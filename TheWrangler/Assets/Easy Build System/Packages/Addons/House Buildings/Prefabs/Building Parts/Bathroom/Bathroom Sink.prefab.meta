@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 483179acca2ff514d8219a23f8789d4e
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Bathroom/Bathroom Sink.prefab
+  uploadId: 741378

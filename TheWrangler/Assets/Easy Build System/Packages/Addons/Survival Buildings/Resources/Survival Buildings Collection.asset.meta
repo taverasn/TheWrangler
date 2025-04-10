@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 03fe9dea81bceeb459ef050e67dd9fb4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Survival Buildings/Resources/Survival
+    Buildings Collection.asset
+  uploadId: 741378

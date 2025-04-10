@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f2e5b270bb000c64a8cad2da3daa4a8a
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Bathroom/Bathroom Toilet.prefab
+  uploadId: 741378

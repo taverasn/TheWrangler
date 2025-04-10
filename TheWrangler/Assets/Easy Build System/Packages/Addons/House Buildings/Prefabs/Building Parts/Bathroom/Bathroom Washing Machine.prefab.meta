@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 94f337bb32e868143898f9e6ec07abb7
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Bathroom/Bathroom Washing Machine.prefab
+  uploadId: 741378

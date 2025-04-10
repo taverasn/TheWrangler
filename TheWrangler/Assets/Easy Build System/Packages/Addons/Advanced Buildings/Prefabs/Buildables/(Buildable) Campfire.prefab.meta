@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cfba646c96472874f95964c9c17b7365
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Advanced Buildings/Prefabs/Buildables/(Buildable)
+    Campfire.prefab
+  uploadId: 741378

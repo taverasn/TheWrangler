@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3f0bc608722aeac47870d63ac60c4033
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Scripts/Demo_OrbitCamera.cs
+  uploadId: 741378

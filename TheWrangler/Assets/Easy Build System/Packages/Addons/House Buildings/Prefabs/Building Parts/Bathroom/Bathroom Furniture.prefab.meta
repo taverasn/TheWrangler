@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1795a330ebf61ea43a896835f7ea5a1c
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Bathroom/Bathroom Furniture.prefab
+  uploadId: 741378

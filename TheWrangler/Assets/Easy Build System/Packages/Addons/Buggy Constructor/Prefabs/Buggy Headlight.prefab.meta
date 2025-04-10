@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 25e7408b7d44be845a88d139a61821fc
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Buggy Constructor/Prefabs/Buggy
+    Headlight.prefab
+  uploadId: 741378

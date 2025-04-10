@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9e98ebf7687a4fb40bf0b9e58a636085
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Features/Editor/Buildings/Socket/BuildingSocketEditor.cs
+  uploadId: 741378

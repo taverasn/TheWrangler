@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8e40b4c8a1aabff41ac57b3b07b8c2fe
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 2c04865d13448d9488a3e7a2263b2988, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Features/Runtime/Buildings/Part/BuildingPart.cs
+  uploadId: 741378

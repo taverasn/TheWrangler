@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f495ad8d6fe6c9147bbc6c310e36c54a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Features/Editor/Buildings/Placer/InspectorBuildingPlacerEditor.cs
+  uploadId: 741378

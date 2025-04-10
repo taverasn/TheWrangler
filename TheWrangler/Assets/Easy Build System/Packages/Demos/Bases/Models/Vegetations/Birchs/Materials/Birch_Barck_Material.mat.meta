@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: afa294465472a72448a8ca6ffba1ac76
+timeCreated: 1551530914
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Demos/Bases/Models/Vegetations/Birchs/Materials/Birch_Barck_Material.mat
+  uploadId: 741378

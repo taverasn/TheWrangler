@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1279c836866a51349b85a3d57a92548c
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Garden/Garden Fence.prefab
+  uploadId: 741378

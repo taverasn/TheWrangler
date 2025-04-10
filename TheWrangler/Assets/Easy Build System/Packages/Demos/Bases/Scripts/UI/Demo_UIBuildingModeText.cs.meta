@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8dad9c5f130a41e4f8b55c323e97b21d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Demos/Bases/Scripts/UI/Demo_UIBuildingModeText.cs
+  uploadId: 741378

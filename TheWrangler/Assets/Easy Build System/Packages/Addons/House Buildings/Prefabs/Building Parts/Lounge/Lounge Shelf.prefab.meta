@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8a0a263304a5c0f4b9d742c0c5fee08c
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Lounge/Lounge Shelf.prefab
+  uploadId: 741378

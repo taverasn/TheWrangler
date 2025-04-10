@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c836783e3928a624e9ff9c70d4f21606
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Demos/Bases/Models/VR Controllers
+    Models/Oculus Quest Controller - Left.prefab
+  uploadId: 741378

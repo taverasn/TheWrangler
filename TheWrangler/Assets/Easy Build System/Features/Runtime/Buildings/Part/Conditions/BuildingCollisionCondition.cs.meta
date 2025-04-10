@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3720bbe100e6564438ceb1433cdff3bb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Features/Runtime/Buildings/Part/Conditions/BuildingCollisionCondition.cs
+  uploadId: 741378

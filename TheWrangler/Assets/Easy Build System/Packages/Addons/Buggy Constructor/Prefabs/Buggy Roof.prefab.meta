@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: fcc29004f3e7b3841b909d43d4e17bc7
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Buggy Constructor/Prefabs/Buggy
+    Roof.prefab
+  uploadId: 741378

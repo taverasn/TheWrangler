@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b954c0f0438dc744faf9002bc8ed4355
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Features/Runtime/Buildings/Part/Conditions/BuildingLinkableSurface.cs
+  uploadId: 741378

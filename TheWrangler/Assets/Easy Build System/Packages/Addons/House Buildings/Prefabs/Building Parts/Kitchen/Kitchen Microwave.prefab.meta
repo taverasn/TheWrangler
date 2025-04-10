@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 39b758f6a688ca34d83b9c428c06d89c
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Kitchen/Kitchen Microwave.prefab
+  uploadId: 741378

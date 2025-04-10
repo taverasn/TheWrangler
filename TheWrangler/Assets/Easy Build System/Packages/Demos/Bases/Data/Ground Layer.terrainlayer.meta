@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 93a2f0d1ff8f98a489e9f7477d7c2fa3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Demos/Bases/Data/Ground Layer.terrainlayer
+  uploadId: 741378

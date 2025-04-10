@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e9a17b21b2c19cc4d816bc804d61156e
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Lounge/Lounge TV Stand.prefab
+  uploadId: 741378

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: aec0c3941e226da45b1c20d43a7c5892
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Survival Buildings/Models/Wood
+    Buildings/Fragments/Mesh Data/Wood Floor_Fragments.asset
+  uploadId: 741378

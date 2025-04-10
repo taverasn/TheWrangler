@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 84953a9805d12e2479f75b4347aba81d
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Buggy Constructor/Prefabs/Buggy
+    Engine.prefab
+  uploadId: 741378

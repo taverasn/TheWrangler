@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c10d7affcf27c4948b791016af006b2d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Survival Buildings/Prefabs/Survival
+    Building Storage.prefab
+  uploadId: 741378

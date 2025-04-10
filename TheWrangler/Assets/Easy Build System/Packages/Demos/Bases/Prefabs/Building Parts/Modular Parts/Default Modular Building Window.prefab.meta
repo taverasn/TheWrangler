@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 6956a6012c0614847a134b20dbb07840
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Demos/Bases/Prefabs/Building Parts/Modular
+    Parts/Default Modular Building Window.prefab
+  uploadId: 741378

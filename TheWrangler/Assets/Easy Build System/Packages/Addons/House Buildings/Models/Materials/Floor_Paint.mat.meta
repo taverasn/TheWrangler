@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4e96979c1cfd0f6449152aca2f5fe4bd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Models/Materials/Floor_Paint.mat
+  uploadId: 741378

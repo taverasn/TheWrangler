@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a67777cedc26565439509c35ff8e9309
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/Buggy Constructor/Prefabs/Buggy
+    Steering Wheel.prefab
+  uploadId: 741378

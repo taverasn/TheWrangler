@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f084a42d61d10b84499cde14fc86cc6e
+labels:
+- BuildingPart
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 45394
+  packageName: Easy Build System - Modular Building System
+  packageVersion: 6.8.2
+  assetPath: Assets/Easy Build System/Packages/Addons/House Buildings/Prefabs/Building
+    Parts/Kitchen/Kitchen Shelf.prefab
+  uploadId: 741378
