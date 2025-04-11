@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbe3bb1b3458fc438bfb75f6a77d4a6, type: 3}
+  m_Name: HG_SMGBase
+  m_EditorClassIdentifier: 
+  pfWeapon: {fileID: 8852637775501897529, guid: ef801974941fae04f90745fbb13dc2e3,
+    type: 3}
+  weaponType: 2
+  fireRate: 0.1
+  maxAmmo: 60
+  maxAmmoReserve: 400
+  damage: 50
