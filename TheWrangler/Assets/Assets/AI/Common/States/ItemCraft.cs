@@ -4,7 +4,7 @@ public class ItemCraft : State
 {
     public ItemCraft(StateMachine machine)
     {
-        logger = new Logger("ItemCraft");
+        logger = LogManager.Instance.AddLogger("ItemCraft", LogLevel.INFO);
         this.machine = machine;
     }
 

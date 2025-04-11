@@ -8,7 +8,7 @@ public class Deciding : State
     public Deciding(StateMachine machine)
     {
         this.machine = machine;
-        logger = new Logger("Deciding");
+        logger = LogManager.Instance.AddLogger("Deciding", LogLevel.INFO);
     }
 
     public override void Arrive()

@@ -8,7 +8,7 @@ public class CraftingTable
 
     public CraftingTable() 
     {
-        logger = new Logger("Crafting Table");
+        logger = LogManager.Instance.AddLogger("Crafting Table", LogLevel.INFO);
     }
 
     private void HandleOpenTable()

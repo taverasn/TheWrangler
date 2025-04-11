@@ -418,7 +418,7 @@ Transform:
   m_GameObject: {fileID: 249249431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.19229573, y: 3.1907759, z: -2.1430368}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 524287
 --- !u!114 &299692727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +573,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 1929140572}
   stateText: {fileID: 1621701163}
+--- !u!1 &838462378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 838462380}
+  - component: {fileID: 838462379}
+  m_Layer: 0
+  m_Name: LogManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &838462379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838462378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6516b99d0ea0f6d488e4ca3f27d87c38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logFile: TheWrangler.log
+--- !u!4 &838462380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838462378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1030326553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,5 +1380,6 @@ SceneRoots:
   - {fileID: 1929140571}
   - {fileID: 2046802689}
   - {fileID: 249249433}
+  - {fileID: 838462380}
   - {fileID: 1030326555}
   - {fileID: 2009278435}

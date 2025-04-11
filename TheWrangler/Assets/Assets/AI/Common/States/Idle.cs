@@ -5,7 +5,7 @@ public class Idle : State
     public Idle(StateMachine machine)
     {
         this.machine = machine;
-        logger = new Logger("Idle");
+        logger = LogManager.Instance.AddLogger("Idle", LogLevel.INFO);
     }
 
     public override void Arrive()

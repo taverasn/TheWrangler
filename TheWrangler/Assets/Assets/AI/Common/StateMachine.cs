@@ -37,7 +37,7 @@ public class StateMachine : MonoBehaviour
 
     protected virtual void Awake()
     {
-        logger = new Logger("State Machine");
+        logger = LogManager.Instance.AddLogger("State Machine", LogLevel.INFO);
 
         inventory = new Inventory(inventorySize);
         craftingTable = new CraftingTable();

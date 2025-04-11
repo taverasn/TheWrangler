@@ -5,7 +5,7 @@ public class ItemMove : ItemInteract
     public ItemMove(StateMachine machine)
     {
         this.machine = machine;
-        logger = new Logger("ItemMove");
+        logger = LogManager.Instance.AddLogger("ItemMove", LogLevel.INFO);
     }
 
     public override void Arrive()

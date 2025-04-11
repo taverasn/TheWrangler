@@ -11,7 +11,7 @@ public class Wander : State
     {
         this.walkRadius = walkRadius;
         this.machine = machine;
-        logger = new Logger("Wander");
+        logger = LogManager.Instance.AddLogger("Wander", LogLevel.INFO);
     }
 
     public override void Arrive()
