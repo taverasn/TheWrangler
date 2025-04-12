@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-guid: f6a1fe8c67fcb454a8ab107115673a52
+guid: 16bfcfb526711a8478f424a19b0af79a
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 45394
-  packageName: Easy Build System - Modular Building System
-  packageVersion: 6.8.2
-  assetPath: Assets/Easy Build System/Features/Resources/Packages/Supports/URP Support.unitypackage
-  uploadId: 741378

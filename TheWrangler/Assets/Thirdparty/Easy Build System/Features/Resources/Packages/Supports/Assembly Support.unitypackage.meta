@@ -1,15 +1,7 @@
 fileFormatVersion: 2
-guid: 426d94ece2c97f64d9d3a5649caa7aee
+guid: e499c64b07a01cf428c8dc050a6082bf
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 45394
-  packageName: Easy Build System - Modular Building System
-  packageVersion: 6.8.2
-  assetPath: Assets/Easy Build System/Features/Resources/Packages/Supports/Assembly
-    Support.unitypackage
-  uploadId: 741378

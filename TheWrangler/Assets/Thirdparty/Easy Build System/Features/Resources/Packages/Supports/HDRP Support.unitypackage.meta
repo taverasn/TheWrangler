@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-guid: 2a08d0ba39f938d488db5996ff831967
+guid: 0c2a7576e562b7c4080291d0258b296b
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 45394
-  packageName: Easy Build System - Modular Building System
-  packageVersion: 6.8.2
-  assetPath: Assets/Easy Build System/Features/Resources/Packages/Supports/HDRP Support.unitypackage
-  uploadId: 741378
