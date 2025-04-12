@@ -176,10 +176,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7428968758647433252}
     m_Modifications:
-    - target: {fileID: 1002213712724889528, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.5830193
-      objectReference: {fileID: 0}
     - target: {fileID: 1126542723595314386, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
       propertyPath: m_Name
       value: pfPlayerCamera
@@ -223,14 +219,6 @@ PrefabInstance:
     - target: {fileID: 2067557432431733710, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3128740266652834698, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.5830193
-      objectReference: {fileID: 0}
-    - target: {fileID: 3983279404074787606, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.5830193
       objectReference: {fileID: 0}
     - target: {fileID: 7296497368898436722, guid: a50df9421dbae854ca9f7a6383304d04, type: 3}
       propertyPath: Target.TrackingTarget
