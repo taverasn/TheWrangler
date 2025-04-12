@@ -889,8 +889,10 @@ ModelImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 45394
-  packageName: Easy Build System - Modular Building System
-  packageVersion: 6.8.2
-  assetPath: Assets/Easy Build System/Packages/Demos/Third-Party/Starter Assets/Character/Models/Armature.fbx
-  uploadId: 741378
+  productId: 196526
+  packageName: Starter Assets - ThirdPerson | Updates in new CharacterController
+    package
+  packageVersion: 1.1.5
+  assetPath: Assets/Thirdparty/Easy Build System/Packages/Demos/Third-Party/Starter
+    Assets/Character/Models/Armature.fbx
+  uploadId: 691128
