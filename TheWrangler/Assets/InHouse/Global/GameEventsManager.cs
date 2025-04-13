@@ -4,8 +4,6 @@ public class GameEventsManager : MonoBehaviour
 {
     public static GameEventsManager Instance;
 
-    public AIEvents AIEvents { get; private set; }
-    public WeaponInputEvents weaponInputEvents;
 
     private void Awake()
     {
@@ -15,10 +13,6 @@ public class GameEventsManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
-        // initialize all events
-        weaponInputEvents = new WeaponInputEvents();
-        AIEvents = new AIEvents();
 
         Instance = this;
     }
