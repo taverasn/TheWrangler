@@ -4,32 +4,37 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - DeadZone
+  - VehicleArea
+  - Bullet
+  - Loop
+  - RagdollZone
+  - Grass
+  - Stone
+  - Tiles
+  - Skin
   - Enemy
-  - FirePoint
-  - Critical
-  - Weapons
-  - Ramp
-  - BodyShot
-  - Ladder
+  - Distractable
+  - CoverTrigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Weapons
-  - Enemy
-  - Object
-  - Interactable
-  - Grass
-  - Metal
-  - Mud
-  - Wood
-  - UITop
-  - PostProcessing
-  - Effects
-  - Player
+  - 
+  - 
+  - Vehicle
+  - Character
+  - Bullet
+  - Terrain
+  - VehicleMeshCollider
+  - VehicleWheel
+  - Item
+  - Bones
+  - Walls
+  - Trigger
   - Socket
   - 
   - 
