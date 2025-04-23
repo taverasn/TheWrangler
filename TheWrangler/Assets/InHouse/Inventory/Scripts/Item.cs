@@ -21,4 +21,9 @@ public class Item
     {
         amount -= _amount;
     }
+
+    public virtual void Use()
+    {
+
+    }
 }

@@ -4,10 +4,10 @@ using System.IO;
 
 public enum LogLevel
 {
-    ERROR,
-    WARN,
-    DEBUG,
-    INFO,
+    ERROR = 0,
+    WARN = 1,
+    DEBUG = 2,
+    INFO = 3,
 }
 
 public class LogManager : MonoBehaviour

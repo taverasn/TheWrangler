@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using UnityEngine;
 
 public class Deciding : State
@@ -21,7 +22,7 @@ public class Deciding : State
     {
         if (UnityEngine.Random.Range(0f, 1f) < interactChance)
         {
-            if (machine.craftableRecipes.Count > 0 && UnityEngine.Random.Range(0f, 1f) < craftChance)
+            if (UnityEngine.Random.Range(0f, 1f) < craftChance && !machine.craftableRecipes.IsNullOrEmpty())
             {
                 Transition<ItemCraft>();
             }
