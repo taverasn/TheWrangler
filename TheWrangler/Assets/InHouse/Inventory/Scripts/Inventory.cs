@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UIElements;
@@ -5,7 +6,7 @@ using UnityEngine.UIElements;
 public class Inventory
 {
     public int size { get; private set; }
-    private Item[] items;
+    public Item[] items { get; private set; }
     private Dictionary<EquipmentSlot, Item> equipment;
 
     public Inventory(int size)
@@ -95,5 +96,16 @@ public class Inventory
         }
 
         return true;
+    }
+
+    public (Item, Item) MoveItem(int oldPosition, int newPosition)
+    {
+        Item itemExistingInNewSpot = items[newPosition];
+        Item itemToMove = items[oldPosition];
+
+        items[oldPosition] = itemExistingInNewSpot;
+        items[newPosition] = itemToMove;
+
+        return (itemExistingInNewSpot, itemToMove);
     }
 }

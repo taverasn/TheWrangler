@@ -9,6 +9,8 @@ public class ItemSO : ScriptableObject
     public string ID;
     public string displayName;
     public EquipmentSlot equipmentSlot;
+    public Sprite icon;
+    public GameObject prefab;
 }
 
 public enum EquipmentSlot
