@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Stick
   displayName: Stick
+  equipmentSlots: 00000000
+  equipmentType: 0
+  icon: {fileID: 0}
+  prefab: {fileID: 0}
+  stackable: 1

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class ItemCraft : State
@@ -19,19 +20,12 @@ public class ItemCraft : State
         Item item = machine.craftingTable.CraftItem(machine.interactable.inventory, machine.craftableRecipes[UnityEngine.Random.Range(0, machine.craftableRecipes.Count)]);
         logger.Debug($"Crafted {item.info.ID}");
 
+        string msg = item.info.equipmentSlots.Contains(EquipmentSlot.NONE) ? $"Added {item.info.ID} to Interactable Inventory" : $"Equipped {item.info.ID} to Companion";
 
-        if (item.info.equipmentSlot != EquipmentSlot.NONE)
-        {
-            logger.Debug($"Equipped {item.info.ID} to Companion");
+        logger.Debug(msg);
 
-            machine.inventory.AddItem(item, -1, true);
-        }
-        else
-        {
-            logger.Debug($"Added {item.info.ID} to Interactable Inventory");
-
-            machine.interactable.inventory.AddItem(item);
-        }
+        machine.interactable.inventory.AddItem(item, -1, item.info.equipmentSlots.First());
+        
         Transition<Idle>();
     }
 

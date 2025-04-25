@@ -8,9 +8,11 @@ public class ItemSO : ScriptableObject
 {
     public string ID;
     public string displayName;
-    public EquipmentSlot equipmentSlot;
+    public List<EquipmentSlot> equipmentSlots;
+    public EquipmentType equipmentType;
     public Sprite icon;
     public GameObject prefab;
+    public bool stackable;
 }
 
 public enum EquipmentSlot
@@ -22,5 +24,17 @@ public enum EquipmentSlot
     FEET,
     MAIN_HAND,
     OFF_HAND,
+    SECONDARY,
     BOTH_HAND
+}
+
+public enum EquipmentType
+{
+    NONE,
+    HEAD,
+    CHEST,
+    LEGS,
+    FEET,
+    WEAPON,
+    OFF_HAND
 }

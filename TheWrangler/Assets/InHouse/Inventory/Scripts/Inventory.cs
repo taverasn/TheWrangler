@@ -7,25 +7,36 @@ public class Inventory
 {
     public int size { get; private set; }
     public Item[] items { get; private set; }
-    private Dictionary<EquipmentSlot, Item> equipment;
+    public Dictionary<EquipmentSlot, Item> equipment { get; private set; }
 
     public Inventory(int size)
     {
         this.size = size;
         items = new Item[size];
         equipment = new Dictionary<EquipmentSlot, Item>();
+        foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
+        {
+            equipment[slot] = null;
+        }
     }
 
-    public void AddItem(Item item, int position = -1, bool equip = false)
+    public void AddItem(Item item, int position = -1, EquipmentSlot slot = EquipmentSlot.NONE)
     {
         if (position == -1)
         {
-            for (int i = 0; i < items.Length; i++)
+            if (items.Contains(item) && item.info.stackable)
             {
-                if (items[i] == null)
+                position = Array.IndexOf(items, item);
+            }
+            else
+            {
+                for (int i = 0; i < items.Length; i++)
                 {
-                    position = i;
-                    break;
+                    if (items[i] == null)
+                    {
+                        position = i;
+                        break;
+                    }
                 }
             }
         }
@@ -39,33 +50,29 @@ public class Inventory
             items[position].Add(item.amount);
         }
 
-        if (equip)
+        if (slot != EquipmentSlot.NONE)
         {
-            Equip(position);
+            Equip(slot, position);
         }
     }
 
-    public void Equip(int position)
+    public (Item, Item) Equip(EquipmentSlot slot, int position, bool equip = true)
     {
         Item equipItem = items[position];
+        Item unequipItem = null;
 
-        if (equipment.ContainsKey(equipItem.info.equipmentSlot))
+        unequipItem = equipment[slot];
+
+        items[position] = unequipItem;
+        equipment[slot] = equipItem;
+
+        if (equip)
         {
-            Item unequipItem = equipment[equipItem.info.equipmentSlot];
-            items[position] = unequipItem;
+            return (unequipItem, equipItem);
         }
-
-        equipment[equipItem.info.equipmentSlot] = equipItem;
-    }
-
-    public void UnEquip(EquipmentSlot equipmentSlot)
-    {
-        if (equipment.ContainsKey(equipmentSlot))
+        else
         {
-            Item unequipItem = equipment[equipmentSlot];
-            equipment.Remove(equipmentSlot);
-
-            AddItem(unequipItem);
+            return (equipItem, unequipItem);
         }
     }
 
@@ -100,11 +107,34 @@ public class Inventory
 
     public (Item, Item) MoveItem(int oldPosition, int newPosition)
     {
-        Item itemExistingInNewSpot = items[newPosition];
-        Item itemToMove = items[oldPosition];
+        Item toItem = items[newPosition];
+        Item fromItem = items[oldPosition];
 
-        items[oldPosition] = itemExistingInNewSpot;
-        items[newPosition] = itemToMove;
+        // If the items are the same and can stack add them and delete
+        // the item in the old position
+        if (toItem?.info == fromItem?.info && fromItem != null && fromItem.info.stackable)
+        {
+            fromItem.amount += toItem.amount;
+            toItem = null;
+            items[oldPosition] = null;
+            items[newPosition] = fromItem;
+        }
+        else
+        {
+            items[oldPosition] = toItem;
+            items[newPosition] = fromItem;
+        }
+
+        return (toItem, fromItem);
+    }
+    
+    public (Item, Item) MoveEquipment(EquipmentSlot oldSlot, EquipmentSlot newSlot)
+    {
+        Item itemExistingInNewSpot = equipment[newSlot];
+        Item itemToMove = equipment[oldSlot];
+
+        equipment[oldSlot] = itemExistingInNewSpot;
+        equipment[newSlot] = itemToMove;
 
         return (itemExistingInNewSpot, itemToMove);
     }
