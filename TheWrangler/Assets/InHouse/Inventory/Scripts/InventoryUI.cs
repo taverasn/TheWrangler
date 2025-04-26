@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private Interactable inventoryHolder;
-    private Inventory inventory;
+    [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject inventorySlotsParent;
     [SerializeField] private GameObject equipmentSlotsParent;
     [SerializeField] private InventorySlot inventorySlotPrefab;
@@ -14,7 +13,6 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        inventory = inventoryHolder.inventory;
         if (inventory != null)
         {
             for (int i = 0; i < inventory.size; i++)

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
-  m_Name: Helmet
+  m_Name: AR
   m_EditorClassIdentifier: 
-  ID: Helmet
-  displayName: Helmet
-  equipmentSlots: 01000000
-  equipmentType: 1
+  ID: AR
+  displayName: AR
+  equipmentSlots: 0500000007000000
+  equipmentType: 5
   icon: {fileID: 0}
-  prefab: {fileID: 1262996259358930, guid: 7dea907e69fa1db4888c36ce5482a775, type: 3}
+  prefab: {fileID: 5449008924072583139, guid: 068ce871d8c16cb4caee3013df51a747, type: 3}
   stackable: 0

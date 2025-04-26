@@ -1,18 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
-    public int size { get; private set; }
+    [field: SerializeField] public int size { get; private set; } = 30;
     public Item[] items { get; private set; }
     public Dictionary<EquipmentSlot, Item> equipment { get; private set; }
 
-    public Inventory(int size)
+    public event Action<Item, bool> onItemEquipped;
+    public void ItemEquipped(Item item, bool equipped) => onItemEquipped?.Invoke(item, equipped);
+
+    public void Awake()
     {
-        this.size = size;
         items = new Item[size];
+        for (int i = 0; i < items.Length; i++)
+        {
+            items[i] = null;
+        }
+
         equipment = new Dictionary<EquipmentSlot, Item>();
         foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
         {
@@ -32,7 +40,7 @@ public class Inventory
             {
                 for (int i = 0; i < items.Length; i++)
                 {
-                    if (items[i] == null)
+                    if (items[i]?.info == null)
                     {
                         position = i;
                         break;
@@ -41,7 +49,7 @@ public class Inventory
             }
         }
 
-        if (items[position] == null)
+        if (items[position]?.info == null)
         {
             items[position] = item;
         }
@@ -66,6 +74,9 @@ public class Inventory
         items[position] = unequipItem;
         equipment[slot] = equipItem;
 
+        ItemEquipped(unequipItem, false);
+        ItemEquipped(equipItem, true);
+
         if (equip)
         {
             return (unequipItem, equipItem);
@@ -88,7 +99,13 @@ public class Inventory
 
         if(item.amount <= 0)
         {
-            item = null;
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (item == items[i])
+                {
+                    items[i] = null;
+                }
+            }
         }
     }
 
