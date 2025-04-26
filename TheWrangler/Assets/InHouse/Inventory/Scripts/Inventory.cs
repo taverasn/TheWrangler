@@ -32,9 +32,10 @@ public class Inventory : MonoBehaviour
     {
         if (position == -1)
         {
-            if (items.Contains(item) && item.info.stackable)
+            Item compareItem = items.FirstOrDefault(i => i?.info == item.info);
+            if (compareItem?.info != null && item.info.stackable)
             {
-                position = Array.IndexOf(items, item);
+                position = Array.IndexOf(items, compareItem);
             }
             else
             {
@@ -89,7 +90,7 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(ItemSO itemSO, int amount)
     {
-        Item item = items.Where(i => i.info == itemSO && i.amount >= amount).FirstOrDefault();
+        Item item = items.Where(i => i?.info == itemSO && i.amount >= amount).FirstOrDefault();
         if (item == null)
         {
             return;
@@ -113,7 +114,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (KeyValuePair<ItemSO, int> pair in recipe.ingredients)
         {
-            if (!items.Any(i => i.info == pair.Key && i.amount >= pair.Value))
+            if (!items.Any(i => i?.info == pair.Key && i.amount >= pair.Value))
             {
                 return false;
             }

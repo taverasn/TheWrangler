@@ -565,6 +565,20 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Part
                 return m_BuildingPhysicsCondition;
             }
         }
+        
+        BuildingItemCondition m_BuildingItemCondition;
+        public BuildingItemCondition TryGetItemCondition
+        {
+            get
+            {
+                if (m_BuildingItemCondition == null)
+                {
+                    m_BuildingItemCondition = GetComponent<BuildingItemCondition>();
+                }
+
+                return m_BuildingItemCondition;
+            }
+        }
 
         readonly Dictionary<Renderer, Material[]> m_DefaultMaterials = new Dictionary<Renderer, Material[]>();
         public Dictionary<Renderer, Material[]> DefaultMaterials

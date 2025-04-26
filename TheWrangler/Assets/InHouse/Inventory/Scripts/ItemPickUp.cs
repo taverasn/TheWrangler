@@ -8,13 +8,15 @@ public class ItemPickUP : MonoBehaviour
     [SerializeField] private ItemSO itemSO;
     [SerializeField] private Collider collider;
     [SerializeField] private TextMeshProUGUI popupText;
+    [SerializeField] private int amount;
+
     private Inventory inventory;
     private Item item;
     private JUTPSInputControlls _inputs;
 
     private void Start()
     {
-        item = new Item(1, itemSO);
+        item = new Item(amount, itemSO);
     }
 
     private void OnEnable()

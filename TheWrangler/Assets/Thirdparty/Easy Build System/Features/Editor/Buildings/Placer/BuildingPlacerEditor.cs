@@ -27,6 +27,7 @@ namespace EasyBuildSystem.Editor.Runtime.Buildings.Placer
     {
         #region Fields
 
+        bool m_InventoryFoldout;
         bool m_InputFoldout;
         bool m_RaycastFoldout;
         bool m_SnappingFoldout;
@@ -115,6 +116,20 @@ namespace EasyBuildSystem.Editor.Runtime.Buildings.Placer
             EditorGUIUtilityExtension.DrawHeader("Easy Build System - Building Placer",
                 "This component handles the inputs and manages the different building modes during the runtime.\n" +
                 "You can find more information on the Building Placer component in the documentation.");
+
+            m_InventoryFoldout = EditorGUIUtilityExtension.BeginFoldout(new GUIContent("Inventory Settings"), m_InventoryFoldout);
+
+            if (m_InventoryFoldout)
+            {
+                EditorGUI.indentLevel++;
+
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_InventorySettings").FindPropertyRelative("m_PlayerInventory"), new GUIContent("Inventory",
+                "Inventory that gets checked for building."));
+
+                EditorGUI.indentLevel--;
+            }
+
+            EditorGUIUtilityExtension.EndFoldout();
 
             m_InputFoldout = EditorGUIUtilityExtension.BeginFoldout(new GUIContent("Input Settings"), m_InputFoldout);
 
