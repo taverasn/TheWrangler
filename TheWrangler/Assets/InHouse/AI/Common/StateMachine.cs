@@ -18,8 +18,7 @@ public class StateMachine : MonoBehaviour
     public float interactCooldown = 30f;
 
     #region Inventory
-    [SerializeField] private int inventorySize = 30;
-    public Inventory inventory { get; protected set; }
+    [field:SerializeField] public Inventory inventory { get; protected set; }
     public CraftingTable craftingTable { get; protected set; }
     public List<RecipeSO> recipes = new List<RecipeSO>();
     public List<RecipeSO> craftableRecipes => interactable != null ? craftingTable.EvaluateCraftableRecipes(interactable.inventory) : new List<RecipeSO>();
@@ -38,8 +37,6 @@ public class StateMachine : MonoBehaviour
     protected virtual void Awake()
     {
         logger = LogManager.Instance.AddLogger("State Machine", LogLevel.INFO);
-
-        inventory = new Inventory(inventorySize);
         craftingTable = new CraftingTable();
         craftingTable.AddRecipes(recipes);
 

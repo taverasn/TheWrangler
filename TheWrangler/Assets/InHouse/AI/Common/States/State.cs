@@ -33,4 +33,9 @@ public class State
     {
         machine.TransitionTo(state);
     }
+
+    public void SetDestination(Vector3 position)
+    {
+        machine.target.position = position;
+    }
 }

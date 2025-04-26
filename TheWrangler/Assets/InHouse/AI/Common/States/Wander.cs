@@ -50,10 +50,10 @@ public class Wander : State
 
         if (interactables.Count > 0)
         {
-            Transform target = interactables.First().transform;
-            SetDestination(target.position);
+            Interactable interactable = interactables.OrderBy(i => Vector3.Distance(machine.transform.position, i.transform.position)).FirstOrDefault();
+            SetDestination(interactable.transform.position);
 
-            machine.interactable = interactables.First();
+            machine.interactable = interactable;
             
             machine.StartCoroutine(machine.StartCanInteractCoolDown());
 
@@ -63,11 +63,6 @@ public class Wander : State
         {
             return false;
         }
-    }
-
-    private void SetDestination(Vector3 position)
-    {
-        machine.target.position = position;
     }
 
     public override void Exit()

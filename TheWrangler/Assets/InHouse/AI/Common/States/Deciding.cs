@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Deciding : State
 {
-    float interactChance = 0.5f;
-    float craftChance = 0.5f;
+    float interactChance = 2f;
+    float craftChance = -1f;
 
     public Deciding(StateMachine machine)
     {

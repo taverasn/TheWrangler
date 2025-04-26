@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour, IInteractable
 {
-    public Inventory inventory;
     [SerializeField] private List<ItemSO> items;
     [SerializeField] private List<ItemSO> ingredients;
-    private void Awake()
+    public Inventory inventory { get; private set; }
+    private void Start()
     {
-        inventory = new Inventory(30);
-        
+        inventory = GetComponent<Inventory>();
+
         int position = 0;
 
         foreach (ItemSO itemSO in items)
