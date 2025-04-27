@@ -324,7 +324,7 @@ namespace JUTPS.CharacterBrain
             HoldableItemInUseRightHand = null;
 
             // Get Camera references
-            MyPivotCamera = (IsArtificialIntelligence == false) ? FindObjectOfType<JUCameraController>() : null;
+            MyPivotCamera = (IsArtificialIntelligence == false) ? FindFirstObjectByType<JUCameraController>(FindObjectsInactive.Exclude) : null;
             MyCamera = (MyPivotCamera != null && IsArtificialIntelligence == false) ? MyPivotCamera.mCamera : null;
 
             // Get last character spine bone
@@ -2009,7 +2009,7 @@ namespace JUTPS.CharacterBrain
             if (IsDead == false) return;
 
             //Reset Camera
-            if (FindObjectOfType<TPSCameraController>() != null) { FindObjectOfType<TPSCameraController>().mCamera.transform.localEulerAngles = Vector3.zero; }
+            if (FindFirstObjectByType<TPSCameraController>() != null) { FindFirstObjectByType<TPSCameraController>().mCamera.transform.localEulerAngles = Vector3.zero; }
 
 
             //Get up

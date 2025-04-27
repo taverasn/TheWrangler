@@ -148,7 +148,7 @@ public class InventoryUI : MonoBehaviour
         // return true
         if (toSlot.TryGetComponent(out equipmentSlot) && fromSlot.TryGetComponent(out equipmentSlot1))
         {
-            if (equipmentSlot.equipmentType == equipmentSlot1.equipmentType)
+            if (equipmentSlot.slot == equipmentSlot1.slot)
             {
                 return true;
             }
@@ -167,8 +167,8 @@ public class InventoryUI : MonoBehaviour
             // In addition to checking if the slot and the ones its going to are the same type we also need to make sure that
             // that they are not equal because they are both null. Because if they're equal because they're null we're gonna
             // end up with non equipment items in equipment slots
-            bool fromSlotCanSwap = equipmentSlot == null ? false : fromSlot.itemSO == null ? false : fromSlot.itemSO.equipmentSlots.Contains(equipmentSlot.slot);
-            bool toSlotCanSwap = equipmentSlot1 == null ? false : toSlot.itemSO == null ? false : toSlot.itemSO.equipmentSlots.Contains(equipmentSlot1.slot);
+            bool fromSlotCanSwap = equipmentSlot == null ? false : fromSlot.itemSO == null ? false : fromSlot.itemSO.equipmentSlot == equipmentSlot.slot;
+            bool toSlotCanSwap = equipmentSlot1 == null ? false : toSlot.itemSO == null ? false : toSlot.itemSO.equipmentSlot == equipmentSlot1.slot;
 
             if (fromSlotCanSwap || toSlotCanSwap)
             {

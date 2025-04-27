@@ -50,10 +50,10 @@ namespace JUTPS.GameSettings
                 {
                     height = (int)(biggestResolution.height * value),
                     width = (int)(biggestResolution.width * value),
-                    refreshRate = currentResolution.refreshRate
+                    refreshRateRatio = currentResolution.refreshRateRatio
                 };
 
-                Screen.SetResolution(targetResolution.width, targetResolution.height, Screen.fullScreen, targetResolution.refreshRate);
+                Screen.SetResolution(targetResolution.width, targetResolution.height, Screen.fullScreenMode, targetResolution.refreshRateRatio);
 
                 OnApplySettings?.Invoke();
             }

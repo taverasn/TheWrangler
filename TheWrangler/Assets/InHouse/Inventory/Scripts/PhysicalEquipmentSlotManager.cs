@@ -14,8 +14,8 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     private void Awake()
     {
         inventory = GetComponent<Inventory>();
-        slots[EquipmentType.HEAD] = HeadSlot;
-        slots[EquipmentType.MAIN_HAND] = WeaponSlot;
+        slots[EquipmentSlot.HEAD] = HeadSlot;
+        slots[EquipmentSlot.MAIN_HAND] = WeaponSlot;
     }
 
     private void OnEnable()
@@ -32,20 +32,20 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     {
         if (item == null) return;
 
-        if (slots[item.info.equipmentType].childCount > 0)
+        if (slots[item.info.equipmentSlot].childCount > 0)
         {
-            Destroy(slots[item.info.equipmentType].GetChild(0).gameObject);
+            Destroy(slots[item.info.equipmentSlot].GetChild(0).gameObject);
         }
 
         if (equipped)
         {
             Transform equipmentTransform = Instantiate(item.info.prefab).transform;
-            equipmentTransform.SetParent(slots[item.info.equipmentType], false);
+            equipmentTransform.SetParent(slots[item.info.equipmentSlot], false);
 
-            inventory.PhysicalItemEquipped(equipmentTransform.gameObject.GetComponent<PhysicalItem>(), item.info.equipmentSlots.First());
+            inventory.PhysicalItemEquipped(equipmentTransform.gameObject.GetComponent<PhysicalItem>(), item.info.equipmentSlot);
         }
     }
 
 }
 
-[Serializable] public class PhysicalEquipmentSlotDictionary : SerializableDictionary<EquipmentType, Transform> { };
+[Serializable] public class PhysicalEquipmentSlotDictionary : SerializableDictionary<EquipmentSlot, Transform> { };

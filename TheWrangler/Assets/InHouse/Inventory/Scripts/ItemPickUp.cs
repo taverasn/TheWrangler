@@ -6,7 +6,6 @@ using UnityEngine.Windows;
 public class ItemPickUP : MonoBehaviour
 {
     [SerializeField] private ItemSO itemSO;
-    [SerializeField] private Collider collider;
     [SerializeField] private TextMeshProUGUI popupText;
     [SerializeField] private int amount;
 

@@ -24,9 +24,9 @@ public class Inventory : MonoBehaviour
     [field: SerializeField] public int size { get; private set; } = 30;
     public Item[] items { get; private set; }
     public Dictionary<EquipmentSlot, Item> equipment { get; private set; }
-    public Item[] mainHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.MAIN_HAND)).ToArray();
-    public Item[] offHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.OFF_HAND)).ToArray();
-    public Item[] bothHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.BOTH_HAND)).ToArray();
+    public Item[] mainHandItems => items.Where(i => i?.info != null && i.info.equipmentSlot == EquipmentSlot.MAIN_HAND).ToArray();
+    public Item[] offHandItems => items.Where(i => i?.info != null && i.info.equipmentSlot == EquipmentSlot.OFF_HAND).ToArray();
+    public Item[] bothHandItems => items.Where(i => i?.info != null && i.info.equipmentSlot == EquipmentSlot.BOTH_HAND).ToArray();
 
     public PhysicalItem ItemInRightHand { get; private set; }
     public PhysicalItem ItemInLeftHand { get; private set; }
@@ -127,7 +127,7 @@ public class Inventory : MonoBehaviour
         {
             if (items[i]?.info.ID == ID)
             {
-                Equip(items[i].info.equipmentSlots.First(), i, equip);
+                Equip(items[i].info.equipmentSlot, i, equip);
             }
         }
     }

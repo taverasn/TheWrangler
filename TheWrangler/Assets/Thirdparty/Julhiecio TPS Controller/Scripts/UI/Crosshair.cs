@@ -52,7 +52,7 @@ namespace JUTPS.UI
             Instance = this;
 
             //Assign camera
-            cameraController = FindObjectOfType<JUCameraController>();
+            cameraController = FindFirstObjectByType<JUCameraController>();
 
             //if theres no player, theres nothing to 
             var playerobject = GameObject.FindGameObjectWithTag("Player");
@@ -276,7 +276,7 @@ namespace JUTPS.UI
         {
             if (Instance == null)
             {
-                Instance = FindObjectOfType<Crosshair>();
+                Instance = FindFirstObjectByType<Crosshair>();
                 return 0;
             }
             var precision = Mathf.Lerp(Current, Instance.CrosshairSensibility * 100 * (WeaponInUse ? WeaponInUse.ShotErrorProbability : 0), Speed * Time.deltaTime);

@@ -8,8 +8,7 @@ public class ItemSO : ScriptableObject
 {
     public string ID;
     public string displayName;
-    public List<EquipmentSlot> equipmentSlots;
-    public EquipmentType equipmentType;
+    public EquipmentSlot equipmentSlot;
     public Sprite icon;
     public GameObject prefab;
     public bool stackable;

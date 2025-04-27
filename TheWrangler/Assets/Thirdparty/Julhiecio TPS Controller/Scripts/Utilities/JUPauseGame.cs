@@ -50,7 +50,7 @@ namespace JUTPS
             {
                 if (!_instance)
                 {
-                    _instance = FindObjectOfType<JUPauseGame>(true);
+                    _instance = FindFirstObjectByType<JUPauseGame>(FindObjectsInactive.Include);
 
                     if (!_instance)
                     {
@@ -79,7 +79,7 @@ namespace JUTPS
                 return;
             }
 
-            _slowmotionInstance = FindObjectOfType<FX.JUSlowmotion>();
+            _slowmotionInstance = FindFirstObjectByType<FX.JUSlowmotion>(FindObjectsInactive.Exclude);
             PauseInputs.OnButtonsDown.AddListener(OnPressPauseInput);
         }
 
