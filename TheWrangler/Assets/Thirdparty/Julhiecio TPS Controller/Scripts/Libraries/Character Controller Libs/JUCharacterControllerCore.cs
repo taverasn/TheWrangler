@@ -34,7 +34,7 @@ namespace JUTPS.CharacterBrain
         [HideInInspector] protected JUFootPlacement FootPlacerIK;
         [HideInInspector] public JUHealth CharacterHealth;
         [HideInInspector] public DriveVehicles DriveVehicleAbility;
-        public Inventory Inventory;
+        public PlayerInventory Inventory;
         [HideInInspector] public Damager LeftHandDamager, RightHandDamager, LeftFootDamager, RightFootDamager;
 
         public enum MovementMode { Free, AwaysInFireMode, JuTpsClassic }
@@ -359,7 +359,7 @@ namespace JUTPS.CharacterBrain
             if (TryGetComponent(out JUHealth health)) { CharacterHealth = health; CharacterHealth.OnDeath.AddListener(DisableDamagers); }
 
             // Get Inventory
-            if (TryGetComponent(out Inventory _Inventory)) { Inventory = _Inventory; }
+            if (TryGetComponent(out PlayerInventory _Inventory)) { Inventory = _Inventory; }
 
             // Get Ragdoller
             if (TryGetComponent(out AdvancedRagdollController ragdollerController)) { Ragdoller = ragdollerController; }

@@ -32,7 +32,7 @@ namespace JUTPS.WeaponSystem
                 {
                     if (ItemQuantity > 0 || Unlocked == true)
                     {
-                        Inventory inventory = GetComponentInParent<Inventory>();
+                        PlayerInventory inventory = GetComponentInParent<PlayerInventory>();
                         inventory.Equip(ItemSwitchID, false);
 
                         RemoveItem();

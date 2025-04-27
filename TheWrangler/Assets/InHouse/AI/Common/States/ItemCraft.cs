@@ -24,8 +24,8 @@ public class ItemCraft : State
 
         logger.Debug(msg);
 
-        machine.interactable.inventory.AddItem(item, -1, item.info.equipmentSlot);
-        
+        machine.interactable.inventory.AddItem(item);
+        machine.interactable.inventory.Equip(item.info.ID);
         Transition<Idle>();
     }
 

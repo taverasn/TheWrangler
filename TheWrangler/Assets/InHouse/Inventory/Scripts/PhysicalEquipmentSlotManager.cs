@@ -9,11 +9,11 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     [SerializeField] private Transform HeadSlot;
     [SerializeField] private Transform WeaponSlot;
 
-    private Inventory inventory;
+    private PlayerInventory inventory;
 
     private void Awake()
     {
-        inventory = GetComponent<Inventory>();
+        inventory = GetComponent<PlayerInventory>();
         slots[EquipmentSlot.HEAD] = HeadSlot;
         slots[EquipmentSlot.MAIN_HAND] = WeaponSlot;
     }

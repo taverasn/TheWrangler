@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: Helmet1
   displayName: Helmet1
   equipmentSlot: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 79231bc35c40e2b4b92c90a5b4f44671, type: 3}
   prefab: {fileID: 0}
   stackable: 0
   maxAmount: 300

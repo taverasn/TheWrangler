@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using JUTPS;
 using JUTPS.CameraSystems;
 using JUTPS.InventorySystem;
 using JUTPS.JUInputSystem;
@@ -8,61 +10,115 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private JUTPS.CharacterBrain.JUCharacterBrain JUCharacter;
-    [SerializeField] private GameObject toggleUI;
-    [SerializeField] private GameObject inventorySlotsParent;
-    [SerializeField] private GameObject equipmentSlotsParent;
-    [SerializeField] private GameObject hotbarSlotsParent;
-    [SerializeField] private InventorySlot inventorySlotPrefab;
-    private List<InventorySlot> inventorySlots = new List<InventorySlot>();
-    private Dictionary<EquipmentSlot, EquipmentSlotUI> equipmentSlots = new Dictionary<EquipmentSlot, EquipmentSlotUI>();
-    private Dictionary<HotBarSlot, HotBarSlotUI> hotbarSlots = new Dictionary<HotBarSlot, HotBarSlotUI>();
+    [field:SerializeField] protected Inventory inventory;
+    [field:SerializeField] protected GameObject inventorySlotsParent;
+    [field:SerializeField] protected GameObject toggleUI;
+    [field:SerializeField] protected InventorySlot inventorySlotPrefab;
+    protected List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
-    private InventorySlot fromSlot;
-    private InventorySlot toSlot;
+    protected InventorySlot fromSlot;
+    protected InventorySlot toSlot;
 
-    private JUTPSInputControlls _inputs;
-
-    private void Start()
+    protected virtual void Start()
     {
-        if (JUCharacter.Inventory != null)
+        SetUp();
+    }
+
+    public virtual void OnEnable()
+    {
+        GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory += MoveItemToSeparateInventory;
+        GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory += OnRequestItemFromSeparateInventory;
+    }
+
+    public virtual void OnDisable()
+    {
+        GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory -= MoveItemToSeparateInventory;
+        GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory -= OnRequestItemFromSeparateInventory;
+    }
+
+    public virtual void MoveItemToSeparateInventory(Item item, bool toPlayer, bool swapItemsBothWays)
+    {
+        if (toPlayer && this is PlayerInventoryUI || !toPlayer && this is not PlayerInventoryUI)
         {
-            for (int i = Inventory.HOT_BAR_SIZE; i < JUCharacter.Inventory.items.Length; i++)
+            if (toggleUI.activeSelf)
             {
-                InventorySlot slot = Instantiate(inventorySlotPrefab);
-                slot.transform.SetParent(inventorySlotsParent.transform, false);
-                slot.Initialize(i, JUCharacter.Inventory.items[i]);
-                inventorySlots.Add(slot);
+                if (swapItemsBothWays)
+                {
+                    Item swapItem = null;
+                    if (toSlot is EquipmentSlotUI)
+                    {
+                        PlayerInventory playerInventory = inventory as PlayerInventory;
+                        swapItem = playerInventory.Equip(((EquipmentSlotUI)toSlot).slot, toSlot.index, false);
+                        swapItem = inventory.RemoveItem(Array.IndexOf(inventory.items, swapItem), 0, true);
+                    }
+                    else
+                    {
+                        swapItem = inventory.RemoveItem(toSlot.index, 0, true);
+                    }
+                    GameEventsManager.Instance.UIEvents.MoveItemToSeparateInventory(swapItem, this is PlayerInventoryUI ? false : true, false);
+                }
+
+                inventory.AddItem(item, toSlot.index);
+
+                if (toSlot is EquipmentSlotUI && inventory is PlayerInventory)
+                {
+                    PlayerInventory playerInventory = inventory as PlayerInventory;
+                    playerInventory.Equip(item.info.ID);
+                }
+
+
+                toSlot.SetItem(item);
+                toSlot = null;
             }
         }
+    }
 
-        foreach (EquipmentSlotUI slot in equipmentSlotsParent.GetComponentsInChildren<EquipmentSlotUI>().ToList())
+    public virtual void OnRequestItemFromSeparateInventory(bool swapItemsBothWays)
+    {
+        if(toggleUI.activeSelf && fromSlot != null)
         {
-            equipmentSlots[slot.slot] = slot;
+            Item swapItem = null;
+            if (fromSlot is EquipmentSlotUI)
+            {
+                PlayerInventory playerInventory = inventory as PlayerInventory;
+                swapItem = playerInventory.Equip(((EquipmentSlotUI)fromSlot).slot, fromSlot.index, false);
+                swapItem = inventory.RemoveItem(Array.IndexOf(inventory.items, swapItem), 0, true);
+            }
+            else
+            {
+                swapItem = inventory.RemoveItem(fromSlot.index, 0, true);
+            }
+
+            if (swapItemsBothWays)
+            {
+                toSlot = fromSlot;
+            }
+            else
+            {
+                fromSlot.SetItem(null);
+            }
+            fromSlot = null;
+
+            GameEventsManager.Instance.UIEvents.MoveItemToSeparateInventory(swapItem, this is PlayerInventoryUI ? false : true, swapItemsBothWays);
         }
-        foreach (HotBarSlotUI slot in hotbarSlotsParent.GetComponentsInChildren<HotBarSlotUI>().ToList())
+    }
+
+    protected virtual void SetUp()
+    {
+        for (int i = 0; i < inventory.items.Length; i++)
         {
-            hotbarSlots[slot.slot] = slot;
+            InventorySlot slot = Instantiate(inventorySlotPrefab);
+            slot.transform.SetParent(inventorySlotsParent.transform, false);
+            slot.Initialize(i, inventory.items[i]);
+            inventorySlots.Add(slot);
         }
     }
 
-    private void OnEnable()
+    public void EnableUI()
     {
-        _inputs = JUInput.Instance().InputActions;
-        _inputs.Player.OpenInventory.started += OnOpenInventory;
-    }
-
-    private void OnDisable()
-    {
-        _inputs.Player.OpenInventory.started -= OnOpenInventory;
-    }
-
-    public void OnOpenInventory(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        OnInventoryUpdated();
         JUCameraController.LockMouse(toggleUI.activeSelf, toggleUI.activeSelf);
         toggleUI.SetActive(!toggleUI.activeSelf);
-
+        OnInventoryUpdated();
     }
 
     public void SetFromSlot(InventorySlot slot)
@@ -74,10 +130,17 @@ public class InventoryUI : MonoBehaviour
     public void SetToSlot(InventorySlot slot)
     {
         this.toSlot = slot;
-        BeginItemSwap();
+        if (fromSlot == null)
+        {
+            GameEventsManager.Instance.UIEvents.RequestItemFromSeparateInventory(slot.itemSO == null ? false : true);
+        }
+        else
+        {
+            BeginItemSwap();
+        }
     }
 
-    public void BeginItemSwap()
+    public virtual void BeginItemSwap()
     {
         if (!CanSwap(fromSlot, toSlot))
         {
@@ -86,27 +149,7 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        EquipmentSlotUI equipmentSlot;
-        EquipmentSlotUI equipmentSlot1;
-
-        if (fromSlot.TryGetComponent(out equipmentSlot) && toSlot.TryGetComponent(out equipmentSlot1))
-        {
-            JUCharacter.Inventory.MoveEquipment(equipmentSlot.slot, equipmentSlot1.slot);
-        }
-        // If the toSlot is the equipmentSlot we call equip because we're moving something
-        // to an equipment slot and vice versa for the fromSlot.
-        else if (toSlot.TryGetComponent(out equipmentSlot))
-        {
-            JUCharacter.Inventory.Equip(equipmentSlot.slot, fromSlot.index);
-        } 
-        else if (fromSlot.TryGetComponent(out equipmentSlot))
-        {
-            JUCharacter.Inventory.Equip(equipmentSlot.slot, toSlot.index, false);
-        }
-        else
-        {
-            JUCharacter.Inventory.MoveItem(fromSlot.index, toSlot.index);
-        }
+        inventory.MoveItem(fromSlot.index, toSlot.index);
 
         fromSlot = null;
         toSlot = null;
@@ -116,71 +159,18 @@ public class InventoryUI : MonoBehaviour
 
     private void OnInventoryUpdated()
     {
-        for (int i = 0; i < JUCharacter.Inventory.items.Length; i++)
+        for (int i = 0; i < inventory.items.Length; i++)
         {
-            if (i < 10)
-            {
-                hotbarSlots[(HotBarSlot)i].SetItem(JUCharacter.Inventory.items[i]);
-            }
-            else
-            {
-                inventorySlots[i - Inventory.HOT_BAR_SIZE].SetItem(JUCharacter.Inventory.items[i]);
-            }
-        }        
-        
-        foreach (KeyValuePair<EquipmentSlot, Item> slotPair in JUCharacter.Inventory.equipment)
-        {
-            equipmentSlots[slotPair.Key].SetItem(slotPair.Value);
+            inventorySlots[i]?.SetItem(inventory.items[i]);
         }
     }
 
-    private bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
+    protected virtual bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
     {
         if (fromSlot == null || toSlot == null || fromSlot.itemSO == null)
         {
             return false;
         }
-
-        EquipmentSlotUI equipmentSlot = null;
-        EquipmentSlotUI equipmentSlot1 = null;
-
-        // If both Slots are Equipment Slots then check if they're the same type of slot and if they are
-        // return true
-        if (toSlot.TryGetComponent(out equipmentSlot) && fromSlot.TryGetComponent(out equipmentSlot1))
-        {
-            if (equipmentSlot.slot == equipmentSlot1.slot)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        // Check if either slot is an equipment slot.
-        // If the fromSlot is an equipment slot that means we are unequiping an item and
-        // we need to see if the toSlot has an item because if it does we can only unequip there
-        // if its the same type of equipment
-        else if (toSlot.TryGetComponent(out equipmentSlot) || (fromSlot.TryGetComponent(out equipmentSlot1) && toSlot.itemSO != null))
-        {
-            // In addition to checking if the slot and the ones its going to are the same type we also need to make sure that
-            // that they are not equal because they are both null. Because if they're equal because they're null we're gonna
-            // end up with non equipment items in equipment slots
-            bool fromSlotCanSwap = equipmentSlot == null ? false : fromSlot.itemSO == null ? false : fromSlot.itemSO.equipmentSlot == equipmentSlot.slot;
-            bool toSlotCanSwap = equipmentSlot1 == null ? false : toSlot.itemSO == null ? false : toSlot.itemSO.equipmentSlot == equipmentSlot1.slot;
-
-            if (fromSlotCanSwap || toSlotCanSwap)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        // If both slots aren't EquipmentSlots than they should always be able to swap
         return true;
     }
 }

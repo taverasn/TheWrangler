@@ -7,10 +7,11 @@ public class InventorySlot : MonoBehaviour
 {
     protected InventoryUI inventoryUI;
     public ItemSO itemSO { get; private set; }
-    public int index { get; protected set; }
+    public int index { get; protected set; } = -1;
     [field:SerializeField] protected Image image { get; private set; }
-    [field:SerializeField] protected TextMeshProUGUI text { get; private set; }
     [field:SerializeField] protected TextMeshProUGUI amountText { get; private set; }
+    [field: SerializeField] protected Sprite defaultIcon;
+    [SerializeField] private Color emptyColor = new Color(255, 255, 255, 100);
 
     public virtual void Start()
     {
@@ -27,15 +28,17 @@ public class InventorySlot : MonoBehaviour
     {
         if (item == null)
         {
-            text.text = "";
-            amountText.text = "";
+            if (amountText != null) amountText.text = "";
             itemSO = null;
+            image.sprite = defaultIcon;
+            image.color = emptyColor;
         }
         else
         {
             itemSO = item.info;
-            text.text = item.info.displayName;
-            amountText.text = item.amount == 1 ? "" : item.amount.ToString();
+            if(amountText != null) amountText.text = item.amount == 1 ? "" : item.amount.ToString();
+            image.sprite = item.info.icon;
+            image.color = Color.white;
         }
     }
 
