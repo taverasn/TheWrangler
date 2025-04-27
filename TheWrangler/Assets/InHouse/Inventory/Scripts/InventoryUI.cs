@@ -28,12 +28,14 @@ public class InventoryUI : MonoBehaviour
     {
         GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory += MoveItemToSeparateInventory;
         GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory += OnRequestItemFromSeparateInventory;
+        GameEventsManager.Instance.UIEvents.onCancelRequestItemFromSeparateInventory += OnCancelRequestItemFromSeparateInventory;
     }
 
     public virtual void OnDisable()
     {
         GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory -= MoveItemToSeparateInventory;
         GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory -= OnRequestItemFromSeparateInventory;
+        GameEventsManager.Instance.UIEvents.onCancelRequestItemFromSeparateInventory -= OnCancelRequestItemFromSeparateInventory;
     }
 
     public virtual void MoveItemToSeparateInventory(Item item, bool toPlayer, bool swapItemsBothWays)
@@ -73,10 +75,17 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public virtual void OnRequestItemFromSeparateInventory(bool swapItemsBothWays)
+    public virtual void OnRequestItemFromSeparateInventory(bool swapItemsBothWays, InventorySlot swapCheckSlot)
     {
         if(toggleUI.activeSelf && fromSlot != null)
         {
+            if (!PlayerInventoryUI.CanSwap(fromSlot, swapCheckSlot))
+            {
+                fromSlot = null;
+                GameEventsManager.Instance.UIEvents.CancelRequestItemFromSeparateInventory();
+                return;
+            }
+
             Item swapItem = null;
             if (fromSlot is EquipmentSlotUI)
             {
@@ -102,6 +111,13 @@ public class InventoryUI : MonoBehaviour
             GameEventsManager.Instance.UIEvents.MoveItemToSeparateInventory(swapItem, this is PlayerInventoryUI ? false : true, swapItemsBothWays);
         }
     }
+
+    public virtual void OnCancelRequestItemFromSeparateInventory()
+    {
+        fromSlot = null;
+        toSlot = null;
+    }
+
 
     protected virtual void SetUp()
     {
@@ -132,7 +148,7 @@ public class InventoryUI : MonoBehaviour
         this.toSlot = slot;
         if (fromSlot == null)
         {
-            GameEventsManager.Instance.UIEvents.RequestItemFromSeparateInventory(slot.itemSO == null ? false : true);
+            GameEventsManager.Instance.UIEvents.RequestItemFromSeparateInventory(slot.itemSO == null ? false : true, toSlot);
         }
         else
         {
@@ -165,7 +181,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    protected virtual bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
+    public static bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
     {
         if (fromSlot == null || toSlot == null || fromSlot.itemSO == null)
         {

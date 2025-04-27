@@ -27,6 +27,9 @@ public class UIEvents
     public event Action<Item, bool, bool> onMoveItemToSeparateInventory;
     public void MoveItemToSeparateInventory(Item item, bool toPlayer, bool swapItemsBothWays) => onMoveItemToSeparateInventory?.Invoke(item, toPlayer, swapItemsBothWays);
     
-    public event Action<bool> onRequestItemFromSeparateInventory;
-    public void RequestItemFromSeparateInventory(bool swapItemsBothWays) => onRequestItemFromSeparateInventory?.Invoke(swapItemsBothWays);
+    public event Action<bool, InventorySlot> onRequestItemFromSeparateInventory;
+    public void RequestItemFromSeparateInventory(bool swapItemsBothWays, InventorySlot swapCheckSlot) => onRequestItemFromSeparateInventory?.Invoke(swapItemsBothWays, swapCheckSlot);
+    
+    public event Action onCancelRequestItemFromSeparateInventory;
+    public void CancelRequestItemFromSeparateInventory() => onCancelRequestItemFromSeparateInventory?.Invoke();
 }

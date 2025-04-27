@@ -122,7 +122,7 @@ public class PlayerInventoryUI : InventoryUI
         }
     }
 
-    protected override bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
+    public static new bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)
     {
         if (fromSlot == null || toSlot == null || fromSlot.itemSO == null)
         {
