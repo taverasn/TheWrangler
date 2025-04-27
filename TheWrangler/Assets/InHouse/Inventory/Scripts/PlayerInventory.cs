@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using JUTPS.CharacterBrain;
 using Unity.Entities.UniversalDelegates;
 using Unity.VisualScripting;
@@ -240,5 +241,35 @@ public class PlayerInventory : Inventory
 
         equipment[oldSlot] = itemExistingInNewSpot;
         equipment[newSlot] = itemToMove;
+    }
+
+    public override void LoadData(GameData data)
+    {
+        base.LoadData(data);
+
+        // Create the quest map
+        Dictionary<int, string> allItems = data.equipments.ContainsKey(uniqueId) ? data.equipments[uniqueId] : new SerializableDictionary<int, string>();
+        foreach (KeyValuePair<int, string> itemPair in allItems)
+        {
+            equipment[(EquipmentSlot)itemPair.Key] = LoadItem(itemPair.Value);
+        }
+    }
+
+    public override void SaveData(GameData data)
+    {
+        base.SaveData(data);
+
+        SerializableDictionary<int, string> serializedItemDictionary = new SerializableDictionary<int, string>();
+
+        foreach (KeyValuePair<EquipmentSlot, Item> itemPair in equipment)
+        {
+            serializedItemDictionary.Add((int)itemPair.Key, SerializedItemString(itemPair.Value));
+        }
+
+        if (data.equipments.ContainsKey(uniqueId))
+        {
+            data.equipments.Remove(uniqueId);
+        }
+        data.equipments.Add(uniqueId, serializedItemDictionary);
     }
 }

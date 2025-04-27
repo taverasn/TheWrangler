@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 public class Inventory : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private string uniqueId = Guid.NewGuid().ToString();
+    [field:SerializeField] protected string uniqueId = Guid.NewGuid().ToString();
     private bool loadInventoryState;
 
     [field: SerializeField] public int size { get; protected set; } = 30;
@@ -159,7 +159,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
         return parsed ? result : -1;
     }
 
-    public void LoadData(GameData data)
+    public virtual void LoadData(GameData data)
     {
         // Create the quest map
         Dictionary<int, string> allItems = data.inventories.ContainsKey(uniqueId) ? data.inventories[uniqueId] : new SerializableDictionary<int, string>();
@@ -169,7 +169,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void SaveData(GameData data)
+    public virtual void SaveData(GameData data)
     {
         SerializableDictionary<int, string> serializedItemDictionary = new SerializableDictionary<int, string>();
 
@@ -185,7 +185,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
         data.inventories.Add(uniqueId, serializedItemDictionary);
     }
 
-    private string SerializedItemString(Item item)
+    protected string SerializedItemString(Item item)
     {
         string serializedData = "";
         try
@@ -204,7 +204,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
         return serializedData;
     }
 
-    private Item LoadItem(string serializedData)
+    protected Item LoadItem(string serializedData)
     {
         Item item = null;
         try

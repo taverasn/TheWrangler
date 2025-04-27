@@ -12,6 +12,7 @@ public class GameData
     public SerializableDictionary<string, string> territories;
 
     public SerializableDictionary<string, SerializableDictionary<int, string>> inventories;
+    public SerializableDictionary<string, SerializableDictionary<int, string>> equipments;
 
     public GameData()
     {
@@ -19,5 +20,6 @@ public class GameData
 
         territories = new SerializableDictionary<string, string>();
         inventories = new SerializableDictionary<string, SerializableDictionary<int, string>>();
+        equipments = new SerializableDictionary<string, SerializableDictionary<int, string>>();
     }
 }

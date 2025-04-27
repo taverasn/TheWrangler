@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6360b16fa0279242b4d22e8228d8112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSO: {fileID: 11400000, guid: a988e43e7b9e68c4db970be76485eac4, type: 2}
+  itemSO: {fileID: 11400000, guid: ba6522d5beed57049b6c8d459697d284, type: 2}
   popupText: {fileID: 1828450841}
   amount: 1
 --- !u!4 &242879261
@@ -5532,6 +5532,11 @@ PrefabInstance:
         type: 3}
       propertyPath: initializeDataIfNull
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259314799512875591, guid: 86290f393d5fee34580e30e6e326e02b,
+        type: 3}
+      propertyPath: overrideSelectedProfileId
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8972500447553706507, guid: 86290f393d5fee34580e30e6e326e02b,
         type: 3}
