@@ -307,7 +307,7 @@ MonoBehaviour:
   FireModeCrouchSpeed: 0.5
   IKPositionRightHand: {fileID: 0}
   IKPositionLeftHand: {fileID: 0}
-  HumanoidSpine: {fileID: 0}
+  HumanoidSpine: {fileID: 1767694034360423559}
   RightFootBone: {fileID: 0}
   LeftFootBone: {fileID: 0}
   LeftHandWeightIK: 0
@@ -580,6 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c904695c0c7974e9584f32dc3e083a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JUCharacter: {fileID: 0}
   <size>k__BackingField: 30
 --- !u!114 &3572920740921087462
 MonoBehaviour:

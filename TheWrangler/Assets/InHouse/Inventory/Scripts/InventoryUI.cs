@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JUTPS.CameraSystems;
 using JUTPS.InventorySystem;
 using JUTPS.JUInputSystem;
 using NUnit.Framework;
@@ -59,7 +60,9 @@ public class InventoryUI : MonoBehaviour
     public void OnOpenInventory(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         OnInventoryUpdated();
+        JUCameraController.LockMouse(toggleUI.activeSelf, toggleUI.activeSelf);
         toggleUI.SetActive(!toggleUI.activeSelf);
+
     }
 
     public void SetFromSlot(InventorySlot slot)

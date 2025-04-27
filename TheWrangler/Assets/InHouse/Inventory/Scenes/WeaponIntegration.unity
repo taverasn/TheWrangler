@@ -3021,12 +3021,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &1379158139 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1767694034360423559, guid: d16f909d6c506064a9bea4f2a0535905,
-    type: 3}
-  m_PrefabInstance: {fileID: 496941069700755160}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1384254463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6124,11 +6118,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1877305804410711894, guid: d16f909d6c506064a9bea4f2a0535905,
-        type: 3}
-      propertyPath: HumanoidSpine
-      value: 
-      objectReference: {fileID: 1379158139}
     - target: {fileID: 8214371727048956249, guid: d16f909d6c506064a9bea4f2a0535905,
         type: 3}
       propertyPath: m_LocalPosition.x
