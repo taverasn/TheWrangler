@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Shield
   displayName: Shield
-  equipmentSlots: 06000000
-  equipmentType: 6
+  equipmentSlot: 6
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  stackable: 0
+  maxAmount: 300

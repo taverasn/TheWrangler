@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Helmet
   displayName: Helmet
-  equipmentSlots: 01000000
-  equipmentType: 1
+  equipmentSlot: 1
   icon: {fileID: 0}
   prefab: {fileID: 1262996259358930, guid: 7dea907e69fa1db4888c36ce5482a775, type: 3}
   stackable: 0
+  maxAmount: 300

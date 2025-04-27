@@ -703,7 +703,7 @@ namespace JUTPS.JUInputSystem
 			else
 			{
 				GetJUInputInstance();
-				JUInputInstance = GameObject.FindObjectOfType<JUInputManager>();
+				JUInputInstance = GameObject.FindFirstObjectByType<JUInputManager>();
 				return JUInputInstance;
 			}
 		}

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Boots
   displayName: Boots
-  equipmentSlots: 04000000
-  equipmentType: 4
+  equipmentSlot: 4
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  stackable: 0
+  maxAmount: 300

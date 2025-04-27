@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: HRifle
   displayName: HRifle
-  equipmentSlots: 0500000007000000
-  equipmentType: 5
+  equipmentSlot: 5
   icon: {fileID: 0}
   prefab: {fileID: 2645065289032192637, guid: fcd1cfebb1be62e4c8b76c66ad8bde8d, type: 3}
   stackable: 0
+  maxAmount: 300

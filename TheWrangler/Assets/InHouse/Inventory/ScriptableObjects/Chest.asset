@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Chest
   displayName: Chest
-  equipmentSlots: 02000000
-  equipmentType: 2
+  equipmentSlot: 2
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  stackable: 0
+  maxAmount: 300

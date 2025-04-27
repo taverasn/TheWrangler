@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Leggings
   displayName: Leggings
-  equipmentSlots: 03000000
-  equipmentType: 3
+  equipmentSlot: 3
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  stackable: 0
+  maxAmount: 300

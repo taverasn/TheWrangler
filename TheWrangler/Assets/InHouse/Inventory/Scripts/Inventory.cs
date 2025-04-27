@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JUTPS.CharacterBrain;
+using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -44,6 +45,7 @@ public class Inventory : MonoBehaviour
     public event Action<PhysicalItem, EquipmentSlot> onPhysicalItemEquipped;
     public void PhysicalItemEquipped(PhysicalItem item, EquipmentSlot slot) => onPhysicalItemEquipped?.Invoke(item, slot);
 
+    private int lastHotBarSlot = 0;
 
     public void Awake()
     {
@@ -58,6 +60,7 @@ public class Inventory : MonoBehaviour
         {
             if (slot == EquipmentSlot.NONE) continue;
             equipment[slot] = null;
+            if (slot == EquipmentSlot.FEET) break;
         }
     }
 
@@ -78,7 +81,7 @@ public class Inventory : MonoBehaviour
 
     public string GetSequentialSlotItemID(HotBarSlot sequentialSlot)
     {
-        return items[(int)sequentialSlot]?.info == null ? "" : items[(int)sequentialSlot].info.ID;
+        return items[(int)sequentialSlot]?.info == null ? ((int)sequentialSlot).ToString() : items[(int)sequentialSlot].info.ID;
     }
 
     private void OnPhysicalItemEquipped(PhysicalItem item, EquipmentSlot slot)
@@ -117,19 +120,46 @@ public class Inventory : MonoBehaviour
 
     public void Equip(string ID, bool equip = true)
     {
-        if (ID == "")
+        int slot = SafeParse(ID);
+
+        if (ID == "" || slot != -1)
         {
             ItemInRightHand = null;
             ItemInLeftHand = null;
+
+            if (slot != -1)
+            {
+                HotBarEquip((HotBarSlot)slot);
+                return;
+            }
         }
 
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i]?.info.ID == ID)
             {
-                Equip(items[i].info.equipmentSlot, i, equip);
+                if (i < HOT_BAR_SIZE)
+                {
+                    HotBarEquip((HotBarSlot)i);
+                    break;
+                }
+                else
+                {
+                    Equip(items[i].info.equipmentSlot, i, equip);
+                    break;
+                }
             }
         }
+    }
+
+    public void HotBarEquip(HotBarSlot slot, bool equip = true)
+    {
+        Item equipItem = items[(int)slot];
+        Item unequipItem = lastHotBarSlot == -1 ? null : items[lastHotBarSlot];
+
+        lastHotBarSlot = (int)slot;
+        ItemEquipped(unequipItem, false);
+        ItemEquipped(equipItem, true);
     }
 
     public void Equip(EquipmentSlot slot, int position = -1, bool equip = true)
@@ -258,6 +288,17 @@ public class Inventory : MonoBehaviour
             items[oldPosition] = toItem;
             items[newPosition] = fromItem;
         }
+
+        if (oldPosition == lastHotBarSlot)
+        {
+            JUCharacter.SwitchToItem("");
+            ItemEquipped(fromItem, false);
+        }
+        
+        if (newPosition == lastHotBarSlot)
+        {
+            JUCharacter.SwitchToItem(newPosition.ToString());
+        }
     }
     
     public void MoveEquipment(EquipmentSlot oldSlot, EquipmentSlot newSlot)
@@ -267,5 +308,12 @@ public class Inventory : MonoBehaviour
 
         equipment[oldSlot] = itemExistingInNewSpot;
         equipment[newSlot] = itemToMove;
+    }
+
+    public static int SafeParse(string input)
+    {
+        bool parsed = int.TryParse(input, out int result);
+
+        return parsed ? result : -1;
     }
 }

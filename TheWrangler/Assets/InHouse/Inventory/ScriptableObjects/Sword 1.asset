@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Sword1
   displayName: Sword1
-  equipmentSlots: 0500000007000000
-  equipmentType: 5
+  equipmentSlot: 5
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  stackable: 0
+  maxAmount: 300

@@ -213,7 +213,7 @@ namespace JUTPS.ItemSystem
             }
             else
             {
-                JuTPSCharacter.SwitchToItem("");
+                JuTPSCharacter.SwitchToItem(SwitchID);
             }
         }
 

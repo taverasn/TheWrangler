@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: AR
   displayName: AR
-  equipmentSlots: 05000000
-  equipmentType: 5
+  equipmentSlot: 5
   icon: {fileID: 0}
   prefab: {fileID: 7775854071164961478, guid: 0504f9fcf69bcf445a553eb8b725f49d, type: 3}
   stackable: 0

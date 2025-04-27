@@ -2172,6 +2172,8 @@ namespace JUTPS.CharacterBrain
             //Switch
             if (!alreadyEquipped)
             {
+                LeftHandIKPositionTarget.SetParent(this.transform);
+                IKPositionLeftHand.SetParent(this.transform);
                 Inventory.Equip(ID);
             }
 
