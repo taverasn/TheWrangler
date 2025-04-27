@@ -21,7 +21,6 @@ namespace JUTPS.ArmorSystem
         void Awake()
         {
             MaxHealth = Health;
-            MaxItemQuantity = 1;
             foreach (DamageableBodyPart dmg in DamageablesToProtect)
             {
                 if (dmg != null)

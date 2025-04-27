@@ -108,7 +108,7 @@ namespace JUTPS.InventorySystem.UI
             else
             {
                 item = inventory.GetSequentialSlotItem(SequentialToDraw);
-                ItemIDToDraw = JUInventory.GetGlobalItemSwitchID(item, inventory);
+                ItemIDToDraw = -1;
             }
             return item;
         }

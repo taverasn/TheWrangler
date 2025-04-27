@@ -6,6 +6,8 @@ using JUTPS.PhysicsScripts;
 using JUTPS.CharacterBrain;
 using JUTPS.ExtendedInverseKinematics;
 using JUTPS.JUInputSystem;
+using JUTPS.InventorySystem;
+using System.Linq;
 
 namespace JUTPS
 {
@@ -34,6 +36,7 @@ namespace JUTPS
         public float PhysicalDamageMultiplier = 0.8f;
         public float RagdollStartAtDamage = 10;
         public string[] PhysicalDamageIgnoreTags = new string[] { "Player", "Enemy", "Bones", "Wall", "Bullet" };
+
         void FixedUpdate()
         {
             if (IsDead == true || DisableAllMove == true || JUPauseGame.IsPaused) { return; }
@@ -261,7 +264,7 @@ namespace JUTPS
             //All Items Using. Tags: Weapon, Melee, Gun, Shot, Reload, Aim
             if (Inventory != null)
             {
-                DefaultUseOfAllItems(ShotInput, ShotInputDown, Inventory.IsPickingItem ? false : ReloadInput, AimInput, AimInputDown, EnablePunchAttacks ? ShotInputDown : false);
+                DefaultUseOfAllItems(ShotInput, ShotInputDown, ReloadInput, AimInput, AimInputDown, EnablePunchAttacks ? ShotInputDown : false);
             }
             else
             {
@@ -603,7 +606,7 @@ namespace JUTPS
                 CurrentItemIDRightHand = Inventory.CurrentRightHandItemID;
                 CurrentItemIDLeftHand = Inventory.CurrentLeftHandItemID;
 
-                IsItemEquiped = Inventory.IsItemSelected;
+                IsItemEquiped = Inventory.IsItemEquipped;
             }
             //Weapon Control
             if (IsItemEquiped)
@@ -637,7 +640,7 @@ namespace JUTPS
             }
 
             //If is Armed
-            if (CurrentItemIDRightHand == -1 && CurrentItemIDLeftHand == -1)
+            if (CurrentItemIDRightHand == "" && CurrentItemIDLeftHand == "")
             {
                 IsItemEquiped = false;
             }

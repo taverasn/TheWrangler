@@ -1,21 +1,53 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JUTPS.CharacterBrain;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum HotBarSlot { 
+    first = 0, 
+    second = 1, 
+    third = 2, 
+    fourth = 3, 
+    fifth = 4, 
+    sixth = 5, 
+    seventh = 6, 
+    eighth = 7, 
+    ninth = 8, 
+    tenth = 9 }
+
 public class Inventory : MonoBehaviour
 {
+    public const int HOT_BAR_SIZE = 10;
+    [SerializeField] private JUTPS.CharacterBrain.JUCharacterBrain JUCharacter;
     [field: SerializeField] public int size { get; private set; } = 30;
     public Item[] items { get; private set; }
     public Dictionary<EquipmentSlot, Item> equipment { get; private set; }
+    public Item[] mainHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.MAIN_HAND)).ToArray();
+    public Item[] offHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.OFF_HAND)).ToArray();
+    public Item[] bothHandItems => items.Where(i => i?.info != null && i.info.equipmentSlots.Contains(EquipmentSlot.BOTH_HAND)).ToArray();
+
+    public PhysicalItem ItemInRightHand { get; private set; }
+    public PhysicalItem ItemInLeftHand { get; private set; }
+
+    public bool IsItemEquipped => ItemInLeftHand || ItemInRightHand;
+    public bool IsDualWielding => ItemInLeftHand && ItemInRightHand;
+    
+    public string CurrentRightHandItemID => ItemInRightHand == null ? "" : ItemInRightHand.itemSO.ID;
+    public string CurrentLeftHandItemID => ItemInLeftHand == null ? "" : ItemInLeftHand.itemSO.ID;
+
 
     public event Action<Item, bool> onItemEquipped;
     public void ItemEquipped(Item item, bool equipped) => onItemEquipped?.Invoke(item, equipped);
+    
+    public event Action<PhysicalItem, EquipmentSlot> onPhysicalItemEquipped;
+    public void PhysicalItemEquipped(PhysicalItem item, EquipmentSlot slot) => onPhysicalItemEquipped?.Invoke(item, slot);
+
 
     public void Awake()
     {
-        items = new Item[size];
+        items = new Item[size + HOT_BAR_SIZE];
         for (int i = 0; i < items.Length; i++)
         {
             items[i] = null;
@@ -24,7 +56,40 @@ public class Inventory : MonoBehaviour
         equipment = new Dictionary<EquipmentSlot, Item>();
         foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
         {
+            if (slot == EquipmentSlot.NONE) continue;
             equipment[slot] = null;
+        }
+    }
+
+    private void Start()
+    {
+        JUCharacter = GetComponent<JUCharacterBrain>();
+    }
+
+    private void OnEnable()
+    {
+        onPhysicalItemEquipped += OnPhysicalItemEquipped;
+    }
+
+    private void OnDisable()
+    {
+        onPhysicalItemEquipped -= OnPhysicalItemEquipped;
+    }
+
+    public string GetSequentialSlotItemID(HotBarSlot sequentialSlot)
+    {
+        return items[(int)sequentialSlot]?.info == null ? "" : items[(int)sequentialSlot].info.ID;
+    }
+
+    private void OnPhysicalItemEquipped(PhysicalItem item, EquipmentSlot slot)
+    {
+        if (slot == EquipmentSlot.MAIN_HAND)
+        {
+            ItemInRightHand = item;
+        }
+        else if (slot == EquipmentSlot.OFF_HAND)
+        {
+            ItemInLeftHand = item;
         }
     }
 
@@ -32,22 +97,7 @@ public class Inventory : MonoBehaviour
     {
         if (position == -1)
         {
-            Item compareItem = items.FirstOrDefault(i => i?.info == item.info);
-            if (compareItem?.info != null && item.info.stackable)
-            {
-                position = Array.IndexOf(items, compareItem);
-            }
-            else
-            {
-                for (int i = 0; i < items.Length; i++)
-                {
-                    if (items[i]?.info == null)
-                    {
-                        position = i;
-                        break;
-                    }
-                }
-            }
+            position = GetFirstOpenSlot(item);
         }
 
         if (items[position]?.info == null)
@@ -65,8 +115,30 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public (Item, Item) Equip(EquipmentSlot slot, int position, bool equip = true)
+    public void Equip(string ID, bool equip = true)
     {
+        if (ID == "")
+        {
+            ItemInRightHand = null;
+            ItemInLeftHand = null;
+        }
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i]?.info.ID == ID)
+            {
+                Equip(items[i].info.equipmentSlots.First(), i, equip);
+            }
+        }
+    }
+
+    public void Equip(EquipmentSlot slot, int position = -1, bool equip = true)
+    {
+        if (position == -1)
+        {
+            position = GetFirstOpenSlot();
+        }
+        
         Item equipItem = items[position];
         Item unequipItem = null;
 
@@ -77,15 +149,59 @@ public class Inventory : MonoBehaviour
 
         ItemEquipped(unequipItem, false);
         ItemEquipped(equipItem, true);
+    }
 
-        if (equip)
+    private int GetFirstOpenSlot(Item item = null)
+    {
+        int position = HOT_BAR_SIZE;
+        Item compareItem = items.FirstOrDefault(i => i?.info == item.info);
+        if (compareItem?.info != null && item.info.stackable)
         {
-            return (unequipItem, equipItem);
+            position = Array.IndexOf(items, compareItem);
         }
         else
         {
-            return (equipItem, unequipItem);
+            for (int i = HOT_BAR_SIZE; i < items.Length; i++)
+            {
+                if (items[i]?.info == null)
+                {
+                    position = i;
+                    break;
+                }
+            }
         }
+        return position;
+    }
+
+    public string GetNextEquippableWeapon(string ID)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i]?.info.ID == ID)
+            {
+                if ((i + 1) < (items.Length - 1))
+                {
+                    return items[i+1].info.ID;
+                }
+            }
+        }
+
+        return "";
+    }
+    public string GetPreviousEquippableWeapon(string ID)
+    {
+        for (int i = items.Length-1; i >= 0; i--)
+        {
+            if (items[i]?.info.ID == ID)
+            {
+                if ((i - 1) > 0)
+                {
+                    return items[i-1].info.ID;
+                }
+            }
+        }
+
+        return "";
     }
 
     public void RemoveItem(ItemSO itemSO, int amount)
@@ -123,7 +239,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public (Item, Item) MoveItem(int oldPosition, int newPosition)
+    public void MoveItem(int oldPosition, int newPosition)
     {
         Item toItem = items[newPosition];
         Item fromItem = items[oldPosition];
@@ -142,18 +258,14 @@ public class Inventory : MonoBehaviour
             items[oldPosition] = toItem;
             items[newPosition] = fromItem;
         }
-
-        return (toItem, fromItem);
     }
     
-    public (Item, Item) MoveEquipment(EquipmentSlot oldSlot, EquipmentSlot newSlot)
+    public void MoveEquipment(EquipmentSlot oldSlot, EquipmentSlot newSlot)
     {
         Item itemExistingInNewSpot = equipment[newSlot];
         Item itemToMove = equipment[oldSlot];
 
         equipment[oldSlot] = itemExistingInNewSpot;
         equipment[newSlot] = itemToMove;
-
-        return (itemExistingInNewSpot, itemToMove);
     }
 }

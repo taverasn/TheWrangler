@@ -122,11 +122,6 @@ namespace JUTPS.CrossPlataform
         //Update Buttons On Screen View
         private void UpdateMobileButtons()
         {
-            if (PickItemButton != null)
-            {
-                PickItemButton.gameObject.SetActive(JUGameManager.PlayerController.Inventory != null ? JUGameManager.PlayerController.Inventory.ItemToPickUp : false);
-            }
-
             if (ReloadButton != null) ReloadButton.gameObject.SetActive((JUGameManager.PlayerController.WeaponInUseRightHand != null ||
                                                JUGameManager.PlayerController.WeaponInUseLeftHand != null) ? true : false);
 

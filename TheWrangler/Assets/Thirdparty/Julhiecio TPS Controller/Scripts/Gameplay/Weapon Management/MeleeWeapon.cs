@@ -32,8 +32,8 @@ namespace JUTPS.WeaponSystem
                 {
                     if (ItemQuantity > 0 || Unlocked == true)
                     {
-                        JUInventory inventory = GetComponentInParent<JUInventory>();
-                        inventory.UnequipItem(JUInventory.GetGlobalItemSwitchID(this, inventory));
+                        Inventory inventory = GetComponentInParent<Inventory>();
+                        inventory.Equip(ItemSwitchID, false);
 
                         RemoveItem();
                     }

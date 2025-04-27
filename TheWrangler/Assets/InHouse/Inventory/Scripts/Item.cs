@@ -5,6 +5,7 @@ public class Item
 {
     public int amount { get; set; }
     public ItemSO info { get; set; }
+    public HotBarSlot hotBarSlot;
 
     public Item(int amount, ItemSO info)
     {

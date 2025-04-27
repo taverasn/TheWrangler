@@ -13,6 +13,7 @@ public class ItemSO : ScriptableObject
     public Sprite icon;
     public GameObject prefab;
     public bool stackable;
+    public int maxAmount = 300;
 }
 
 public enum EquipmentSlot
@@ -24,7 +25,6 @@ public enum EquipmentSlot
     FEET,
     MAIN_HAND,
     OFF_HAND,
-    SECONDARY,
     BOTH_HAND
 }
 
@@ -35,6 +35,6 @@ public enum EquipmentType
     CHEST,
     LEGS,
     FEET,
-    WEAPON,
+    MAIN_HAND,
     OFF_HAND
 }

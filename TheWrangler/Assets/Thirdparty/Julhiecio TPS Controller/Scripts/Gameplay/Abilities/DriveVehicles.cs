@@ -572,7 +572,7 @@ namespace JUTPS.ActionScripts
             TPSCharacter.IsGrounded = false;
             TPSCharacter.VelocityMultiplier = 0;
 
-            TPSCharacter.SwitchToItem(-1);
+            TPSCharacter.SwitchToItem("");
             TPSCharacter.DisableLocomotion();
 
             // Disable physics.

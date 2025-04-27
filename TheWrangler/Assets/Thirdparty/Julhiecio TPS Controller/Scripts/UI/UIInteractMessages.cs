@@ -83,19 +83,6 @@ namespace JUTPS.UI
                     return;
                 }
             }
-
-            // >> Item Message
-            PickUpMessageObject.SetActive(JUGameManager.PlayerController.Inventory.ItemToPickUp != null);
-
-            if (PickUpMessageObject.activeInHierarchy && SetMessagePositionToItemPosition)
-            {
-                UIElementToWorldPosition.SetUIWorldPosition(PickUpMessageObject, JUGameManager.PlayerController.Inventory.ItemToPickUp.transform.position, Offset);
-            }
-
-            if (ShowItemNameOnText && WarningText && JUGameManager.PlayerController.Inventory.ItemToPickUp != null)
-            {
-                WarningText.text = PickUpLabelText + JUGameManager.PlayerController.Inventory.ItemToPickUp.ItemName;
-            }
         }
     }
 }

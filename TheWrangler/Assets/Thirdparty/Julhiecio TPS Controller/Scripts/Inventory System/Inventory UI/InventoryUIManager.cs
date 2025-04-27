@@ -250,7 +250,7 @@ namespace JUTPS.InventorySystem.UI
                 InventorySlotUI emptySlot = GetFirstEmptySlot(inventory.Slots);
                 if (emptySlot == null) return;
                 //EMPTY IS NO LONGER EMPTY
-                emptySlot.ItemIDToDraw = JUInventory.GetGlobalItemSwitchID(item, inventory.TargetInventory);
+                emptySlot.ItemIDToDraw = -1;
                 emptySlot.RefreshSlot();
                 emptySlot.IsEmpty = false;
             }

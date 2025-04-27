@@ -7,14 +7,14 @@ public class InventorySlot : MonoBehaviour
 {
     protected InventoryUI inventoryUI;
     public ItemSO itemSO { get; private set; }
-    public int index { get; private set; }
+    public int index { get; protected set; }
     [field:SerializeField] protected Image image { get; private set; }
     [field:SerializeField] protected TextMeshProUGUI text { get; private set; }
     [field:SerializeField] protected TextMeshProUGUI amountText { get; private set; }
 
-    private void Start()
+    public virtual void Start()
     {
-        inventoryUI = transform.parent.parent.GetComponent<InventoryUI>();
+        inventoryUI = transform.parent.parent.parent.GetComponent<InventoryUI>();
     }
 
     public void Initialize(int index, Item item)

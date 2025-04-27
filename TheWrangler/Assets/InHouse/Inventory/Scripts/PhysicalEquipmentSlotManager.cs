@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     {
         inventory = GetComponent<Inventory>();
         slots[EquipmentType.HEAD] = HeadSlot;
-        slots[EquipmentType.WEAPON] = WeaponSlot;
+        slots[EquipmentType.MAIN_HAND] = WeaponSlot;
     }
 
     private void OnEnable()
@@ -40,6 +41,8 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
         {
             Transform equipmentTransform = Instantiate(item.info.prefab).transform;
             equipmentTransform.SetParent(slots[item.info.equipmentType], false);
+
+            inventory.PhysicalItemEquipped(equipmentTransform.gameObject.GetComponent<PhysicalItem>(), item.info.equipmentSlots.First());
         }
     }
 

@@ -1,27 +1,65 @@
+using System.Collections.Generic;
+using System.Linq;
+using JUTPS.InventorySystem;
+using JUTPS.JUInputSystem;
 using NUnit.Framework;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private Inventory inventory;
+    [SerializeField] private JUTPS.CharacterBrain.JUCharacterBrain JUCharacter;
+    [SerializeField] private GameObject toggleUI;
     [SerializeField] private GameObject inventorySlotsParent;
     [SerializeField] private GameObject equipmentSlotsParent;
+    [SerializeField] private GameObject hotbarSlotsParent;
     [SerializeField] private InventorySlot inventorySlotPrefab;
+    private List<InventorySlot> inventorySlots = new List<InventorySlot>();
+    private Dictionary<EquipmentSlot, EquipmentSlotUI> equipmentSlots = new Dictionary<EquipmentSlot, EquipmentSlotUI>();
+    private Dictionary<HotBarSlot, HotBarSlotUI> hotbarSlots = new Dictionary<HotBarSlot, HotBarSlotUI>();
 
     private InventorySlot fromSlot;
     private InventorySlot toSlot;
 
+    private JUTPSInputControlls _inputs;
+
     private void Start()
     {
-        if (inventory != null)
+        if (JUCharacter.Inventory != null)
         {
-            for (int i = 0; i < inventory.size; i++)
+            for (int i = Inventory.HOT_BAR_SIZE; i < JUCharacter.Inventory.items.Length; i++)
             {
                 InventorySlot slot = Instantiate(inventorySlotPrefab);
                 slot.transform.SetParent(inventorySlotsParent.transform, false);
-                slot.Initialize(i, inventory.items[i]);
+                slot.Initialize(i, JUCharacter.Inventory.items[i]);
+                inventorySlots.Add(slot);
             }
         }
+
+        foreach (EquipmentSlotUI slot in equipmentSlotsParent.GetComponentsInChildren<EquipmentSlotUI>().ToList())
+        {
+            equipmentSlots[slot.slot] = slot;
+        }
+        foreach (HotBarSlotUI slot in hotbarSlotsParent.GetComponentsInChildren<HotBarSlotUI>().ToList())
+        {
+            hotbarSlots[slot.slot] = slot;
+        }
+    }
+
+    private void OnEnable()
+    {
+        _inputs = JUInput.Instance().InputActions;
+        _inputs.Player.OpenInventory.started += OnOpenInventory;
+    }
+
+    private void OnDisable()
+    {
+        _inputs.Player.OpenInventory.started -= OnOpenInventory;
+    }
+
+    public void OnOpenInventory(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        OnInventoryUpdated();
+        toggleUI.SetActive(!toggleUI.activeSelf);
     }
 
     public void SetFromSlot(InventorySlot slot)
@@ -45,34 +83,52 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        Item fromItem, toItem;
         EquipmentSlotUI equipmentSlot;
         EquipmentSlotUI equipmentSlot1;
 
         if (fromSlot.TryGetComponent(out equipmentSlot) && toSlot.TryGetComponent(out equipmentSlot1))
         {
-            (fromItem, toItem) = inventory.MoveEquipment(equipmentSlot.slot, equipmentSlot1.slot);
+            JUCharacter.Inventory.MoveEquipment(equipmentSlot.slot, equipmentSlot1.slot);
         }
         // If the toSlot is the equipmentSlot we call equip because we're moving something
         // to an equipment slot and vice versa for the fromSlot.
         else if (toSlot.TryGetComponent(out equipmentSlot))
         {
-            (fromItem, toItem) = inventory.Equip(equipmentSlot.slot, fromSlot.index);
-
-        } else if (fromSlot.TryGetComponent(out equipmentSlot))
+            JUCharacter.Inventory.Equip(equipmentSlot.slot, fromSlot.index);
+        } 
+        else if (fromSlot.TryGetComponent(out equipmentSlot))
         {
-            (fromItem, toItem) = inventory.Equip(equipmentSlot.slot, toSlot.index, false);
-        } else
-        {
-            (fromItem, toItem) = inventory.MoveItem(fromSlot.index, toSlot.index);
+            JUCharacter.Inventory.Equip(equipmentSlot.slot, toSlot.index, false);
         }
-
-
-        toSlot.SetItem(toItem);
-        fromSlot.SetItem(fromItem);
+        else
+        {
+            JUCharacter.Inventory.MoveItem(fromSlot.index, toSlot.index);
+        }
 
         fromSlot = null;
         toSlot = null;
+
+        OnInventoryUpdated();
+    }
+
+    private void OnInventoryUpdated()
+    {
+        for (int i = 0; i < JUCharacter.Inventory.items.Length; i++)
+        {
+            if (i < 10)
+            {
+                hotbarSlots[(HotBarSlot)i].SetItem(JUCharacter.Inventory.items[i]);
+            }
+            else
+            {
+                inventorySlots[i - Inventory.HOT_BAR_SIZE].SetItem(JUCharacter.Inventory.items[i]);
+            }
+        }        
+        
+        foreach (KeyValuePair<EquipmentSlot, Item> slotPair in JUCharacter.Inventory.equipment)
+        {
+            equipmentSlots[slotPair.Key].SetItem(slotPair.Value);
+        }
     }
 
     private bool CanSwap(InventorySlot fromSlot, InventorySlot toSlot)

@@ -146,7 +146,7 @@ namespace JUTPS
             PlayerController.ResetDefaultLayersWeight();
 
             if (PlayerController.HoldableItemInUseRightHand != null)
-                PlayerController.SwitchToItem(-1);
+                PlayerController.SwitchToItem("");
 
             if (UseDebugLogs)
                 Debug.Log("Player has respawned");
