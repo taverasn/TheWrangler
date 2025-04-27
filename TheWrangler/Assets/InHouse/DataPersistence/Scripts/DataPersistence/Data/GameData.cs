@@ -11,10 +11,13 @@ public class GameData
 
     public SerializableDictionary<string, string> territories;
 
+    public SerializableDictionary<string, SerializableDictionary<int, string>> inventories;
+
     public GameData()
     {
         version = 1;
 
         territories = new SerializableDictionary<string, string>();
+        inventories = new SerializableDictionary<string, SerializableDictionary<int, string>>();
     }
 }

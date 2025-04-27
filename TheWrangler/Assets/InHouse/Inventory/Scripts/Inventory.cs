@@ -7,8 +7,11 @@ using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UIElements;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private string uniqueId = Guid.NewGuid().ToString();
+    private bool loadInventoryState;
+
     [field: SerializeField] public int size { get; protected set; } = 30;
     public Item[] items { get; protected set; }
 
@@ -154,5 +157,77 @@ public class Inventory : MonoBehaviour
         bool parsed = int.TryParse(input, out int result);
 
         return parsed ? result : -1;
+    }
+
+    public void LoadData(GameData data)
+    {
+        // Create the quest map
+        Dictionary<int, string> allItems = data.inventories.ContainsKey(uniqueId) ? data.inventories[uniqueId] : new SerializableDictionary<int, string>();
+        foreach (KeyValuePair<int, string> itemPair in allItems)
+        {
+            items[itemPair.Key] = LoadItem(itemPair.Value);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        SerializableDictionary<int, string> serializedItemDictionary = new SerializableDictionary<int, string>();
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            serializedItemDictionary.Add(i, SerializedItemString(items[i]));
+        }
+
+        if (data.inventories.ContainsKey(uniqueId))
+        {
+            data.inventories.Remove(uniqueId);
+        }
+        data.inventories.Add(uniqueId, serializedItemDictionary);
+    }
+
+    private string SerializedItemString(Item item)
+    {
+        string serializedData = "";
+        try
+        {
+            if (item != null)
+            {
+                ItemData itemData = item.GetItemData();
+                // serialize using JsonUtility
+                serializedData = JsonUtility.ToJson(itemData);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to save item with id " + item.info.ID + ": " + e);
+        }
+        return serializedData;
+    }
+
+    private Item LoadItem(string serializedData)
+    {
+        Item item = null;
+        try
+        {
+            // load quest from saved data
+            if (!loadInventoryState)
+            {
+                if (serializedData == "")
+                {
+                    item = null;
+                }
+                else
+                {
+                    ItemData itemData = JsonUtility.FromJson<ItemData>(serializedData);
+                    ItemSO itemSO = GlobalInventoryManager.Instance.allItemSOs[itemData.ID];
+                    item = new Item(itemData.amount, itemSO);
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to load " + serializedData + ": " + e);
+        }
+        return item;
     }
 }

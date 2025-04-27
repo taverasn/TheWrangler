@@ -27,4 +27,9 @@ public class Item
     {
 
     }
+
+    public ItemData GetItemData()
+    {
+        return new ItemData(amount, info.ID);
+    }
 }
