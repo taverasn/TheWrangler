@@ -8,6 +8,7 @@ public class GameData
     public int version;
 
     public long lastUpdated;
+    public int lastHotBarSlot;
 
     public SerializableDictionary<string, string> territories;
 
@@ -21,5 +22,7 @@ public class GameData
         territories = new SerializableDictionary<string, string>();
         inventories = new SerializableDictionary<string, SerializableDictionary<int, string>>();
         equipments = new SerializableDictionary<string, SerializableDictionary<int, string>>();
+
+        lastHotBarSlot = 0;
     }
 }

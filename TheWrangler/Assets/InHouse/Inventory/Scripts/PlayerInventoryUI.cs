@@ -37,6 +37,8 @@ public class PlayerInventoryUI : InventoryUI
         {
             hotbarSlots[slot.slot] = slot;
         }
+
+        OnInventoryUpdated();
     }
 
     public override void OnEnable()

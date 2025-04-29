@@ -44,7 +44,7 @@ public class PlayerInventory : Inventory
     public event Action<PhysicalItem, EquipmentSlot> onPhysicalItemEquipped;
     public void PhysicalItemEquipped(PhysicalItem item, EquipmentSlot slot) => onPhysicalItemEquipped?.Invoke(item, slot);
 
-    private int lastHotBarSlot = 0;
+    public int lastHotBarSlot { get; private set; } = 0;
 
     public override void Awake()
     {
@@ -252,7 +252,13 @@ public class PlayerInventory : Inventory
         foreach (KeyValuePair<int, string> itemPair in allItems)
         {
             equipment[(EquipmentSlot)itemPair.Key] = LoadItem(itemPair.Value);
+
+            if (equipment[(EquipmentSlot)itemPair.Key] != null)
+            {
+                JUCharacter.SwitchToItem(equipment[(EquipmentSlot)itemPair.Key].info.ID);
+            }
         }
+        data.lastHotBarSlot = lastHotBarSlot;
     }
 
     public override void SaveData(GameData data)
@@ -271,5 +277,7 @@ public class PlayerInventory : Inventory
             data.equipments.Remove(uniqueId);
         }
         data.equipments.Add(uniqueId, serializedItemDictionary);
+
+        lastHotBarSlot = data.lastHotBarSlot;
     }
 }

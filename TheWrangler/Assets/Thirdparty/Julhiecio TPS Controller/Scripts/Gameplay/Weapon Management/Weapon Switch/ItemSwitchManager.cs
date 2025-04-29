@@ -53,6 +53,8 @@ namespace JUTPS.ItemSystem
                 Invoke(nameof(EquipStartItem), 0.2f);
             }
             IsPlayer = gameObject.tag == "Player";
+
+
         }
         protected virtual void Update()
         {
@@ -67,7 +69,7 @@ namespace JUTPS.ItemSystem
 
         private void EquipStartItem()
         {
-            JuTPSCharacter.SwitchToItem(ItemToEquipOnStart ? ItemToEquipOnStart.ID : "");
+            JuTPSCharacter.SwitchToItem(JuTPSCharacter.Inventory.items[JuTPSCharacter.Inventory.lastHotBarSlot]?.info.ID);
         }
         protected virtual void OldInput_ItemSwitchController()
         {

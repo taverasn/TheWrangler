@@ -128,6 +128,8 @@ public class InventoryUI : MonoBehaviour
             slot.Initialize(i, inventory.items[i]);
             inventorySlots.Add(slot);
         }
+
+        OnInventoryUpdated();
     }
 
     public void EnableUI()

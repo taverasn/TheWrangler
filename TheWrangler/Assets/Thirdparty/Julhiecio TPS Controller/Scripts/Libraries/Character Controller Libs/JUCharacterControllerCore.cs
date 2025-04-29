@@ -10,6 +10,7 @@ using JUTPS.ActionScripts;
 using JUTPS.PhysicsScripts;
 using JUTPS.WeaponSystem;
 using JUTPS.CameraSystems;
+using UnityEngine.TextCore.Text;
 
 //using JU_INPUT_SYSTEM;
 
