@@ -8,10 +8,10 @@ public class Interactable : MonoBehaviour, IInteractable
 {
     [SerializeField] private List<ItemSO> items;
     [SerializeField] private List<ItemSO> ingredients;
-    public PlayerInventory inventory { get; private set; }
+    public Inventory inventory { get; private set; }
     private void Start()
     {
-        inventory = GetComponent<PlayerInventory>();
+        inventory = GetComponent<Inventory>();
 
         int position = 0;
 

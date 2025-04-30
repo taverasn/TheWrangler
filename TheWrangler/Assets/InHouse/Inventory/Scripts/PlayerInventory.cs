@@ -65,7 +65,7 @@ public class PlayerInventory : Inventory
 
     public override void Start()
     {
-        JUCharacter = GetComponent<JUCharacterBrain>();
+        TryGetComponent<JUCharacterBrain>(out JUCharacter);
     }
 
     public override void OnEnable()
@@ -224,13 +224,13 @@ public class PlayerInventory : Inventory
 
         if (oldPosition == lastHotBarSlot)
         {
-            JUCharacter.SwitchToItem("");
+            JUCharacter?.SwitchToItem("");
             ItemEquipped(items[newPosition], false);
         }
         
         if (newPosition == lastHotBarSlot)
         {
-            JUCharacter.SwitchToItem(newPosition.ToString());
+            JUCharacter?.SwitchToItem(newPosition.ToString());
         }
     }
     
@@ -255,7 +255,7 @@ public class PlayerInventory : Inventory
 
             if (equipment[(EquipmentSlot)itemPair.Key] != null)
             {
-                JUCharacter.SwitchToItem(equipment[(EquipmentSlot)itemPair.Key].info.ID);
+                JUCharacter?.SwitchToItem(equipment[(EquipmentSlot)itemPair.Key].info.ID);
             }
         }
         data.lastHotBarSlot = lastHotBarSlot;

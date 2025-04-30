@@ -20,12 +20,21 @@ public class ItemCraft : State
         Item item = machine.craftingTable.CraftItem(machine.interactable.inventory, machine.craftableRecipes[UnityEngine.Random.Range(0, machine.craftableRecipes.Count)]);
         logger.Debug($"Crafted {item.info.ID}");
 
-        string msg = item.info.equipmentSlot == EquipmentSlot.NONE ? $"Added {item.info.ID} to Interactable Inventory" : $"Equipped {item.info.ID} to Companion";
+        string msg = "";
+
+        if (item.info.equipmentSlot == EquipmentSlot.NONE)
+        {
+            machine.inventory.Equip(item.info.ID);
+            msg = $"Equipped {item.info.ID} to Companion";
+        }
+        else
+        {
+            machine.interactable.inventory.AddItem(item);
+            msg = $"Added {item.info.ID} to Interactable Inventory";
+        }
 
         logger.Debug(msg);
 
-        machine.interactable.inventory.AddItem(item);
-        machine.interactable.inventory.Equip(item.info.ID);
         Transition<Idle>();
     }
 

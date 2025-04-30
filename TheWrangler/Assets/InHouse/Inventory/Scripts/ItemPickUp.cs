@@ -41,7 +41,7 @@ public class ItemPickUP : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.TryGetComponent<Inventory>(out inventory))
         {
             inventory = other.gameObject.GetComponent<Inventory>();
             popupText.gameObject.SetActive(true);
