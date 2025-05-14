@@ -1,4 +1,5 @@
 using EasyBuildSystem.Features.Runtime.Buildings.Part.Conditions;
+using Sirenix.Utilities;
 using UnityEngine;
 
 
@@ -16,7 +17,7 @@ public class BuildingItemCondition : BuildingCondition
     #region Internal Methods
     public override bool CheckPlacingCondition()
     {
-        return Recipe == null || inventory == null ? true : inventory.CanCraft(Recipe);
+        return Recipe == null || inventory == null ? true : inventory.CanCraft(Recipe).IsNullOrEmpty() ? false : true;
     }
     #endregion
 }

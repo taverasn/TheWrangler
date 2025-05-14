@@ -29,6 +29,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory += MoveItemToSeparateInventory;
         GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory += OnRequestItemFromSeparateInventory;
         GameEventsManager.Instance.UIEvents.onCancelRequestItemFromSeparateInventory += OnCancelRequestItemFromSeparateInventory;
+        inventory.onInventoryUpdated += OnInventoryUpdated;
     }
 
     public virtual void OnDisable()
@@ -36,6 +37,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.Instance.UIEvents.onMoveItemToSeparateInventory -= MoveItemToSeparateInventory;
         GameEventsManager.Instance.UIEvents.onRequestItemFromSeparateInventory -= OnRequestItemFromSeparateInventory;
         GameEventsManager.Instance.UIEvents.onCancelRequestItemFromSeparateInventory -= OnCancelRequestItemFromSeparateInventory;
+        inventory.onInventoryUpdated -= OnInventoryUpdated;
     }
 
     public virtual void MoveItemToSeparateInventory(Item item, bool toPlayer, bool swapItemsBothWays)
@@ -175,7 +177,7 @@ public class InventoryUI : MonoBehaviour
         OnInventoryUpdated();
     }
 
-    private void OnInventoryUpdated()
+    protected virtual void OnInventoryUpdated()
     {
         for (int i = 0; i < inventory.items.Length; i++)
         {

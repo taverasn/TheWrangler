@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  ID: Stone
+  <ID>k__BackingField: Stone
   displayName: Stone
-  equipmentSlots: 00000000
-  equipmentType: 0
-  icon: {fileID: 0}
+  equipmentSlot: 0
+  icon: {fileID: 21300000, guid: 2d4886129c99c5846a82e2bcfc77e2ed, type: 3}
   prefab: {fileID: 0}
   stackable: 1
+  maxAmount: 300

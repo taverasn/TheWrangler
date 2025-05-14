@@ -36,7 +36,7 @@ public class InventorySlot : MonoBehaviour
         else
         {
             itemSO = item.info;
-            if(amountText != null) amountText.text = item.amount == 1 ? "" : item.amount.ToString();
+            if(amountText != null) amountText.text = item.amount <= 1 ? "" : item.amount.ToString();
             image.sprite = item.info.icon;
             image.color = Color.white;
         }

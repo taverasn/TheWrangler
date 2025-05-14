@@ -14,6 +14,9 @@ public class Inventory : MonoBehaviour, IDataPersistence
 
     [field: SerializeField] public int size { get; protected set; } = 30;
     public Item[] items { get; protected set; }
+    public List<Item> combinedItemsList => items.Where(item => item != null && item?.info != null).GroupBy(item => item.info).Select(group => new Item(group.Sum(i => i.amount), group.Key)).ToList();
+    public event Action onInventoryUpdated;
+    public void InventoryUpdated() => onInventoryUpdated?.Invoke();
 
     public virtual void Awake()
     {
@@ -47,11 +50,12 @@ public class Inventory : MonoBehaviour, IDataPersistence
         {
             items[position].Add(item.amount);
         }
+        InventoryUpdated();
     }
 
     protected virtual int GetFirstOpenSlot(Item item = null, int startingPosition = 0)
     {
-        int position = startingPosition;
+        int position = -1;
         Item compareItem = items.FirstOrDefault(i => i?.info == item?.info);
         if (compareItem?.info != null && item.info.stackable)
         {
@@ -69,6 +73,28 @@ public class Inventory : MonoBehaviour, IDataPersistence
             }
         }
         return position;
+    }
+
+    public virtual bool CanAddItem(ItemSO itemSO)
+    {
+        bool canAdd = false;
+        Item compareItem = items.FirstOrDefault(i => i?.info == itemSO);
+        if (compareItem?.info != null && itemSO.stackable)
+        {
+            canAdd = true;
+        }
+        else
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i]?.info == null)
+                {
+                    canAdd = true;
+                    break;
+                }
+            }
+        }
+        return canAdd;
     }
 
     public void RemoveItem(ItemSO itemSO, int amount)
@@ -91,8 +117,9 @@ public class Inventory : MonoBehaviour, IDataPersistence
                 }
             }
         }
+        InventoryUpdated();
     }
-    
+
     public Item RemoveItem(int position, int amount, bool all = false)
     {
         Item item = null;
@@ -115,20 +142,27 @@ public class Inventory : MonoBehaviour, IDataPersistence
             }
         }
 
+        InventoryUpdated();
         return item;
     }
 
-    public bool CanCraft(RecipeSO recipe)
+    public List<Item> CanCraft(RecipeSO recipe)
     {
+        List<Item> ingredients = new List<Item>();
+
         foreach (KeyValuePair<ItemSO, int> pair in recipe.ingredients)
         {
-            if (!items.Any(i => i?.info == pair.Key && i.amount >= pair.Value))
+            if (!combinedItemsList.Any(i => i?.info == pair.Key && i.amount >= pair.Value))
             {
-                return false;
+                continue;
+            }
+            else
+            {
+                ingredients.Add(combinedItemsList.FirstOrDefault(i => i.info == pair.Key));
             }
         }
 
-        return true;
+        return ingredients;
     }
 
     public virtual void MoveItem(int oldPosition, int newPosition)
@@ -150,6 +184,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
             items[oldPosition] = toItem;
             items[newPosition] = fromItem;
         }
+        InventoryUpdated();
     }
 
     public static int SafeParse(string input)

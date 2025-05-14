@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: Sword 1
   m_EditorClassIdentifier: 
-  ID: Sword1
+  <ID>k__BackingField: Sword 1
   displayName: Sword1
   equipmentSlot: 5
   icon: {fileID: 0}

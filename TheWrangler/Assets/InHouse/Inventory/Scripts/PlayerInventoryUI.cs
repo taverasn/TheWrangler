@@ -104,7 +104,7 @@ public class PlayerInventoryUI : InventoryUI
         OnInventoryUpdated();
     }
 
-    private void OnInventoryUpdated()
+    protected override void OnInventoryUpdated()
     {
         for (int i = 0; i < inventory.items.Length; i++)
         {

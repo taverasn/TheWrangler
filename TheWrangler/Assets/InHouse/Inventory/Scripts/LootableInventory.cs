@@ -11,6 +11,7 @@ public class LootableInventory : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private InventoryUI InventoryUI;
+    [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private TextMeshProUGUI popupText;
     [ShowInInspector] public ItemAmountDictionary items;
     private JUTPSInputControlls _inputs;
@@ -40,6 +41,7 @@ public class LootableInventory : MonoBehaviour
         if (JUCharacter == null) return;
         GameEventsManager.Instance.UIEvents.OpenPlayerInventory();
         InventoryUI.EnableUI();
+        craftingTableUI.EnableUI();
     }
 
 

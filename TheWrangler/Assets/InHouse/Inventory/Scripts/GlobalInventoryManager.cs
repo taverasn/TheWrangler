@@ -5,6 +5,7 @@ public class GlobalInventoryManager : MonoBehaviour
 {
     public static GlobalInventoryManager Instance;
     public Dictionary<string, ItemSO> allItemSOs = new Dictionary<string, ItemSO>();
+    public Dictionary<string, RecipeSO> allRecipeSOs = new Dictionary<string, RecipeSO>();
 
     private void Awake()
     {
@@ -19,6 +20,12 @@ public class GlobalInventoryManager : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             allItemSOs[items[i].ID] = items[i];
+        }
+        
+        RecipeSO[] recipes = Resources.LoadAll<RecipeSO>("Recipes");
+        for (int i = 0; i < recipes.Length; i++)
+        {
+            allRecipeSOs[recipes[i].ID] = recipes[i];
         }
 
 

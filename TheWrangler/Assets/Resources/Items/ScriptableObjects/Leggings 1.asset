@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: Leggings 1
   m_EditorClassIdentifier: 
-  ID: Leggings1
+  <ID>k__BackingField: Leggings 1
   displayName: Leggings1
   equipmentSlot: 3
   icon: {fileID: 0}

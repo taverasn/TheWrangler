@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
-  ID: AR
+  <ID>k__BackingField: AR
   displayName: AR
   equipmentSlot: 5
   icon: {fileID: 21300000, guid: 50a15b2d2aacf744d8a754a2ef11da09, type: 3}

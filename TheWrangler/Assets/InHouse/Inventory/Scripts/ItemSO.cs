@@ -6,13 +6,21 @@ using UnityEngine;
 [Serializable]
 public class ItemSO : ScriptableObject
 {
-    public string ID;
+    [field: SerializeField] public string ID { get; private set; }
     public string displayName;
     public EquipmentSlot equipmentSlot;
     public Sprite icon;
     public GameObject prefab;
     public bool stackable;
     public int maxAmount = 300;
+
+    private void OnValidate()
+    {
+#if UNITY_EDITOR
+        ID = this.name;
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
+    }
 }
 
 public enum EquipmentSlot

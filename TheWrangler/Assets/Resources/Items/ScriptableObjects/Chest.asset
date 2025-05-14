@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: Chest
   m_EditorClassIdentifier: 
-  ID: Chest
+  <ID>k__BackingField: Chest
   displayName: Chest
   equipmentSlot: 2
   icon: {fileID: 0}

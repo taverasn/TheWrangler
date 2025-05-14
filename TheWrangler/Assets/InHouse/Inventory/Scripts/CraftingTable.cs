@@ -1,14 +1,23 @@
+using JUTPS.CharacterBrain;
+using JUTPS.JUInputSystem;
 using NUnit.Framework;
+using Sirenix.Utilities;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.TextCore.Text;
+using UnityEngine.Windows;
 
-public class CraftingTable
+public class CraftingTable : MonoBehaviour
 {
-    public List<RecipeSO> recipes = new List<RecipeSO>();
+    public List<RecipeSO> recipes {  get; private set; }
     private Logger logger;
 
-    public CraftingTable() 
+    private void Awake()
     {
         logger = LogManager.Instance.AddLogger("Crafting Table", LogLevel.INFO);
+        recipes = GlobalInventoryManager.Instance.allRecipeSOs.Values.ToList();
     }
 
     public void AddRecipes(List<RecipeSO> recipes)
@@ -27,7 +36,7 @@ public class CraftingTable
         List<RecipeSO> recipes = new List<RecipeSO>();
         foreach (RecipeSO recipe in this.recipes)
         {
-            if(inventory.CanCraft(recipe))
+            if(!inventory.CanCraft(recipe).IsNullOrEmpty())
             {
                 recipes.Add(recipe);
             }

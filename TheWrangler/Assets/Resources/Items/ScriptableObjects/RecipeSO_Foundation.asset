@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
   m_Name: RecipeSO_Foundation
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: RecipeSO_Foundation
   item: {fileID: 0}
   ingredients:
     keys:

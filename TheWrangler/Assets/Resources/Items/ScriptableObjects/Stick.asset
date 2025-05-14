@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
   m_Name: Stick
   m_EditorClassIdentifier: 
-  ID: Stick
+  <ID>k__BackingField: Stick
   displayName: Stick
-  equipmentSlots: 00000000
-  equipmentType: 0
-  icon: {fileID: 0}
+  equipmentSlot: 0
+  icon: {fileID: 21300000, guid: 3a691b56f255f7e48acec83593e06853, type: 3}
   prefab: {fileID: 0}
   stackable: 1
+  maxAmount: 300

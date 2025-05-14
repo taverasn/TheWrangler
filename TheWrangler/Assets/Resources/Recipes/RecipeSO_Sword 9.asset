@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
-  m_Name: RecipeSO_Sword
+  m_Name: RecipeSO_Sword 9
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: RecipeSO_Sword 9
   item: {fileID: 11400000, guid: c4bf4d5734262f24f9307efd8e5551d7, type: 2}
   ingredients:
     keys:
