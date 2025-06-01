@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Deciding : State
 {
-    float interactChance = 2f;
-    float craftChance = -1f;
+    float interactChance = .5f;
+    float craftChance = .5f;
 
     public Deciding(StateMachine machine)
     {
@@ -35,6 +35,11 @@ public class Deciding : State
         {
             Transition<Wander>();
         }
+    }
+
+    private void ChooseDegenerateAction()
+    {
+
     }
 
 

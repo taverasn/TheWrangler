@@ -13,7 +13,7 @@ public class StateMachine : MonoBehaviour
     [field:SerializeField] public Transform target { get; protected set; }
     private FollowerEntity follower;
 
-    public Interactable interactable;
+    public IInteractable interactable;
     public bool canInteract = true;
     public float interactCooldown = 30f;
 
@@ -37,8 +37,6 @@ public class StateMachine : MonoBehaviour
     protected virtual void Awake()
     {
         logger = LogManager.Instance.AddLogger("State Machine", LogLevel.INFO);
-        craftingTable = new CraftingTable();
-        craftingTable.AddRecipes(recipes);
 
         follower = GetComponent<FollowerEntity>();
 

@@ -3,15 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class ItemPickUP : MonoBehaviour
+public class ItemPickUp : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemSO itemSO;
     [SerializeField] private TextMeshProUGUI popupText;
     [SerializeField] private int amount;
 
-    private Inventory inventory;
+    public Inventory inventory { get; set; }
     private Item item;
     private JUTPSInputControlls _inputs;
+
+    Transform IInteractable.transform { get => transform; set => throw new System.NotImplementedException(); }
 
     private void Start()
     {
@@ -41,7 +43,7 @@ public class ItemPickUP : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Inventory>(out inventory))
+        if (other.gameObject.GetComponent<Inventory>() != null)
         {
             inventory = other.gameObject.GetComponent<Inventory>();
             popupText.gameObject.SetActive(true);

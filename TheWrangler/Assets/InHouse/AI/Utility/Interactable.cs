@@ -8,7 +8,9 @@ public class Interactable : MonoBehaviour, IInteractable
 {
     [SerializeField] private List<ItemSO> items;
     [SerializeField] private List<ItemSO> ingredients;
-    public Inventory inventory { get; private set; }
+    public Inventory inventory { get; set; }
+    Transform IInteractable.transform { get => transform; set => throw new System.NotImplementedException(); }
+
     private void Start()
     {
         inventory = GetComponent<Inventory>();

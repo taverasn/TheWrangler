@@ -62,7 +62,7 @@ public class ItemMove : ItemInteract
 
         // Move Item
         // Search for next nearest inventory thats not the current interactable
-        List<Interactable> interactables = TargetFinder.FindTarget(machine.transform.position, 50, LayerMask.GetMask("Default"));
+        List<IInteractable> interactables = TargetFinder.Instance.interactables;
 
         if (interactables.Count > 0)
         {
