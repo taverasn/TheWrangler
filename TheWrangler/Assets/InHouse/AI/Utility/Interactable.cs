@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour, IInteractable
     [SerializeField] private List<ItemSO> ingredients;
     public Inventory inventory { get; set; }
     Transform IInteractable.transform { get => transform; set => throw new System.NotImplementedException(); }
+    InteractType IInteractable.type { get => InteractType.Inventory; set => throw new System.NotImplementedException(); }
 
     private void Start()
     {

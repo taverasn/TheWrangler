@@ -3,17 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class ItemPickUp : MonoBehaviour, IInteractable
+public class PickUp : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemSO itemSO;
     [SerializeField] private TextMeshProUGUI popupText;
     [SerializeField] private int amount;
-
     public Inventory inventory { get; set; }
     private Item item;
     private JUTPSInputControlls _inputs;
 
     Transform IInteractable.transform { get => transform; set => throw new System.NotImplementedException(); }
+    InteractType IInteractable.type { get => InteractType.ItemPickUp; set => throw new System.NotImplementedException(); }
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class ItemPickUp : MonoBehaviour, IInteractable
         _inputs.Player.Interact.started -= OnPickUpItem;
     }
 
-    public void OnPickUpItem(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void PickUpItem()
     {
         if (inventory == null) return;
 
@@ -40,13 +40,22 @@ public class ItemPickUp : MonoBehaviour, IInteractable
         Destroy(this.gameObject);
     }
 
+    public void OnPickUpItem(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        PickUpItem();
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Inventory>() != null)
         {
             inventory = other.gameObject.GetComponent<Inventory>();
-            popupText.gameObject.SetActive(true);
+
+            if (other.CompareTag("Player"))
+            {
+                popupText.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -55,7 +64,10 @@ public class ItemPickUp : MonoBehaviour, IInteractable
         if (other.gameObject.CompareTag("Player"))
         {
             inventory = null;
-            popupText.gameObject.SetActive(false);
+            if (other.CompareTag("Player"))
+            {
+                popupText.gameObject.SetActive(false);
+            }
         }
     }
 }

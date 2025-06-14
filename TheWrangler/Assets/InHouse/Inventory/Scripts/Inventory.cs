@@ -234,7 +234,7 @@ public class Inventory : MonoBehaviour, IDataPersistence
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Failed to save item with id " + item.info.ID + ": " + e);
+            Debug.LogError("Failed to save item with id " + item == null ? "DoesNotExist" : item.info.ID + ": " + e);
         }
         return serializedData;
     }

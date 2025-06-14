@@ -45,6 +45,7 @@ public class StateMachine : MonoBehaviour
         states.Add(new Deciding(this));
         states.Add(new ItemCraft(this));
         states.Add(new ItemMove(this));
+        states.Add(new ItemPickUp(this));
 
         onTransitionTo += HandleTransitionTo;
     }

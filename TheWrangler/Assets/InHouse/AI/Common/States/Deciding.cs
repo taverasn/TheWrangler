@@ -15,10 +15,33 @@ public class Deciding : State
     public override void Arrive()
     {
         base.Arrive();
-        DecideWhatToDo();
+        machine.onDestinationReached += HandleDestinationReached;
+
     }
 
     private void DecideWhatToDo()
+    {
+        switch (machine.interactable.type)
+        {
+            case InteractType.ItemPickUp:
+                HandleItemPickUpInteractable();
+                break;
+            case InteractType.Inventory:
+                HandleInventoryInteractable();
+                break;
+            case InteractType.None:
+                logger.Error("There Shouldnt be any Interactables with an Unassigned type. How did you get here???");
+                Transition<Wander>();
+                break;
+        }
+    }
+
+    private void HandleItemPickUpInteractable()
+    {
+        Transition<ItemPickUp>();
+    }
+
+    private void HandleInventoryInteractable()
     {
         if (UnityEngine.Random.Range(0f, 1f) < interactChance)
         {
@@ -37,14 +60,14 @@ public class Deciding : State
         }
     }
 
-    private void ChooseDegenerateAction()
+    private void HandleDestinationReached()
     {
-
+        DecideWhatToDo();
     }
-
 
     public override void Exit()
     {
         base.Exit();
+        machine.onDestinationReached -= HandleDestinationReached;
     }
 }
