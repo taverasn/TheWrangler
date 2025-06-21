@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6360b16fa0279242b4d22e8228d8112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSO: {fileID: 11400000, guid: b80c419cd2d1e094185fb2f41e5d465b, type: 2}
+  itemSO: {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
   popupText: {fileID: 1886513175425328293}
-  amount: 0
+  amount: 50
 --- !u!135 &5121710424481989824
 SphereCollider:
   m_ObjectHideFlags: 0

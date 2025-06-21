@@ -404,6 +404,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
 
                 m_CurrentPreview.AttachedBuildingSocket = m_CurrentSocket;
 
+                if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+                {
+                    m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+                }
+
                 //if (!CanPlacing)
                 //{
                 //    HandleFree();
@@ -418,6 +423,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
         /// </summary>
         void HandleFree()
         {
+            if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+            }
+
             m_CurrentPreview.AttachedBuildingSocket = null;
 
             Quaternion rotation;
@@ -1010,6 +1020,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
             }
 
             m_CurrentPreview = Instantiate(buildingPart);
+
+            if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+            }
 
             m_CurrentPreview.ChangeState(BuildingPart.StateType.PREVIEW);
             m_CurrentPreview.transform.position = instantiatePoint;

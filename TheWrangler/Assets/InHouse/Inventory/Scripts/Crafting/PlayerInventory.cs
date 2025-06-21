@@ -191,6 +191,9 @@ public class PlayerInventory : Inventory
     {
         for (int i = 0; i < items.Length; i++)
         {
+            if (items[i] == null || items[i]?.info == null)
+                return "";
+
             if (items[i]?.info.ID == ID)
             {
                 if ((i + 1) < (items.Length - 1))

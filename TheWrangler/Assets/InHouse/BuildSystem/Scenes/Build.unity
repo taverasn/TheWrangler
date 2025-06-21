@@ -2089,6 +2089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673f97a91ffcc1a498b7af77f431293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryType: 0
   inventory: {fileID: 0}
   inventorySlotsParent: {fileID: 659389479}
   toggleUI: {fileID: 0}
@@ -5384,7 +5385,7 @@ MonoBehaviour:
       m_Bits: 256
     m_MaxAngle: 20
   m_InventorySettings:
-    m_PlayerInventory: {fileID: 0}
+    m_PlayerInventory: {fileID: 7698248483341321875}
   m_AudioSettings:
     m_AudioSource: {fileID: 0}
     m_PlacingAudioClips: []
@@ -6724,7 +6725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6360b16fa0279242b4d22e8228d8112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSO: {fileID: 11400000, guid: 924e771763e6fcf4f962e2005e286b97, type: 2}
+  itemSO: {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
   popupText: {fileID: 1089736451}
   amount: 10
 --- !u!4 &1615407074
@@ -9677,6 +9678,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HeadSlot: {fileID: 256868797}
   WeaponSlot: {fileID: 384139180}
+--- !u!114 &7698248483341321875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6049377575984680306, guid: d16f909d6c506064a9bea4f2a0535905,
+    type: 3}
+  m_PrefabInstance: {fileID: 496941069700755160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998721812907312721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3939b021fe6a9f9418e8fef9ee929955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &7728177293660971904
 MeshFilter:
   m_ObjectHideFlags: 0

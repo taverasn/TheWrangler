@@ -17,7 +17,7 @@ public class BuildingItemCondition : BuildingCondition
     #region Internal Methods
     public override bool CheckPlacingCondition()
     {
-        return Recipe == null || inventory == null ? true : !inventory.CanCraft(Recipe).Item1 ? false : true;
+        return Recipe == null || inventory == null ? false : inventory.CanCraft(Recipe).Item1 ? true : false;
     }
     #endregion
 }
