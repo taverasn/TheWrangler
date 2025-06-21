@@ -30,7 +30,7 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
 
     private void OnItemEquipped(Item item, bool equipped)
     {
-        if (item == null) return;
+        if (item == null || item.info.equipmentSlot == EquipmentSlot.NONE) return;
 
         if (slots[item.info.equipmentSlot].childCount > 0)
         {

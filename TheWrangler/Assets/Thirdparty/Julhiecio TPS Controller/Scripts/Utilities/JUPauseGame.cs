@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.Events;
 using JUTPS.InputEvents;
 using JUTPSEditor.JUHeader;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace JUTPS
 {
@@ -40,6 +41,7 @@ namespace JUTPS
         /// Return true if the game is paused.
         /// </summary>
         public static bool IsPaused { get; private set; }
+        public static bool IsMenuOpen { get; private set; }
 
         /// <summary>
         /// Returns the pause manager on the scene, if not exist, create one. Can have only one instance.
@@ -124,13 +126,22 @@ namespace JUTPS
             SetPaused(false);
         }
 
+        public static void MenuToggle()
+        {
+            IsMenuOpen = !IsMenuOpen;
+            Time.timeScale = IsMenuOpen ? 0 : 1;
+
+            if (Instance._slowmotionInstance)
+                Instance._slowmotionInstance.EnableSlowmotion = !IsPaused;
+        }
+
         /// <summary>
         /// Set the game as paused of unpaused.
         /// </summary>
         /// <param name="paused">If true, the game is paused, freezing the time, if not, the game will be continued.</param>
         public static void SetPaused(bool paused)
         {
-            if (IsPaused == paused)
+            if (IsPaused == paused || IsMenuOpen)
                 return;
 
             IsPaused = !IsPaused;

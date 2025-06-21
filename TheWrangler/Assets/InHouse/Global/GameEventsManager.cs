@@ -32,4 +32,10 @@ public class UIEvents
     
     public event Action onCancelRequestItemFromSeparateInventory;
     public void CancelRequestItemFromSeparateInventory() => onCancelRequestItemFromSeparateInventory?.Invoke();
+
+    public event Action<CraftingTable, Inventory> onToggleCraftingUI;
+    public void ToggleCraftingUI(CraftingTable craftingTable, Inventory inventory) => onToggleCraftingUI?.Invoke(craftingTable, inventory);
+    
+    public event Action<Inventory> onToggleInventoryUI;
+    public void ToggleInventoryUI(Inventory inventory) => onToggleInventoryUI?.Invoke(inventory);
 }

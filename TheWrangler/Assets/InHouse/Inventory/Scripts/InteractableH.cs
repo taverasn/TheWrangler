@@ -7,8 +7,6 @@ using UnityEngine.Windows;
 
 public class InteractableH : MonoBehaviour
 {
-    [SerializeField] private InventoryUI InventoryUI;
-    [SerializeField] private CraftingTableUI CraftingTableUI;
     [SerializeField] private TextMeshProUGUI popupText;
     private JUTPSInputControlls _inputs;
     private JUCharacterBrain JUCharacter;
@@ -28,8 +26,6 @@ public class InteractableH : MonoBehaviour
     {
         if (JUCharacter == null) return;
         GameEventsManager.Instance.UIEvents.OpenPlayerInventory();
-        InventoryUI.EnableUI();
-        CraftingTableUI.EnableUI();
     }
 
     private void OnTriggerEnter(Collider other)

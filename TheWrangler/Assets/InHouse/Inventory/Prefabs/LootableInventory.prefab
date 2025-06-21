@@ -423,14 +423,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c45b12b7ac56494fb5b423666064b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryType: 0
   inventory: {fileID: 5659650858181976047}
-  InventoryUI: {fileID: 5189400061922563250}
+  craftingTable: {fileID: 0}
   popupText: {fileID: 5981714834449600986}
   items:
     keys:
-    - {fileID: 11400000, guid: b80c419cd2d1e094185fb2f41e5d465b, type: 2}
-    - {fileID: 11400000, guid: 924e771763e6fcf4f962e2005e286b97, type: 2}
-    values: 0100000014000000
+    - {fileID: 11400000, guid: c74ecc8488d9c894b8337b3617894143, type: 2}
+    - {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
+    - {fileID: 11400000, guid: e3f71d65cf1b8104a8f76436bb957c13, type: 2}
+    values: 0a000000140000001e000000
 --- !u!114 &5659650858181976047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f618101166c9944bf389c9d1edf2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryType: 0
   inventory: {fileID: 5659650858181976047}
   inventorySlotsParent: {fileID: 7669359276147447745}
   toggleUI: {fileID: 4956913032027567754}

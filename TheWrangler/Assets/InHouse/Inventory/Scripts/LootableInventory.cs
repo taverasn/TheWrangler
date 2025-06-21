@@ -9,9 +9,9 @@ using UnityEngine;
 
 public class LootableInventory : MonoBehaviour
 {
+    [SerializeField] private InventoryType inventoryType;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private InventoryUI InventoryUI;
-    [SerializeField] private CraftingTableUI craftingTableUI;
+    [SerializeField] private CraftingTable craftingTable;
     [SerializeField] private TextMeshProUGUI popupText;
     [ShowInInspector] public ItemAmountDictionary items;
     private JUTPSInputControlls _inputs;
@@ -40,8 +40,11 @@ public class LootableInventory : MonoBehaviour
     {
         if (JUCharacter == null) return;
         GameEventsManager.Instance.UIEvents.OpenPlayerInventory();
-        InventoryUI.EnableUI();
-        craftingTableUI.EnableUI();
+
+        if (inventoryType == InventoryType.Inventory)
+            GameEventsManager.Instance.UIEvents.ToggleInventoryUI(inventory);
+        else
+            GameEventsManager.Instance.UIEvents.ToggleCraftingUI(craftingTable, inventory);
     }
 
 
@@ -62,4 +65,10 @@ public class LootableInventory : MonoBehaviour
             popupText.gameObject.SetActive(false);
         }
     }
+}
+
+public enum InventoryType
+{
+    Inventory,
+    Crafting
 }
