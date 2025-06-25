@@ -1,17 +1,19 @@
-using CrashKonijn.Goap.Behaviours;
+using CrashKonijn.Agent.Runtime;
+using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 
 namespace TheWrangler.GOAP.Behaviour
 {
-    [RequireComponent(typeof(AgentBehaviour))]
+    [RequireComponent(typeof(AgentBehaviour), typeof(GoapActionProvider))]
     public class GoapSetBinder : MonoBehaviour
     {
-        [SerializeField] private GoapRunnerBehaviour goapRunner;
+        [SerializeField] private GoapBehaviour goapRunner;
 
         private void Awake()
         {
             AgentBehaviour agent = GetComponent<AgentBehaviour>();
-            agent.GoapSet = goapRunner.GetGoapSet("BaseSet");
+            GoapActionProvider actionProvider = GetComponent<GoapActionProvider>();
+            actionProvider.AgentType = goapRunner.GetAgentType("BaseAgent");
         }
     }
 }

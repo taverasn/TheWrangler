@@ -1,6 +1,6 @@
-using CrashKonijn.Goap.Behaviours;
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Interfaces;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Goap.Core;
+using CrashKonijn.Goap.Runtime;
 using TheWrangler.GOAP.Config;
 using TheWrangler.GOAP.Interfaces;
 
@@ -10,12 +10,22 @@ namespace TheWrangler.GOAP
     {
         public AttackConfigSO attackConfig;
         public WanderConfigSO wanderConfig;
-        public override void InitConfig(GoapConfig config)
+        public NeedsConfigSO needsConfig;
+
+        public override void InitConfig(IGoapConfig config)
         {
             config.GoapInjector = this;
         }
 
-        public void Inject(IActionBase action)
+        public void Inject(ITargetSensor targetSensor)
+        {
+            if (targetSensor is IInjectable injectable)
+            {
+                injectable.Inject(this);
+            }
+        }
+
+        public void Inject(IAction action)
         {
             if (action is IInjectable injectable)
             {
@@ -23,7 +33,7 @@ namespace TheWrangler.GOAP
             }
         }
 
-        public void Inject(IGoalBase goal)
+        public void Inject(IGoal goal)
         {
             if (goal is IInjectable injectable)
             {
@@ -31,17 +41,33 @@ namespace TheWrangler.GOAP
             }
         }
 
-        public void Inject(IWorldSensor worldSensor)
+        public void Inject(ISensor sensor)
         {
-            if (worldSensor is IInjectable injectable)
+            if (sensor is IInjectable injectable)
             {
                 injectable.Inject(this);
             }
         }
 
-        public void Inject(ITargetSensor targetSensor)
+        public void Inject(IWorldSensor sensor)
         {
-            if (targetSensor is IInjectable injectable)
+            if (sensor is IInjectable injectable)
+            {
+                injectable.Inject(this);
+            }
+        }
+
+        public void Inject(ILocalWorldSensor sensor)
+        {
+            if (sensor is IInjectable injectable)
+            {
+                injectable.Inject(this);
+            }
+        }
+
+        public void Inject(ILocalTargetSensor sensor)
+        {
+            if (sensor is IInjectable injectable)
             {
                 injectable.Inject(this);
             }

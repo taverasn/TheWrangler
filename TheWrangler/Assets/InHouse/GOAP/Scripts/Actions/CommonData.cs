@@ -1,4 +1,4 @@
-using CrashKonijn.Goap.Interfaces;
+using CrashKonijn.Agent.Core;
 using UnityEngine;
 
 namespace TheWrangler.GOAP.Actions

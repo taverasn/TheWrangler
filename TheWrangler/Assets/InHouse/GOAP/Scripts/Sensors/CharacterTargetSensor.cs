@@ -1,6 +1,5 @@
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Interfaces;
-using CrashKonijn.Goap.Sensors;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Goap.Runtime;
 using TheWrangler.GOAP.Config;
 using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
@@ -21,9 +20,9 @@ namespace TheWrangler.GOAP.Sensors
             attackConfig = dependencyInjector.attackConfig;
         }
 
-        public override ITarget Sense(IMonoAgent agent, IComponentReference references)
+        public override ITarget Sense(IActionReceiver agent, IComponentReference references, ITarget existingTarget)
         {
-            if (Physics.OverlapSphereNonAlloc(agent.transform.position, attackConfig.SensorRadius, colliders, attackConfig.AttackableLayerMask) > 0)
+            if (Physics.OverlapSphereNonAlloc(agent.Transform.position, attackConfig.SensorRadius, colliders, attackConfig.AttackableLayerMask) > 0)
             {
                 return new TransformTarget(colliders[0].transform);
             }

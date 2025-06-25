@@ -1,5 +1,3 @@
-using CrashKonijn.Goap.Sensors;
-using JUTPS;
 using JUTPS.CharacterBrain;
 using UnityEngine;
 

@@ -1,6 +1,5 @@
-using CrashKonijn.Goap.Behaviours;
-using CrashKonijn.Goap.Interfaces;
-using System;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Agent.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,14 +28,14 @@ namespace TheWrangler.GOAP.Behaviour
         {
             agentBehaviour.Events.OnTargetInRange += EventsOnTargetInRange;    
             agentBehaviour.Events.OnTargetChanged += EventsOnTargetChanged;    
-            agentBehaviour.Events.OnTargetOutOfRange += EventsOnTargetOutOfRange;    
+            agentBehaviour.Events.OnTargetNotInRange += EventsOnTargetNotInRange;    
         }
 
         private void OnDisable()
         {
             agentBehaviour.Events.OnTargetInRange -= EventsOnTargetInRange;
             agentBehaviour.Events.OnTargetChanged -= EventsOnTargetChanged;
-            agentBehaviour.Events.OnTargetOutOfRange -= EventsOnTargetOutOfRange;
+            agentBehaviour.Events.OnTargetNotInRange -= EventsOnTargetNotInRange;
         }
 
         private void EventsOnTargetInRange(ITarget target)
@@ -51,7 +50,7 @@ namespace TheWrangler.GOAP.Behaviour
             //animator.SetBool(WALK, true);
         }
 
-        private void EventsOnTargetOutOfRange(ITarget target)
+        private void EventsOnTargetNotInRange(ITarget target)
         {
             //animator.SetBool(WALK, false);
         }

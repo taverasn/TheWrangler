@@ -1,5 +1,4 @@
-using CrashKonijn.Goap.Behaviours;
-using UnityEngine;
+using CrashKonijn.Goap.Runtime;
 
 namespace TheWrangler.GOAP.Targets
 {

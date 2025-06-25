@@ -1,14 +1,12 @@
-using CrashKonijn.Goap.Behaviours;
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Enums;
-using CrashKonijn.Goap.Interfaces;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Goap.Runtime;
 using TheWrangler.GOAP.Config;
 using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
 
 namespace TheWrangler.GOAP.Actions
 {
-    public class MeleeAction : ActionBase<AttackData>, IInjectable
+    public class MeleeAction : GoapActionBase<AttackData>, IInjectable
     {
         private AttackConfigSO attackConfig;
         public override void Created()
@@ -25,7 +23,7 @@ namespace TheWrangler.GOAP.Actions
             attackConfig = dependencyInjector.attackConfig;
         }
 
-        public override ActionRunState Perform(IMonoAgent agent, AttackData data, ActionContext context)
+        public override IActionRunState Perform(IMonoAgent agent, AttackData data, IActionContext context)
         {
             data.Timer -= context.DeltaTime;
 
@@ -41,7 +39,6 @@ namespace TheWrangler.GOAP.Actions
             }
 
             return data.Timer > 0 ? ActionRunState.Continue : ActionRunState.Stop;
-
         }
 
         public override void Start(IMonoAgent agent, AttackData data)

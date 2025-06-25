@@ -1,14 +1,13 @@
-using CrashKonijn.Goap.Behaviours;
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Enums;
-using CrashKonijn.Goap.Interfaces;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Agent.Runtime;
+using CrashKonijn.Goap.Runtime;
 using TheWrangler.GOAP.Config;
 using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
 
 namespace TheWrangler.GOAP.Actions
 {
-    public class WanderAction : ActionBase<CommonData>, IInjectable
+    public class WanderAction : GoapActionBase<CommonData>, IInjectable
     {
         private WanderConfigSO wanderConfig;
         public override void Created()
@@ -24,7 +23,7 @@ namespace TheWrangler.GOAP.Actions
             wanderConfig = dependencyInjector.wanderConfig;
         }
 
-        public override ActionRunState Perform(IMonoAgent agent, CommonData data, ActionContext context)
+        public override IActionRunState Perform(IMonoAgent agent, CommonData data, IActionContext context)
         {
             data.Timer -= context.DeltaTime;
 

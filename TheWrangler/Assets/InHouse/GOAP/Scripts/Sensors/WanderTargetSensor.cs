@@ -1,6 +1,5 @@
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Interfaces;
-using CrashKonijn.Goap.Sensors;
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Goap.Runtime;
 using TheWrangler.GOAP.Config;
 using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
@@ -19,19 +18,13 @@ namespace TheWrangler.GOAP.Sensors
         {
         }
 
-        public override ITarget Sense(IMonoAgent agent, IComponentReference references)
-        {
-            Vector3 position = GetRandomPosition(agent);
-            return new PositionTarget(position);
-        }
-
-        private Vector3 GetRandomPosition(IMonoAgent agent)
+        private Vector3 GetRandomPosition(IActionReceiver agent)
         {
             int count = 0;
             while (count < MAX_TARGET_SEARCH_ATTEMPTS)
             {
                 Vector2 random = Random.insideUnitCircle * wanderConfig.WanderRadius;
-                Vector3 position = agent.transform.position + new Vector3(
+                Vector3 position = agent.Transform.position + new Vector3(
                     random.x,
                     0,
                     random.y
@@ -44,7 +37,7 @@ namespace TheWrangler.GOAP.Sensors
             }
 
 
-            return agent.transform.position;
+            return agent.Transform.position;
         }
 
         public override void Update()
@@ -54,6 +47,12 @@ namespace TheWrangler.GOAP.Sensors
         public void Inject(DependencyInjector dependencyInjector)
         {
             wanderConfig = dependencyInjector.wanderConfig;
+        }
+
+        public override ITarget Sense(IActionReceiver agent, IComponentReference references, ITarget existingTarget)
+        {
+            Vector3 position = GetRandomPosition(agent);
+            return new PositionTarget(position);
         }
     }
 }
