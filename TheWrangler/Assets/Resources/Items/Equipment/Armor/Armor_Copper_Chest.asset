@@ -19,3 +19,5 @@ MonoBehaviour:
   maxAmount: 300
   stackable: 0
   equipmentSlot: 2
+  toolType: 0
+  tier: 0

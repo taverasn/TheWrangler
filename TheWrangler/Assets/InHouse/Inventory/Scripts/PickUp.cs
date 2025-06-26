@@ -31,6 +31,11 @@ public class PickUp : MonoBehaviour, IInteractable
         _inputs.Player.Interact.started -= OnPickUpItem;
     }
 
+    public void SetUp(ItemSO _itemSO, int _amount)
+    {
+        item = new Item(_amount, _itemSO);
+    }
+
     public void PickUpItem()
     {
         if (inventory == null) return;

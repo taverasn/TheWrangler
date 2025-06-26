@@ -33,6 +33,7 @@ namespace JUTPS
         /// The damage force.
         /// </summary>
         [JUHeader("Damager Settings")]
+        public ItemSO itemSO;
         public float Damage;
 
         /// <summary>
@@ -278,7 +279,14 @@ namespace JUTPS
             {
                 JUHealth health = collider.GetComponentInParent<JUHealth>();
 
-                if (health)
+                if (health is ResourceHealth resourceHealth)
+                {
+                    if (itemSO.toolType == resourceHealth.toolType && itemSO.tier == resourceHealth.tier)
+                    {
+                        resourceHealth.DoDamage(damage);
+                    }
+                }
+                else if (health)
                 {
                     health.DoDamage(damage);
                     if (ShowHitMarker)

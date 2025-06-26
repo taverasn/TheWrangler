@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc9a2ab5aa81fa84ebbce95edee559de, type: 3}
-  m_Name: Armor_Copper_Helmet
+  m_Name: Tool_Copper_Axe
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: Armor_Copper_Helmet
-  displayName: Helmet
-  prefab: {fileID: 1262996259358930, guid: 7dea907e69fa1db4888c36ce5482a775, type: 3}
-  icon: {fileID: 21300000, guid: a61dd4b37af1c794896ceccc00b7abea, type: 3}
-  maxAmount: 300
+  <ID>k__BackingField: Tool_Copper_Axe
+  displayName: Copper Axe
+  prefab: {fileID: 1625256296266264961, guid: 2ddbd78fa8fabae49b9f84d54550012a, type: 3}
+  icon: {fileID: 21300000, guid: 5fe4902cb7d0c994eb9af1c1b161f717, type: 3}
+  maxAmount: 1
   stackable: 0
-  equipmentSlot: 1
-  toolType: 0
+  equipmentSlot: 5
+  toolType: 1
   tier: 0

@@ -13,6 +13,8 @@ public class ItemSO : ScriptableObject
     public int maxAmount = 300;
     public bool stackable;
     public EquipmentSlot equipmentSlot;
+    public ToolType toolType;
+    public Tier tier;
 
     private void OnValidate()
     {
