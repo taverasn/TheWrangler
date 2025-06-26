@@ -29,6 +29,7 @@ namespace TheWrangler.GOAP.Factories
         private void BuildGoals(CapabilityBuilder builder)
         {
             builder.AddGoal<WanderGoal>()
+                .SetBaseCost(50)
                 .AddCondition<IsWandering>(Comparison.GreaterThanOrEqual, 1);
             
             builder.AddGoal<KillTarget>()

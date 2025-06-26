@@ -10,6 +10,7 @@ namespace TheWrangler.GOAP.Actions
     public class WanderAction : GoapActionBase<CommonData>, IInjectable
     {
         private WanderConfigSO wanderConfig;
+
         public override void Created()
         {
         }
