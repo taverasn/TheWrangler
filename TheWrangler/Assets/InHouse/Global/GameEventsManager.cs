@@ -5,6 +5,7 @@ public class GameEventsManager : MonoBehaviour
 {
     public static GameEventsManager Instance;
     public UIEvents UIEvents;
+    public NeedsEvents NeedsEvents;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class GameEventsManager : MonoBehaviour
             return;
         }
         UIEvents = new UIEvents();
+        NeedsEvents = new NeedsEvents();
         Instance = this;
     }
 }
@@ -38,4 +40,13 @@ public class UIEvents
     
     public event Action<Inventory> onToggleInventoryUI;
     public void ToggleInventoryUI(Inventory inventory) => onToggleInventoryUI?.Invoke(inventory);
+}
+
+public class NeedsEvents
+{
+    public Action<NeedsUpdateEvent> onUpdateNeeds;
+    public void UpdateNeeds(NeedsUpdateEvent needsUpdateEvent) => onUpdateNeeds?.Invoke(needsUpdateEvent);
+    
+    public Action<NeedsOwner, Need, NeedsBroadcastReason> onBroadcastNeedsUpdate;
+    public void BroadcastNeedsUpdate(NeedsOwner needsOwner, Need need, NeedsBroadcastReason needsBroadcastReason) => onBroadcastNeedsUpdate?.Invoke(needsOwner, need, needsBroadcastReason);
 }
