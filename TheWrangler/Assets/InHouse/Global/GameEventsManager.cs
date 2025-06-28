@@ -47,6 +47,6 @@ public class NeedsEvents
     public Action<NeedsUpdateEvent> onUpdateNeeds;
     public void UpdateNeeds(NeedsUpdateEvent needsUpdateEvent) => onUpdateNeeds?.Invoke(needsUpdateEvent);
     
-    public Action<NeedsOwner, Need, NeedsBroadcastReason> onBroadcastNeedsUpdate;
-    public void BroadcastNeedsUpdate(NeedsOwner needsOwner, Need need, NeedsBroadcastReason needsBroadcastReason) => onBroadcastNeedsUpdate?.Invoke(needsOwner, need, needsBroadcastReason);
+    public Action<NeedsBroadcastEvent> onBroadcastNeedsUpdate;
+    public void BroadcastNeedsUpdate(NeedsBroadcastEvent needsBroadcastEvent) => onBroadcastNeedsUpdate?.Invoke(needsBroadcastEvent);
 }

@@ -8,6 +8,9 @@ public class NeedsController : MonoBehaviour, IDataPersistence
 {
     private Dictionary<NeedsType, Need> needsMap = new Dictionary<NeedsType, Need>();
     [SerializeField] private NeedsOwner needsOwner = NeedsOwner.PLAYER;
+    // Only owners that are not the Player or Companion care about this since other owners
+    // can have multiple of the same type
+    public string guid = "";
 
     private bool TryGetNeed(NeedsType type, out Need need) => needsMap.TryGetValue(type, out need);
     private bool UsesSaveDataForCurrentValue => needsOwner == NeedsOwner.PLAYER || needsOwner == NeedsOwner.COMPANION;
@@ -26,9 +29,17 @@ public class NeedsController : MonoBehaviour, IDataPersistence
         GameEventsManager.Instance.NeedsEvents.onUpdateNeeds -= OnUpdateNeeds;
     }
 
+    private void Start()
+    {
+        foreach (Need need in needsMap.Values)
+        {
+            GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(needsOwner, guid, need, NeedsBroadcastReason.UNKNOWN));
+        }
+    }
+
     private void OnUpdateNeeds(NeedsUpdateEvent needsUpdateEvent)
     {
-        if (this.needsOwner == needsUpdateEvent.owner)
+        if (this.needsOwner == needsUpdateEvent.owner && UsesSaveDataForCurrentValue || guid == needsUpdateEvent.guid)
         {
             Need need;
 
@@ -147,12 +158,12 @@ public class NeedsController : MonoBehaviour, IDataPersistence
             {
                 NeedsData needsData = JsonUtility.FromJson<NeedsData>(serializedData);
 
-                need = new Need(needsSO, needsOwner, needsData.maxValue, needsData.currentValue, needsData.depletionRate, needsData.restorationRate);
+                need = new Need(needsSO, needsOwner, guid, needsData.maxValue, needsData.currentValue, needsData.depletionRate, needsData.restorationRate);
             }
             // otherwise, initialize a new need
             else
             {
-                need = new Need(needsSO, needsOwner);
+                need = new Need(needsSO, needsOwner, guid);
             }
         }
         catch (System.Exception e)
@@ -166,18 +177,36 @@ public class NeedsController : MonoBehaviour, IDataPersistence
 public struct NeedsUpdateEvent
 {
     public NeedsOwner owner;
+    public string guid;
     public NeedsType type;
     public NeedsUpdateReason reason;
     public float value;
     public float timer;
 
-    public NeedsUpdateEvent(NeedsOwner owner, NeedsType type, NeedsUpdateReason reason, float value, float timer)
+    public NeedsUpdateEvent(NeedsOwner owner, string guid, NeedsType type, NeedsUpdateReason reason, float value, float timer)
     {
         this.owner = owner;
+        this.guid = guid;
         this.type = type;
         this.reason = reason;
         this.value = value;
         this.timer = timer;
+    }
+}
+
+public struct NeedsBroadcastEvent
+{
+    public NeedsOwner owner;
+    public string guid;
+    public Need need;
+    public NeedsBroadcastReason reason;
+
+    public NeedsBroadcastEvent(NeedsOwner owner, string guid, Need need, NeedsBroadcastReason reason)
+    {
+        this.owner = owner;
+        this.guid = guid;
+        this.need = need;
+        this.reason = reason;
     }
 }
 

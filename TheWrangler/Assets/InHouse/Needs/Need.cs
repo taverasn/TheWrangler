@@ -4,6 +4,7 @@ public class Need
 {
     public NeedsSO info { get; private set; }
     private NeedsOwner owner;
+    private string guid;
     public float maxValue { get; private set; }
     public float currentValue {get; private set;}
     private float depletionRate;
@@ -35,10 +36,11 @@ public class Need
                             depletionRate > 0 &&
                             !canRestore;
 
-    public Need(NeedsSO info, NeedsOwner owner)
+    public Need(NeedsSO info, NeedsOwner owner, string guid)
     {
         this.info = info;
         this.owner = owner;
+        this.guid = guid;
         this.maxValue = info.MaxValue;
         this.currentValue = info.DepletionType == DepletionType.FILL ? info.MaxValue : 0;
         this.depletionRate = info.DepletionRate;
@@ -46,10 +48,11 @@ public class Need
         this.canRestore = restorationRate > 0;
     }
 
-    public Need(NeedsSO info, NeedsOwner owner, float maxValue, float currentValue, float depletionRate, float restorationRate)
+    public Need(NeedsSO info, NeedsOwner owner, string guid, float maxValue, float currentValue, float depletionRate, float restorationRate)
     {
         this.info = info;
         this.owner = owner;
+        this.guid = guid;
         this.maxValue = maxValue;
         this.currentValue = currentValue;
         this.depletionRate = depletionRate;
@@ -87,14 +90,15 @@ public class Need
     {
         this.dotRate = dotRate;
         this.dotTimer = dotTimer;
-        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(owner, this, NeedsBroadcastReason.DOT_STARTED);
+        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_STARTED));
+
     }
 
     public void ClearEffectOverTime()
     {
         this.dotRate = 0;
         this.dotTimer = 0;
-        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(owner, this, NeedsBroadcastReason.DOT_ENDED);
+        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_ENDED));
     }
 
     public void ChangeCurrentValue(float value)
@@ -116,7 +120,7 @@ public class Need
         else if (value < 0)
             reason = IsDepleted ? NeedsBroadcastReason.REACHED_MINIMUM : NeedsBroadcastReason.DECREASED;
 
-        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(owner, this, reason);
+        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, reason));
     }
 
     public void UpgradeMaxValue(float value)
