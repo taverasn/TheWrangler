@@ -232,6 +232,8 @@ public enum NeedsOwner
     // Also I dont care/think it matters for these types to save current values.
     ENEMY_ZOMBIE,
     NPC_VILLAGER,
+    PLANT,
+    DESTRUCTABLE_OBJECT,
     NONE,
 }
 
