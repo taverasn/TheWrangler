@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3267467535931908319}
   - component: {fileID: 8639872143090466635}
   - component: {fileID: 5153887347647465547}
+  - component: {fileID: 1021245098034385744}
+  - component: {fileID: 943576482709506005}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -137,6 +139,91 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1021245098034385744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317830836874360296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505491a43e9856546aded567aaf92bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InputHandler: {fileID: 943576482709506005}
+  m_RaycastSettings:
+    m_Camera: {fileID: 3267467535931908319}
+    m_ViewType: 1
+    m_FromTransform: {fileID: 1013144357520787328}
+    m_LayerMask:
+      serializedVersion: 2
+      m_Bits: 1
+    m_Through: 0
+    m_OffsetPosition: {x: 0, y: 0, z: 0}
+    m_Distance: 10
+    m_MaxDistance: 0
+  m_SnappingSettings:
+    m_Type: 0
+    m_LayerMask:
+      serializedVersion: 2
+      m_Bits: 262400
+    m_MaxAngle: 20
+  m_InventorySettings:
+    m_PlayerInventory: {fileID: 0}
+  m_AudioSettings:
+    m_AudioSource: {fileID: 0}
+    m_PlacingAudioClips: []
+    m_DestroyAudioClips: []
+    m_EditingAudioClips: []
+  m_SelectedBuildingPart: {fileID: 7990950198401023037, guid: 2d3d33c3eadcc28439f66f393ecb91e7,
+    type: 3}
+  OnChangedBuildModeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChangedBuildingPartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlacingBuildingPartOnSocketEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &943576482709506005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317830836874360296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5426b9c21eb5b594896e2d9496eac29c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InputSettings:
+    m_BlockWhenCursorOverUI: 0
+    m_ValidateInputReference: {fileID: 6358376302932378488, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_CancelInputReference: {fileID: -6776656050215801594, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_CanRotateBuildingPart: 1
+    m_RotateModeInputReference: {fileID: 6711614612305694995, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_CanSelectBuildingPart: 1
+    m_CanSelectBuildingPartEvenPlacement: 1
+    m_SelectInputReference: {fileID: -6128111170889409005, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_UsePlacingModeShortcut: 1
+    m_PlacingModeInputReference: {fileID: -6803549112050257495, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_ResetModeAfterPlacing: 0
+    m_UseEditingModeShortcut: 1
+    m_EditingModeInputReference: {fileID: 4995024207531239218, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_ResetModeAfterEditing: 0
+    m_UseDestroyingModeShortcut: 1
+    m_DestroyingModeInputReference: {fileID: -243565863689554035, guid: 9260fea400b2696498f79dea99c99253,
+      type: 3}
+    m_ResetModeAfterDestroying: 0
 --- !u!1 &334758376954121358
 GameObject:
   m_ObjectHideFlags: 0

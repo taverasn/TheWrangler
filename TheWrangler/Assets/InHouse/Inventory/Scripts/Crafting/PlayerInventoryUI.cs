@@ -18,9 +18,10 @@ public class PlayerInventoryUI : InventoryUI
 
     private JUTPSInputControlls _inputs;
 
-    private void Start()
+    protected override void Start()
     {
         SetUp();
+
     }
 
     protected override void SetUp()
@@ -31,7 +32,7 @@ public class PlayerInventoryUI : InventoryUI
         {
             InventorySlot slot = Instantiate(inventorySlotPrefab);
             slot.transform.SetParent(inventorySlotsParent.transform, false);
-            slot.Initialize(i, playerInventory.items[i]);
+            slot.Initialize(this, i, playerInventory.items[i]);
             inventorySlots.Add(slot);
         }
 
@@ -42,6 +43,7 @@ public class PlayerInventoryUI : InventoryUI
         foreach (HotBarSlotUI slot in hotbarSlotsParent.GetComponentsInChildren<HotBarSlotUI>().ToList())
         {
             hotbarSlots[slot.slot] = slot;
+            slot.Initialize(this);
         }
 
         OnInventoryUpdated();

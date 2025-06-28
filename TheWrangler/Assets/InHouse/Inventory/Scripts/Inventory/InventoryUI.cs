@@ -131,7 +131,7 @@ public class InventoryUI : MonoBehaviour
         {
             InventorySlot slot = Instantiate(inventorySlotPrefab);
             slot.transform.SetParent(inventorySlotsParent.transform, false);
-            slot.Initialize(i, inventory.items[i]);
+            slot.Initialize(this, i, inventory.items[i]);
             inventorySlots.Add(slot);
         }
 

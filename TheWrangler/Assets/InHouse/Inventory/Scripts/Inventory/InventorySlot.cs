@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    protected InventoryUI inventoryUI;
+    public InventoryUI inventoryUI;
     public ItemSO itemSO { get; private set; }
     public int index { get; protected set; } = -1;
     [field:SerializeField] protected Image image { get; private set; }
@@ -13,13 +13,9 @@ public class InventorySlot : MonoBehaviour
     [field: SerializeField] protected Sprite defaultIcon;
     [SerializeField] private Color emptyColor = new Color(255, 255, 255, 100);
 
-    public virtual void Start()
+    public virtual void Initialize(InventoryUI inventoryUI, int index = -1, Item item = null)
     {
-        inventoryUI = transform.parent.parent.parent.GetComponent<InventoryUI>();
-    }
-
-    public void Initialize(int index, Item item)
-    {
+        this.inventoryUI = inventoryUI;
         this.index = index;
         SetItem(item);
     }

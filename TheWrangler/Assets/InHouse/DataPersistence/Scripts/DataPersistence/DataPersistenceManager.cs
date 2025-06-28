@@ -10,6 +10,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private bool disableDataPersistence = false;
     [SerializeField] private bool initializeDataIfNull = false;
     [SerializeField] private bool overrideSelectedProfileId = false;
+    [SerializeField] private bool initializeNewDataEachTime = false;
     [SerializeField] private string testSelectedProfileId = "test";
 
     [Header("File Storage Config")]
@@ -129,7 +130,8 @@ public class DataPersistenceManager : MonoBehaviour
         this.GameData = FileDataHandler.Load(selectedProfileId);
 
         // start a new game if the data is null and we're configured to intialize data for debugging purposes
-        if (this.GameData == null && initializeDataIfNull)
+        // or initialize new data each time for debugging purposes
+        if (this.GameData == null && initializeDataIfNull || initializeNewDataEachTime)
         {
             NewGame();
         }

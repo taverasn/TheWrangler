@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Infection
   MaxValue: 100
-  DepletionRate: 0
   NeedsType: 6
+  DepletionType: 0
+  DepletionBehaviour: 0
+  DepletionRate: 0
+  RestorationRate: 1

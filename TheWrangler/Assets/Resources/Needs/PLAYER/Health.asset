@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: HP
   MaxValue: 100
-  DepletionRate: 0
   NeedsType: 2
   DepletionType: 1
+  DepletionBehaviour: 0
+  DepletionRate: 0
+  RestorationRate: 1
