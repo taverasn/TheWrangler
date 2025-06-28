@@ -46,6 +46,26 @@ public class NeedsController : MonoBehaviour, IDataPersistence
         }
     }
 
+    public int ShouldSatisfyNeed(NeedsType needsType)
+    {
+        int satisfyNeed = 0;
+
+        if (TryGetNeed(needsType, out Need need))
+        {
+            switch (need.info.DepletionType)
+            {
+                case DepletionType.EMPTY:
+                    satisfyNeed = need.NormalizedValue <= 0.5f ? 1 : 0;
+                    break;
+                case DepletionType.FILL:
+                    satisfyNeed = need.NormalizedValue >= 0.5f ? 1 : 0;
+                    break;
+            }
+        }
+
+        return satisfyNeed;
+    }
+
     private void OnUpdateNeeds(NeedsUpdateEvent needsUpdateEvent)
     {
         if (this.needsOwner == needsUpdateEvent.owner && UsesSaveDataForCurrentValue || guid == needsUpdateEvent.guid)
