@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 7842374495015934564}
   - component: {fileID: 6971629377222545175}
   - component: {fileID: 8408186541777561385}
+  - component: {fileID: 6185766225836372217}
   - component: {fileID: 3572920740921087462}
   - component: {fileID: 6049377575984680306}
   - component: {fileID: 8151242335488848154}
@@ -569,6 +570,26 @@ MonoBehaviour:
   EnableAlphaNumericWeaponSwitch: 1
   EnableMouseScrollWeaponSwitch: 1
   ScrollThreshold: 0.1
+--- !u!114 &6185766225836372217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22849684986727963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2549d042f8b6d41bb6289069865f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: 0
+  HitEffect: 0
+  HitParticle: {fileID: 0}
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+  <NormalizedValue>k__BackingField: 0
+  <lastReason>k__BackingField: 0
 --- !u!114 &3572920740921087462
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Wood_Pine
   displayName: Pine Log
-  prefab: {fileID: 0}
+  prefab: {fileID: 1855221616810179539, guid: f43c1ed4e8ea98644bfb1be33a56a228, type: 3}
   icon: {fileID: 21300000, guid: 3a691b56f255f7e48acec83593e06853, type: 3}
   maxAmount: 300
   stackable: 1

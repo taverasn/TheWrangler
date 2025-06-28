@@ -144,6 +144,25 @@ public class Need
         this.canDeplete = canDeplete;
     }
 
+    public void Reset()
+    {
+        this.currentValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
+        this.dotRate = 0;
+        this.dotTimer = 0;
+        this.canRestore = restorationRate > 0;
+        this.canDeplete = true;
+    }
+
+    public void SetMinimum()
+    {
+        this.currentValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
+    }
+
+    public void SetMaximum()
+    {
+        this.currentValue = info.DepletionType == DepletionType.EMPTY ? 0 : info.MaxValue;
+    }
+
     public NeedsData GetNeedsData()
     {
         return new NeedsData(maxValue, currentValue, depletionRate, restorationRate);

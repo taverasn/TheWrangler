@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Rock_Stone
   displayName: Stone
-  prefab: {fileID: 0}
+  prefab: {fileID: 7698126216048273850, guid: 0174cc5e1da838840ba8eefdb0219ae9, type: 3}
   icon: {fileID: 21300000, guid: d592fc6167247764e945fba083e03517, type: 3}
   maxAmount: 300
   stackable: 1

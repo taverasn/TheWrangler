@@ -10,7 +10,7 @@ public class NeedsController : MonoBehaviour, IDataPersistence
     [SerializeField] private NeedsOwner needsOwner = NeedsOwner.PLAYER;
     // Only owners that are not the Player or Companion care about this since other owners
     // can have multiple of the same type
-    private string guid = "";
+    public string guid { get; private set; } = "";
 
     private bool TryGetNeed(NeedsType type, out Need need) => needsMap.TryGetValue(type, out need);
     private bool UsesSaveDataForCurrentValue => needsOwner == NeedsOwner.PLAYER || needsOwner == NeedsOwner.COMPANION;
@@ -83,6 +83,13 @@ public class NeedsController : MonoBehaviour, IDataPersistence
                     break;
                 case NeedsUpdateReason.RESUME_DEPLETION:
                     need.SetCanDeplete(true);
+                    break;
+                case NeedsUpdateReason.RESET:
+                    need.Reset();
+                    break;
+                case NeedsUpdateReason.SET_MAXIMUM:
+                    break;
+                case NeedsUpdateReason.SET_MINIMUM:
                     break;
             }
         }
@@ -244,7 +251,7 @@ public enum NeedsOwner
     // Also I dont care/think it matters for these types to save current values.
     ENEMY_ZOMBIE,
     NPC_VILLAGER,
-    PLANT,
+    RESOURCE,
     DESTRUCTABLE_OBJECT,
     NONE,
 }
@@ -260,6 +267,9 @@ public enum NeedsUpdateReason
     EFFECT_OVER_TIME_INCREASE,
     STOP_DEPLETION,
     RESUME_DEPLETION,
+    RESET,
+    SET_MINIMUM,
+    SET_MAXIMUM,
 }
 
 public enum DepletionType

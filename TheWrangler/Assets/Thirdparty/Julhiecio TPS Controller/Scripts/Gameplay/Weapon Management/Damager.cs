@@ -62,6 +62,8 @@ namespace JUTPS
         public bool CanHit { get; private set; }
         public bool IsColliding { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
+        [HideInInspector] public NeedsOwner owner;
+        
 
         public Damager()
         {
@@ -283,23 +285,23 @@ namespace JUTPS
                 {
                     if (itemSO.toolType == resourceHealth.toolType && itemSO.tier == resourceHealth.tier)
                     {
-                        resourceHealth.DoDamage(damage);
+                        resourceHealth.DoDamage(owner, damage);
                     }
                 }
                 else if (health)
                 {
-                    health.DoDamage(damage);
+                    health.DoDamage(owner, damage);
                     if (ShowHitMarker)
-                        if (!health.IsDead && realDamage > 0)
+                        if (health.lastReason != NeedsBroadcastReason.REACHED_MINIMUM && realDamage > 0)
                             HitMarkerEffect.HitCheck(health.transform.tag, point, realDamage);
                 }
             }
             else
             {
-                realDamage = bodyPart.DoDamage(damage);
+                realDamage = bodyPart.DoDamage(owner, damage);
                 if (ShowHitMarker)
                 {
-                    if (!bodyPart.Health.IsDead && realDamage > 0)
+                    if (bodyPart.Health.lastReason != NeedsBroadcastReason.REACHED_MINIMUM && realDamage > 0)
                         HitMarkerEffect.HitCheck(bodyPart.transform.tag, point, realDamage);
                 }
             }

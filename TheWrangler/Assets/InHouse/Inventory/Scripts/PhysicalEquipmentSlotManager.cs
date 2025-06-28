@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using JUTPS;
+using JUTPS.CharacterBrain;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,11 +11,13 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     [SerializeField] private Transform HeadSlot;
     [SerializeField] private Transform WeaponSlot;
 
+    private JUCharacterBrain jUCharacterBrain;
     private PlayerInventory inventory;
 
     private void Awake()
     {
         inventory = GetComponent<PlayerInventory>();
+        jUCharacterBrain = GetComponent<JUCharacterBrain>();
         slots[EquipmentSlot.HEAD] = HeadSlot;
         slots[EquipmentSlot.MAIN_HAND] = WeaponSlot;
     }
@@ -42,7 +46,16 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
             Transform equipmentTransform = Instantiate(item.info.prefab).transform;
             equipmentTransform.SetParent(slots[item.info.equipmentSlot], false);
 
-            inventory.PhysicalItemEquipped(equipmentTransform.gameObject.GetComponent<PhysicalItem>(), item.info.equipmentSlot);
+            PhysicalItem physicalItem = equipmentTransform.gameObject.GetComponent<PhysicalItem>();
+            physicalItem.owner = jUCharacterBrain.owner;
+
+            Damager damager = physicalItem.GetComponentInChildren<Damager>();
+            if (damager != null)
+            {
+                damager.owner = jUCharacterBrain.owner;
+            }
+
+            inventory.PhysicalItemEquipped(physicalItem, item.info.equipmentSlot);
         }
     }
 

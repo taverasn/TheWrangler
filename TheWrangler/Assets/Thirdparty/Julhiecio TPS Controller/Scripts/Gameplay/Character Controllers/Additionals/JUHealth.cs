@@ -1,75 +1,124 @@
-﻿using System.Collections;
+﻿using CrashKonijn.Goap.Core;
+using JUTPS.FX;
+using JUTPSEditor.JUHeader;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using JUTPS.FX;
-using JUTPSEditor.JUHeader;
+using static UnityEngine.Rendering.DebugUI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace JUTPS
 {
 
+    [RequireComponent(typeof(NeedsController))]
     [AddComponentMenu("JU TPS/Third Person System/Additionals/JU Health")]
     public class JUHealth : MonoBehaviour
     {
         [JUHeader("Settings")]
-        public float Health = 100;
-        public float MaxHealth = 100;
+        [SerializeField] protected NeedsOwner owner;
 
         [JUHeader("Effects")]
-        public bool BloodScreenEffect = false;
-        public GameObject BloodHitParticle;
+        public bool HitEffect = false;
+        public GameObject HitParticle;
 
-        [JUHeader("On Death Event")]
-        public UnityEvent OnDeath;
+        [JUHeader("On Destroyed Event")]
+        public UnityEvent OnDestroyed;
 
-        [JUHeader("Stats")]
-        public bool IsDead;
+        public float NormalizedValue { get; private set; }
+        public NeedsBroadcastReason lastReason { get; private set; }
 
-        void Start()
+        protected NeedsType needsType = NeedsType.HEALTH;
+        protected string guid;
+
+
+        private void Start()
         {
-            LimitHealth();
-            InvokeRepeating(nameof(CheckHealthState), 0, 0.5f);
+            guid = GetComponent<NeedsController>().guid;
         }
-        private void LimitHealth()
-        {
-            Health = Mathf.Clamp(Health, 0, MaxHealth);
-        }
-        public static void DoDamage(JUHealth health, float damage, Vector3 hitPosition = default(Vector3))
-        {
-            health.DoDamage(damage, hitPosition);
-        }
-        public void DoDamage(float damage, Vector3 hitPosition = default(Vector3))
-        {
-            Health -= damage;
-            LimitHealth();
-            Invoke(nameof(CheckHealthState), 0.016f);
 
-            if (BloodScreenEffect) BloodScreen.PlayerTakingDamaged();
-            if (hitPosition != Vector3.zero && BloodHitParticle != null)
+        protected virtual void OnEnable()
+        {
+            GameEventsManager.Instance.NeedsEvents.onBroadcastNeedsUpdate += OnBroadcastNeedsUpdate;
+        }
+
+        protected virtual void OnDisable()
+        {
+            GameEventsManager.Instance.NeedsEvents.onBroadcastNeedsUpdate -= OnBroadcastNeedsUpdate;
+        }
+
+        protected virtual void OnBroadcastNeedsUpdate(NeedsBroadcastEvent e)
+        {
+            if (e.owner == owner && e.guid == guid && e.need.info.NeedsType == needsType)
             {
-                GameObject fxParticle = Instantiate(BloodHitParticle, hitPosition, Quaternion.identity);
+                if (e.reason == NeedsBroadcastReason.REACHED_MINIMUM)
+                {
+                    //Disable all damagers0
+                    foreach (Damager dmg in GetComponentsInChildren<Damager>()) dmg.gameObject.SetActive(false);
+
+                    OnDestroyed.Invoke();
+                }
+
+                lastReason = e.reason;
+                NormalizedValue = e.need.NormalizedValue;
+            }
+        }
+
+        public void DoDamage(NeedsOwner owner, float value, Vector3 hitPosition = default(Vector3))
+        {
+            if (owner == this.owner)
+                return;
+
+            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent
+            {
+                owner = this.owner,
+                guid = guid,
+                type = needsType,
+                reason = NeedsUpdateReason.DECREASE,
+                value = value
+            });
+
+            if (HitEffect && value > 0) BloodScreen.PlayerTakingDamaged();
+            if (hitPosition != Vector3.zero && HitParticle != null)
+            {
+                GameObject fxParticle = Instantiate(HitParticle, hitPosition, Quaternion.identity);
                 fxParticle.hideFlags = HideFlags.HideInHierarchy;
                 Destroy(fxParticle, 3);
             }
         }
 
-        public void CheckHealthState()
+        public void DoHeal(float value, Vector3 hitPosition = default(Vector3))
         {
-            LimitHealth();
-
-            if (Health <= 0 && IsDead == false)
+            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent
             {
-                Health = 0;
-                IsDead = true;
+                owner = owner,
+                guid = guid,
+                type = needsType,
+                reason = NeedsUpdateReason.INCREASE,
+                value = value
+            });
+        }
 
-                //Disable all damagers0
-                foreach (Damager dmg in GetComponentsInChildren<Damager>()) dmg.gameObject.SetActive(false);
+        public void ResetHealth()
+        {
+            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent
+            {
+                owner = owner,
+                guid = guid,
+                type = needsType,
+                reason = NeedsUpdateReason.RESET,
+            });
+        }
 
-                OnDeath.Invoke();
-            }
-
-            if (Health > 0) IsDead = false;
+        public void SetMinimum()
+        {
+            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent
+            {
+                owner = owner,
+                guid = guid,
+                type = needsType,
+                reason = NeedsUpdateReason.SET_MINIMUM,
+            });
         }
     }
-
 }

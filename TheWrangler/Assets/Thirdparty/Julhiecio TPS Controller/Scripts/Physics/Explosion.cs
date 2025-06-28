@@ -89,7 +89,8 @@ namespace JUTPS.PhysicsScripts
                     //Calculate Damage
                     float damage = (int)Mathf.Lerp(Damage, Damage / 10, Vector3.Distance(health.transform.position, transform.position) / ExplosionRadious);
 
-                    health.DoDamage(damage);
+                    // Everything should take damage from an explosion
+                    health.DoDamage(NeedsOwner.NONE, damage);
                 }
             }
 

@@ -19,9 +19,9 @@ namespace JUTPS.PowerUps
                 var juHealth = other.GetComponent<JUHealth>();
                 if (juHealth != null)
                 {
-                    if (juHealth.Health == juHealth.MaxHealth) return;
+                    if (juHealth.lastReason == NeedsBroadcastReason.REACHED_MAXIMUM) return;
 
-                    juHealth.Health += HealthToAdd;
+                    juHealth.DoHeal(HealthToAdd);
 
                     GameObject fx = Instantiate(Effect, transform.position, transform.rotation);
                     Destroy(fx, 5);

@@ -349,7 +349,7 @@ namespace JUTPS.AI
             bool attack = false;
             if (target.TryGetComponent(out JUHealth health))
             {
-                if (health.IsDead == false)
+                if (health.lastReason != NeedsBroadcastReason.REACHED_MINIMUM)
                 {
                     attack = true;
                 }
@@ -371,7 +371,7 @@ namespace JUTPS.AI
                 {
                     if (col.TryGetComponent(out JUHealth health))
                     {
-                        if (health.Health > 0 && health.IsDead == false)
+                        if (health.lastReason != NeedsBroadcastReason.REACHED_MINIMUM)
                         {
                             aliveTargets.Add(health.transform);
                         }

@@ -148,7 +148,7 @@ namespace JUTPS.WeaponSystem
 					if (col.gameObject.TryGetComponent(out DamageableBodyPart bodyPart))
 					{
 						//Take body part damage
-						RealDamage = bodyPart.DoDamage(BulletDamage);
+						RealDamage = bodyPart.DoDamage(NeedsOwner.NONE, BulletDamage);
 					}
 					else
 					{
@@ -163,7 +163,8 @@ namespace JUTPS.WeaponSystem
 				{
 					if (col.gameObject.TryGetComponent(out JUHealth health))
 					{
-						health.DoDamage(BulletDamage);
+						// Everything should take damage from a bullet
+						health.DoDamage(NeedsOwner.NONE, BulletDamage);
 					}
 				}
 
@@ -197,7 +198,7 @@ namespace JUTPS.WeaponSystem
 					{
 						if (col.gameObject.GetComponentInParent<JUHealth>() != null)
 						{
-							if (col.gameObject.GetComponentInParent<JUHealth>().IsDead == false)
+							if (col.gameObject.GetComponentInParent<JUHealth>().lastReason != NeedsBroadcastReason.REACHED_MINIMUM)
 							{
 								HitMarkerEffect.HitCheck(CollidedGameObjectTag, FinalPoint, RealDamage);
 							}

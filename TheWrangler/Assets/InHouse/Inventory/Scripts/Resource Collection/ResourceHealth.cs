@@ -1,10 +1,14 @@
 using JUTPS;
+using JUTPS.FX;
+using JUTPSEditor.JUHeader;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ResourceHealth : JUHealth
 {
-    [field:SerializeField] public ToolType toolType { get; private set; }
-    [field:SerializeField] public Tier tier { get; private set; }
+    [field: SerializeField] public ToolType toolType { get; private set; }
+    [field: SerializeField] public Tier tier { get; private set; }
     [SerializeField] private ResourceSO resourceDrop;
     [SerializeField] private Transform itemPickUpPrefab;
     private int dropAmount;
@@ -14,20 +18,24 @@ public class ResourceHealth : JUHealth
         dropAmount = Random.Range(0, 100);
     }
 
-    private void OnEnable()
+
+    protected override void OnEnable()
     {
-        OnDeath.AddListener(HandleResourceDeath);
+        GameEventsManager.Instance.NeedsEvents.onBroadcastNeedsUpdate += OnBroadcastNeedsUpdate;
+        OnDestroyed.AddListener(HandleResourceDeath);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        OnDeath.RemoveListener(HandleResourceDeath);
+        GameEventsManager.Instance.NeedsEvents.onBroadcastNeedsUpdate -= OnBroadcastNeedsUpdate;
+        OnDestroyed.RemoveListener(HandleResourceDeath);
     }
 
     private void HandleResourceDeath()
     {
-        PickUp pickUp = Instantiate(itemPickUpPrefab, null).GetComponent<PickUp>();
+        PickUp pickUp = Instantiate(itemPickUpPrefab).GetComponent<PickUp>();
         pickUp.SetUp(resourceDrop, dropAmount);
+        pickUp.transform.position = this.transform.position;
         Destroy(this.gameObject);
     }
 }

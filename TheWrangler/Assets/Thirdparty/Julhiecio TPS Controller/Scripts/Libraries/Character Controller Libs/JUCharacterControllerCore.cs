@@ -62,6 +62,9 @@ namespace JUTPS.CharacterBrain
         private Vector3 StartStepUpCharacterPosition, StepPosition;
         private float GoingToStepTime;
 
+        [Header("Owner")]
+        public NeedsOwner owner;
+
         //MOVEMENT
         [Header("Movement Settings")]
         public MovementMode LocomotionMode;
@@ -357,7 +360,7 @@ namespace JUTPS.CharacterBrain
             }
 
             //Get JUHealth
-            if (TryGetComponent(out JUHealth health)) { CharacterHealth = health; CharacterHealth.OnDeath.AddListener(DisableDamagers); }
+            if (TryGetComponent(out JUHealth health)) { CharacterHealth = health; CharacterHealth.OnDestroyed.AddListener(DisableDamagers); }
 
             // Get Inventory
             if (TryGetComponent(out PlayerInventory _Inventory)) { Inventory = _Inventory; }
@@ -1947,7 +1950,7 @@ namespace JUTPS.CharacterBrain
         {
             if (CharacterHealth == null) return;
 
-            if (CharacterHealth.Health <= 0 && IsDead == false)
+            if (CharacterHealth.lastReason == NeedsBroadcastReason.REACHED_MINIMUM && IsDead == false)
             {
                 KillCharacter();
             }
@@ -1983,7 +1986,8 @@ namespace JUTPS.CharacterBrain
                 CharacterHealth = GetComponent<JUHealth>();
                 if (CharacterHealth == null) return;
             }
-            CharacterHealth.DoDamage(Damage, hitPosition);
+            // If the player takes damage in this way it doesnt matter where it came from it should hit
+            CharacterHealth.DoDamage(NeedsOwner.NONE, Damage, hitPosition);
         }
         public virtual void KillCharacter()
         {
@@ -2002,7 +2006,7 @@ namespace JUTPS.CharacterBrain
                 Ragdoller.TimeToGetUp = 900;
             }
 
-            CharacterHealth.Health = 0;
+            CharacterHealth.SetMinimum();
             IsDead = true;
         }
         public virtual void RessurectCharacter()
@@ -2030,9 +2034,7 @@ namespace JUTPS.CharacterBrain
             //Reset Health
             if (CharacterHealth != null)
             {
-                CharacterHealth.Health = CharacterHealth.MaxHealth;
-                CharacterHealth.IsDead = false;
-                CharacterHealth.CheckHealthState();
+                CharacterHealth.ResetHealth();
             }
             IsDead = false;
 

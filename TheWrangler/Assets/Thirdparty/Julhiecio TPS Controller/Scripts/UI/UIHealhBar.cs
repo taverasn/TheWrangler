@@ -41,14 +41,14 @@ namespace JUTPS.UI
             if (HealthComponent == null || HealthBarImage == null) return;
 
 
-            float healthValueNormalized = HealthComponent.Health / HealthComponent.MaxHealth;
-            HealthBarImage.fillAmount = Mathf.MoveTowards(HealthBarImage.fillAmount, healthValueNormalized, Speed * Time.deltaTime);
+            //float healthValueNormalized = HealthComponent.Health / HealthComponent.MaxHealth;
+            //HealthBarImage.fillAmount = Mathf.MoveTowards(HealthBarImage.fillAmount, healthValueNormalized, Speed * Time.deltaTime);
 
             HealthBarImage.color = Color.Lerp(EmptyHPColor, FullHPColor, HealthBarImage.fillAmount);
 
             if (HealthPointsText != null)
             {
-                HealthPointsText.text = HealthComponent.Health.ToString("000") + "/" + HealthComponent.MaxHealth;
+                //HealthPointsText.text = HealthComponent.Health.ToString("000") + "/" + HealthComponent.MaxHealth;
                 if (ChangeHPTextColorToo) HealthPointsText.color = Color.Lerp(HealthBarImage.color, Color.white, 0.6f);
             }
             if (oldFillAmount != HealthBarImage.fillAmount)
