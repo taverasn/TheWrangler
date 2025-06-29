@@ -16,7 +16,7 @@ namespace TheWrangler.GOAP
             builder.AddAction<ChargeAction>()
                 .AddEffect<ChargeLow>(EffectType.Decrease)
                 .SetTarget<ChargeStationTarget>()
-                .SetStoppingDistance(1);
+                .SetStoppingDistance(.1f);
 
             builder.AddTargetSensor<ChargeStationTargetSensor>()
                 .SetTarget<ChargeStationTarget>();

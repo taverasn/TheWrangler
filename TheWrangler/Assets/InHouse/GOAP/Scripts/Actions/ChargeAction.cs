@@ -12,6 +12,7 @@ namespace TheWrangler.GOAP
         // This method is optional and can be removed
 
         bool actionComplete = false;
+        bool chargeMessageSent = false;
 
         public override void Created()
         {
@@ -38,7 +39,6 @@ namespace TheWrangler.GOAP
         // This method is optional and can be removed
         public override void Start(IMonoAgent agent, Data data)
         {
-            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent(NeedsOwner.COMPANION, "", NeedsType.HUNGER, NeedsUpdateReason.EFFECT_OVER_TIME_MAXIMUM, 0, 5));
         }
 
         // This method is called once before the action is performed
@@ -51,6 +51,11 @@ namespace TheWrangler.GOAP
         // This method is required
         public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
         {
+            if (context.IsInRange && !chargeMessageSent)
+            {
+                GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent(NeedsOwner.COMPANION, "", NeedsType.HUNGER, NeedsUpdateReason.EFFECT_OVER_TIME_MAXIMUM, 0, 5));
+                chargeMessageSent = true;
+            }
             if (actionComplete)
                 return ActionRunState.Completed;
             return ActionRunState.Continue;
@@ -61,6 +66,7 @@ namespace TheWrangler.GOAP
         public override void Complete(IMonoAgent agent, Data data)
         {
             actionComplete = false;
+            chargeMessageSent = false;
         }
 
         // This method is called when the action is stopped
