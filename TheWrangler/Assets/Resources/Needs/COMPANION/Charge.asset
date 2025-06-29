@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Charge
   MaxValue: 100
-  DepletionRate: 5
   NeedsType: 4
   DepletionType: 1
+  DepletionBehaviour: 1
+  DepletionRate: 1
+  RestorationRate: 0

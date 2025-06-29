@@ -14,7 +14,7 @@ namespace JUTPS.UI
         [SerializeField] private JUHealth HealthComponent;
         [SerializeField] private bool IsPlayerHealthBar = true;
         [SerializeField] private Image HealthBarImage;
-        [SerializeField] private float Speed = 6;
+        //[SerializeField] private float Speed = 6;
         [SerializeField] private Text HealthPointsText;
 
         [Header("Health Bar Color Change")]

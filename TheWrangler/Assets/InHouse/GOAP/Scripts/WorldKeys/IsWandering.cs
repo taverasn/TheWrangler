@@ -1,10 +1,7 @@
 using CrashKonijn.Goap.Runtime;
-using UnityEngine;
 
-namespace TheWrangler.GOAP.WorldKeys
+namespace TheWrangler.GOAP
 {
-    public class IsWandering : WorldKeyBase
-    {
-
-    }
+    [GoapId("IsWandering-261293e8-fe17-41f5-a8db-149d22c65cc1")]
+    public class IsWandering : WorldKeyBase {}
 }

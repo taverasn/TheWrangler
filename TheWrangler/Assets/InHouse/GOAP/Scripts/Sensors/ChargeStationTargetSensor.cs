@@ -4,7 +4,7 @@ using System.Linq;
 using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
 
-namespace TheWrangler.GOAP.Sensors
+namespace TheWrangler.GOAP
 {
     public class ChargeStationTargetSensor : LocalTargetSensorBase, IInjectable
     {

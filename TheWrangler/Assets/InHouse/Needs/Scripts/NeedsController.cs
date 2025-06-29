@@ -18,7 +18,7 @@ public class NeedsController : MonoBehaviour, IDataPersistence
     // Find a way to get these state variables from the owners controller
     private bool isSprinting;
     private bool isOutOfCombat = true;
-    private bool isIdle = true;
+    //private bool isIdle = true;
 
     private void Awake()
     {
@@ -48,22 +48,27 @@ public class NeedsController : MonoBehaviour, IDataPersistence
 
     public int ShouldSatisfyNeed(NeedsType needsType)
     {
-        int satisfyNeed = 0;
-
         if (TryGetNeed(needsType, out Need need))
         {
+            bool thresholdMet = false;
+
             switch (need.info.DepletionType)
             {
                 case DepletionType.EMPTY:
-                    satisfyNeed = need.NormalizedValue <= 0.5f ? 1 : 0;
+                    thresholdMet = need.NormalizedValue <= 0.3f;
                     break;
                 case DepletionType.FILL:
-                    satisfyNeed = need.NormalizedValue >= 0.5f ? 1 : 0;
+                    thresholdMet = need.NormalizedValue >= 0.7f;
                     break;
             }
+            // Threshold met and goto is not none then return 1
+            // only return 0 if not threshold met and goto is none
+
+            if (!thresholdMet && need.goTo == GOTO.NONE)
+                return 0;
         }
 
-        return satisfyNeed;
+        return 1;
     }
 
     private void OnUpdateNeeds(NeedsUpdateEvent needsUpdateEvent)
@@ -97,6 +102,12 @@ public class NeedsController : MonoBehaviour, IDataPersistence
                     break;
                 case NeedsUpdateReason.EFFECT_OVER_TIME_DECREASE:
                     need.ApplyEffectOverTime(-needsUpdateEvent.value, needsUpdateEvent.timer);
+                    break;
+                case NeedsUpdateReason.EFFECT_OVER_TIME_MAXIMUM:
+                    need.ApplyEffectOverTime(needsUpdateEvent.timer);
+                    break;
+                case NeedsUpdateReason.EFFECT_OVER_TIME_MINIMUM:
+                    need.ApplyEffectOverTime(needsUpdateEvent.timer, false);
                     break;
                 case NeedsUpdateReason.STOP_DEPLETION:
                     need.SetCanDeplete(false);
@@ -285,6 +296,8 @@ public enum NeedsUpdateReason
     INCREASE,
     EFFECT_OVER_TIME_DECREASE,
     EFFECT_OVER_TIME_INCREASE,
+    EFFECT_OVER_TIME_MAXIMUM,
+    EFFECT_OVER_TIME_MINIMUM,
     STOP_DEPLETION,
     RESUME_DEPLETION,
     RESET,

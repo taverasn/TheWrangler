@@ -1,58 +1,46 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
-using TheWrangler.GOAP.Config;
-using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace TheWrangler.GOAP.Sensors
+namespace TheWrangler.GOAP
 {
-    public class WanderTargetSensor : LocalTargetSensorBase, IInjectable
+    // Defining a GoapId is only necessary when using the ScriptableObject configuration method.
+    [GoapId("WanderTargetSensor-c34e9575-d171-4044-9b83-a91a1c32e214")]
+    public class WanderTargetSensor : LocalTargetSensorBase
     {
-        const int MAX_TARGET_SEARCH_ATTEMPTS = 5;
-        const int MAX_DISTANCE_FROM_TARGET = 1;
+        private static readonly Bounds Bounds = new(Vector3.zero, new Vector3(15, 0, 8));
 
-        private WanderConfigSO wanderConfig;
+        // Is called when this script is initialzed
+        public override void Created() { }
 
-        public override void Created()
+        // Is called every frame that an agent of an `AgentType` that uses this sensor needs it.
+        // This can be used to 'cache' data that is used in the `Sense` method.
+        // Eg look up all the trees in the scene, and then find the closest one in the Sense method.
+        public override void Update() { }
+
+        public override ITarget Sense(IActionReceiver agent, IComponentReference references, ITarget existingTarget)
         {
+            var random = this.GetRandomPosition(agent);
+
+            // If the existing target is a `PositionTarget`, we can reuse it and just update the position.
+            if (existingTarget is PositionTarget positionTarget)
+            {
+                return positionTarget.SetPosition(random);
+            }
+
+            return new PositionTarget(random);
         }
 
         private Vector3 GetRandomPosition(IActionReceiver agent)
         {
-            int count = 0;
-            while (count < MAX_TARGET_SEARCH_ATTEMPTS)
-            {
-                Vector2 random = Random.insideUnitCircle * wanderConfig.WanderRadius;
-                Vector3 position = agent.Transform.position + new Vector3(
-                    random.x,
-                    0,
-                    random.y
-                );
-                if (NavMesh.SamplePosition(position, out NavMeshHit hit, MAX_DISTANCE_FROM_TARGET, NavMesh.AllAreas))
-                {
-                    return hit.position;
-                }
-                count++;
-            }
+            var random = Random.insideUnitCircle * 3f;
+            var position = agent.Transform.position + new Vector3(random.x, 0f, random.y);
 
+            // Check if the position is within the bounds of the world.
+            if (Bounds.Contains(position))
+                return position;
 
-            return agent.Transform.position;
-        }
-
-        public override void Update()
-        {
-        }
-
-        public void Inject(DependencyInjector dependencyInjector)
-        {
-            wanderConfig = dependencyInjector.wanderConfig;
-        }
-
-        public override ITarget Sense(IActionReceiver agent, IComponentReference references, ITarget existingTarget)
-        {
-            Vector3 position = GetRandomPosition(agent);
-            return new PositionTarget(position);
+            return Bounds.ClosestPoint(position);
         }
     }
 }

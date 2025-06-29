@@ -1,49 +1,68 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
-using TheWrangler.GOAP.Config;
-using TheWrangler.GOAP.Interfaces;
 using UnityEngine;
 
-namespace TheWrangler.GOAP.Actions
+namespace TheWrangler.GOAP
 {
-    public class MeleeAction : GoapActionBase<AttackData>, IInjectable
+    [GoapId("Melee-68ec823f-70dd-443c-a584-4aacac4cf032")]
+    public class MeleeAction : GoapActionBase<MeleeAction.Data>
     {
-        private AttackConfigSO attackConfig;
+        // This method is called when the action is created
+        // This method is optional and can be removed
         public override void Created()
         {
         }
 
-        public override void End(IMonoAgent agent, AttackData data)
+        // This method is called every frame before the action is performed
+        // If this method returns false, the action will be stopped
+        // This method is optional and can be removed
+        public override bool IsValid(IActionReceiver agent, Data data)
         {
-            //data.animator.SetBool(AttackData.ATTACK, false);
+            return true;
         }
 
-        public void Inject(DependencyInjector dependencyInjector)
+        // This method is called when the action is started
+        // This method is optional and can be removed
+        public override void Start(IMonoAgent agent, Data data)
         {
-            attackConfig = dependencyInjector.attackConfig;
         }
 
-        public override IActionRunState Perform(IMonoAgent agent, AttackData data, IActionContext context)
+        // This method is called once before the action is performed
+        // This method is optional and can be removed
+        public override void BeforePerform(IMonoAgent agent, Data data)
         {
-            data.Timer -= context.DeltaTime;
-
-            bool shouldAttack = data.Target != null &&
-                                Vector3.Distance(data.Target.Position, agent.transform.position) <=
-                                attackConfig.MeleeAttackRadius;
-
-            //data.animator.SetBool(AttackData.ATTACK, shouldAttack);
-
-            if (shouldAttack)
-            {
-                agent.transform.LookAt(data.Target.Position);
-            }
-
-            return data.Timer > 0 ? ActionRunState.Continue : ActionRunState.Stop;
         }
 
-        public override void Start(IMonoAgent agent, AttackData data)
+        // This method is called every frame while the action is running
+        // This method is required
+        public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
         {
-            data.Timer = attackConfig.AttackDelay;
+            return ActionRunState.Completed;
+        }
+
+        // This method is called when the action is completed
+        // This method is optional and can be removed
+        public override void Complete(IMonoAgent agent, Data data)
+        {
+        }
+
+        // This method is called when the action is stopped
+        // This method is optional and can be removed
+        public override void Stop(IMonoAgent agent, Data data)
+        {
+        }
+
+        // This method is called when the action is completed or stopped
+        // This method is optional and can be removed
+        public override void End(IMonoAgent agent, Data data)
+        {
+        }
+
+        // The action class itself must be stateless!
+        // All data should be stored in the data class
+        public class Data : IActionData
+        {
+            public ITarget Target { get; set; }
         }
     }
 }

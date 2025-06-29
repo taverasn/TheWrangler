@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Need
 {
@@ -12,8 +13,10 @@ public class Need
 
     private float dotTimer;
     private float dotRate;
+    public GOTO goTo {get; private set;}
+    private float elapsedTime;
+    private float reachValue;
 
-    private bool canRestore;
     // TODO: At the moment this is a debug bool to be able to play without worrying about needs management
     private bool canDeplete = true;
 
@@ -28,14 +31,14 @@ public class Need
                         currentValue < maxValue :
                         currentValue > 0) &&
                         restorationRate > 0 &&
-                        canRestore;
+                        goTo == GOTO.NONE;
 
     bool ShouldDeplete => (info.DepletionType == DepletionType.EMPTY ?
                             currentValue > 0 :
                             currentValue < maxValue) &&
                             depletionRate > 0 &&
                             info.DepletionBehaviour == DepletionBehaviour.PASSIVE &&
-                            !canRestore;
+                            goTo == GOTO.NONE;
 
     public Need(NeedsSO info, NeedsOwner owner, string guid)
     {
@@ -46,7 +49,6 @@ public class Need
         this.currentValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
         this.depletionRate = info.DepletionRate;
         this.restorationRate = info.RestorationRate;
-        this.canRestore = restorationRate > 0;
     }
 
     public Need(NeedsSO info, NeedsOwner owner, string guid, float maxValue, float currentValue, float depletionRate, float restorationRate)
@@ -58,7 +60,6 @@ public class Need
         this.currentValue = currentValue;
         this.depletionRate = depletionRate;
         this.restorationRate = restorationRate;
-        this.canRestore = restorationRate > 0;
     }
 
     public void Update(float deltaTime, bool isOutOfCombat)
@@ -72,9 +73,31 @@ public class Need
         if (dotTimer > 0 && dotRate != 0)
         {
             dotTimer -= deltaTime;
+
             ChangeCurrentValue(dotRate);
 
             if (dotTimer < 0)
+            {
+                ClearEffectOverTime();
+            }
+        }
+
+        if (goTo != GOTO.NONE)
+        {
+            if (elapsedTime < dotTimer && currentValue != reachValue)
+            {
+                elapsedTime += deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / dotTimer);
+                NeedsBroadcastReason reason = NeedsBroadcastReason.UNKNOWN;
+                currentValue = Mathf.Lerp(currentValue, reachValue, t);
+                if (goTo == GOTO.MAXIMUM)
+                    reason = IsFull ? NeedsBroadcastReason.REACHED_MAXIMUM : NeedsBroadcastReason.INCREASED;
+                else if (goTo == GOTO.MINIMUM)
+                    reason = IsDepleted ? NeedsBroadcastReason.REACHED_MINIMUM : NeedsBroadcastReason.DECREASED;
+
+                GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, reason));
+            }
+            else
             {
                 ClearEffectOverTime();
             }
@@ -92,13 +115,29 @@ public class Need
         this.dotRate = dotRate;
         this.dotTimer = dotTimer;
         GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_STARTED));
+    }
 
+    public void ApplyEffectOverTime(float dotTimer, bool maximum = true)
+    {
+        this.dotTimer = dotTimer;
+
+        if (maximum)
+            reachValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
+        else
+            reachValue = info.DepletionType == DepletionType.EMPTY ? 0 : info.MaxValue;
+
+        goTo = maximum ? GOTO.MAXIMUM : GOTO.MINIMUM;
+
+        GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_STARTED));
     }
 
     public void ClearEffectOverTime()
     {
         this.dotRate = 0;
         this.dotTimer = 0;
+        this.reachValue = 0;
+        this.goTo = GOTO.NONE;
+        this.elapsedTime = 0;
         GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_ENDED));
     }
 
@@ -106,9 +145,6 @@ public class Need
     {
         if (!canDeplete)
             return;
-
-        // If value is positive at this point that means that we're allowed to naturally restore
-        canRestore = value > 0;
 
         float changeValue = info.DepletionType == DepletionType.FILL ? -value : value;
 
@@ -149,7 +185,6 @@ public class Need
         this.currentValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
         this.dotRate = 0;
         this.dotTimer = 0;
-        this.canRestore = restorationRate > 0;
         this.canDeplete = true;
     }
 
@@ -167,4 +202,11 @@ public class Need
     {
         return new NeedsData(maxValue, currentValue, depletionRate, restorationRate);
     }
+}
+
+public enum GOTO
+{
+    NONE,
+    MAXIMUM,
+    MINIMUM
 }

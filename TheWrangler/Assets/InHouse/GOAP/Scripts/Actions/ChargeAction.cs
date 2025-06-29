@@ -1,58 +1,85 @@
 using CrashKonijn.Agent.Core;
-using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
-using TheWrangler.GOAP.Behaviour;
-using TheWrangler.GOAP.Interfaces;
+using System;
 using UnityEngine;
 
-namespace TheWrangler.GOAP.Actions
+namespace TheWrangler.GOAP
 {
-    public class ChargeAction : GoapActionBase<ChargeAction.Data>, IInjectable
+    [GoapId("Charge-70bd9651-decd-4ad1-8909-6626e73fefa6")]
+    public class ChargeAction : GoapActionBase<ChargeAction.Data>
     {
-        private NeedsConfigSO needsConfig;
-        private static readonly int IS_EATING = Animator.StringToHash("IsEating");
+        // This method is called when the action is created
+        // This method is optional and can be removed
+
+        bool actionComplete = false;
 
         public override void Created()
         {
+            GameEventsManager.Instance.NeedsEvents.onBroadcastNeedsUpdate += OnBroadcastNeedsUpdate;
         }
 
-        public override void End(IMonoAgent agent, Data data)
+        private void OnBroadcastNeedsUpdate(NeedsBroadcastEvent e)
         {
-            //data.animator.SetBool(IS_EATING, false);
-            data.charge.enabled = true;
+            if (e.owner == NeedsOwner.COMPANION && e.need.info.NeedsType == NeedsType.HUNGER && e.reason == NeedsBroadcastReason.REACHED_MAXIMUM)
+            {
+                actionComplete = true;
+            }
         }
 
-        public void Inject(DependencyInjector dependencyInjector)
+        // This method is called every frame before the action is performed
+        // If this method returns false, the action will be stopped
+        // This method is optional and can be removed
+        public override bool IsValid(IActionReceiver agent, Data data)
         {
-            needsConfig = dependencyInjector.needsConfig;
+            return true;
         }
 
+        // This method is called when the action is started
+        // This method is optional and can be removed
         public override void Start(IMonoAgent agent, Data data)
         {
-            data.charge.enabled = false;
-            data.Timer = needsConfig.NeedsCheckInterval;
+            GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent(NeedsOwner.COMPANION, "", NeedsType.HUNGER, NeedsUpdateReason.EFFECT_OVER_TIME_MAXIMUM, 0, 5));
         }
 
+        // This method is called once before the action is performed
+        // This method is optional and can be removed
+        public override void BeforePerform(IMonoAgent agent, Data data)
+        {
+        }
+
+        // This method is called every frame while the action is running
+        // This method is required
         public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
         {
-            data.Timer -= context.DeltaTime;
-            data.charge.charge -= context.DeltaTime * needsConfig.NeedsRestorationRate;
-            //data.animator.SetBool(IS_EATING, true);
-            if (data.Target == null || data.charge.charge <= 0)
-            {
-                return ActionRunState.Stop;
-            }
-
+            if (actionComplete)
+                return ActionRunState.Completed;
             return ActionRunState.Continue;
         }
 
-        public class Data : CommonData
+        // This method is called when the action is completed
+        // This method is optional and can be removed
+        public override void Complete(IMonoAgent agent, Data data)
         {
-            [GetComponent]
-            public Animator animator { get; set; }
+            actionComplete = false;
+        }
 
-            [GetComponent]
-            public ChargeBehaviour charge { get; set; }
+        // This method is called when the action is stopped
+        // This method is optional and can be removed
+        public override void Stop(IMonoAgent agent, Data data)
+        {
+        }
+
+        // This method is called when the action is completed or stopped
+        // This method is optional and can be removed
+        public override void End(IMonoAgent agent, Data data)
+        {
+        }
+
+        // The action class itself must be stateless!
+        // All data should be stored in the data class
+        public class Data : IActionData
+        {
+            public ITarget Target { get; set; }
         }
     }
 }

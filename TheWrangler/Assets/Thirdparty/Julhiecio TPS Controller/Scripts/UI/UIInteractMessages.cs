@@ -10,11 +10,11 @@ namespace JUTPS.UI
     {
         [Header("Item Pickup Message")]
         [SerializeField] private GameObject PickUpMessageObject;
-        [SerializeField] private bool SetMessagePositionToItemPosition = true;
+        //[SerializeField] private bool SetMessagePositionToItemPosition = true;
         [SerializeField] private Vector3 Offset;
         [SerializeField] private bool ShowItemNameOnText;
         [SerializeField] private Text WarningText;
-        [SerializeField] private string PickUpLabelText = "[HOLD] TO PICK UP ";
+        //[SerializeField] private string PickUpLabelText = "[HOLD] TO PICK UP ";
         [Header("Vehicle Enter Message")]
         [SerializeField] private string VehicleEnterLabelText = "TO DRIVE";
         [SerializeField] private Vector3 VehicleOffset;

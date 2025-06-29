@@ -1,73 +1,78 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Agent.Runtime;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace TheWrangler.GOAP.Behaviour
+namespace TheWrangler.GOAP
 {
-    [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(AgentBehaviour))]
     public class AgentMoveBehaviour : MonoBehaviour
     {
-        private NavMeshAgent agent;
-        private Animator animator;
-        private AgentBehaviour agentBehaviour;
+        private AgentBehaviour agent;
         private ITarget currentTarget;
-        [SerializeField]private float minMoveDistance = 0.25f;
-
-        private Vector3 lastPosition;
-        private static readonly int WALK = Animator.StringToHash("Walk");
+        private bool shouldMove;
 
         private void Awake()
         {
-            agent = GetComponent<NavMeshAgent>();
-            animator = GetComponent<Animator>();
-            agentBehaviour = agent.GetComponent<AgentBehaviour>();
+            this.agent = this.GetComponent<AgentBehaviour>();
         }
 
         private void OnEnable()
         {
-            agentBehaviour.Events.OnTargetInRange += EventsOnTargetInRange;    
-            agentBehaviour.Events.OnTargetChanged += EventsOnTargetChanged;    
-            agentBehaviour.Events.OnTargetNotInRange += EventsOnTargetNotInRange;    
+            this.agent.Events.OnTargetInRange += this.OnTargetInRange;
+            this.agent.Events.OnTargetChanged += this.OnTargetChanged;
+            this.agent.Events.OnTargetNotInRange += this.TargetNotInRange;
+            this.agent.Events.OnTargetLost += this.TargetLost;
         }
 
         private void OnDisable()
         {
-            agentBehaviour.Events.OnTargetInRange -= EventsOnTargetInRange;
-            agentBehaviour.Events.OnTargetChanged -= EventsOnTargetChanged;
-            agentBehaviour.Events.OnTargetNotInRange -= EventsOnTargetNotInRange;
+            this.agent.Events.OnTargetInRange -= this.OnTargetInRange;
+            this.agent.Events.OnTargetChanged -= this.OnTargetChanged;
+            this.agent.Events.OnTargetNotInRange -= this.TargetNotInRange;
+            this.agent.Events.OnTargetLost -= this.TargetLost;
         }
 
-        private void EventsOnTargetInRange(ITarget target)
+        private void TargetLost()
         {
+            this.currentTarget = null;
+            this.shouldMove = false;
         }
 
-        private void EventsOnTargetChanged(ITarget target, bool inRange)
+        private void OnTargetInRange(ITarget target)
         {
-            currentTarget = target;
-            lastPosition = currentTarget.Position;
-            agent.SetDestination(target.Position);
-            //animator.SetBool(WALK, true);
+            this.shouldMove = false;
         }
 
-        private void EventsOnTargetNotInRange(ITarget target)
+        private void OnTargetChanged(ITarget target, bool inRange)
         {
-            //animator.SetBool(WALK, false);
+            this.currentTarget = target;
+            this.shouldMove = !inRange;
         }
 
-        private void Update()
+        private void TargetNotInRange(ITarget target)
         {
-            if (currentTarget == null)
-            {
+            this.shouldMove = true;
+        }
+
+        public void Update()
+        {
+            if (this.agent.IsPaused)
                 return;
-            }
 
-            if (minMoveDistance <= Vector3.Distance(currentTarget.Position, lastPosition))
-            {
-                lastPosition = currentTarget.Position;
-                agent.SetDestination(currentTarget.Position);
-            }
-            //animator.SetBool(WALK, agent.velocity.magnitude > 0.1f);
+            if (!this.shouldMove)
+                return;
+
+            if (this.currentTarget == null)
+                return;
+
+            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.transform.position.y, this.currentTarget.Position.z), Time.deltaTime);
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (this.currentTarget == null)
+                return;
+
+            Gizmos.DrawLine(this.transform.position, this.currentTarget.Position);
         }
     }
 }
