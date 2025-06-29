@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -14,8 +15,9 @@ public class Need
     private float dotTimer;
     private float dotRate;
     public GOTO goTo {get; private set;}
-    private float elapsedTime;
     private float reachValue;
+    private float startValue;
+    private float interpolationSpeed;
 
     // TODO: At the moment this is a debug bool to be able to play without worrying about needs management
     private bool canDeplete = true;
@@ -70,26 +72,15 @@ public class Need
         if (ShouldDeplete)
             ChangeCurrentValue(-depletionRate * deltaTime);
 
-        if (dotTimer > 0 && dotRate != 0)
-        {
-            dotTimer -= deltaTime;
-
-            ChangeCurrentValue(dotRate);
-
-            if (dotTimer < 0)
-            {
-                ClearEffectOverTime();
-            }
-        }
-
         if (goTo != GOTO.NONE)
         {
-            if (elapsedTime < dotTimer && currentValue != reachValue)
+            if (dotTimer > 0 && currentValue != reachValue)
             {
-                elapsedTime += deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / dotTimer);
+                dotTimer -= deltaTime;
+
+                currentValue = Mathf.MoveTowards(currentValue, reachValue, interpolationSpeed * deltaTime);
+
                 NeedsBroadcastReason reason = NeedsBroadcastReason.UNKNOWN;
-                currentValue = Mathf.Lerp(currentValue, reachValue, t);
                 if (goTo == GOTO.MAXIMUM)
                     reason = IsFull ? NeedsBroadcastReason.REACHED_MAXIMUM : NeedsBroadcastReason.INCREASED;
                 else if (goTo == GOTO.MINIMUM)
@@ -114,12 +105,22 @@ public class Need
     {
         this.dotRate = dotRate;
         this.dotTimer = dotTimer;
+        this.startValue = currentValue;
+
+        float amountToChangeBy = dotRate * dotTimer;
+        float changeValue = info.DepletionType == DepletionType.FILL ? -amountToChangeBy : amountToChangeBy;
+
+        goTo = changeValue > 0 ? GOTO.MAXIMUM : GOTO.MINIMUM;
+        reachValue = Mathf.Clamp(this.startValue + changeValue, 0, maxValue);
+        interpolationSpeed = Mathf.Abs(reachValue - startValue) / dotTimer;
+
         GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_STARTED));
     }
 
     public void ApplyEffectOverTime(float dotTimer, bool maximum = true)
     {
         this.dotTimer = dotTimer;
+        this.startValue = currentValue;
 
         if (maximum)
             reachValue = info.DepletionType == DepletionType.EMPTY ? info.MaxValue : 0;
@@ -127,6 +128,8 @@ public class Need
             reachValue = info.DepletionType == DepletionType.EMPTY ? 0 : info.MaxValue;
 
         goTo = maximum ? GOTO.MAXIMUM : GOTO.MINIMUM;
+
+        interpolationSpeed = Mathf.Abs(reachValue - startValue) / dotTimer;
 
         GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_STARTED));
     }
@@ -137,7 +140,7 @@ public class Need
         this.dotTimer = 0;
         this.reachValue = 0;
         this.goTo = GOTO.NONE;
-        this.elapsedTime = 0;
+        this.startValue = 0;
         GameEventsManager.Instance.NeedsEvents.BroadcastNeedsUpdate(new NeedsBroadcastEvent(owner, guid.ToString(), this, NeedsBroadcastReason.DOT_ENDED));
     }
 

@@ -20,5 +20,8 @@ MonoBehaviour:
   stackable: 1
   equipmentSlot: 0
   toolType: 0
-  tier: 0
-  restoration: 50
+  tier: 1
+  type: 5
+  reason: 5
+  value: 50
+  timer: 0

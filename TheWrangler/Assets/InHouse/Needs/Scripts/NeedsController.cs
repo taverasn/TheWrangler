@@ -119,8 +119,10 @@ public class NeedsController : MonoBehaviour, IDataPersistence
                     need.Reset();
                     break;
                 case NeedsUpdateReason.SET_MAXIMUM:
+                    need.ChangeCurrentValue(need.maxValue);
                     break;
                 case NeedsUpdateReason.SET_MINIMUM:
+                    need.ChangeCurrentValue(-need.maxValue);
                     break;
             }
         }
@@ -289,6 +291,7 @@ public enum NeedsOwner
 
 public enum NeedsUpdateReason
 {
+    NONE,
     UPGRADE_MAX_VALUE,
     UPGRADE_DEPLETION_RATE,
     UPGRADE_RESTORATION_RATE,

@@ -1,6 +1,9 @@
+using NUnit;
 using System.Collections;
 using System.Linq;
 using Unity.Entities.UniversalDelegates;
+using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +11,10 @@ public class NeedsBarUI : MonoBehaviour
 {
     [field:SerializeField] public NeedsType needsType { get; private set; }
     [SerializeField] private Slider slider;
-    [SerializeField] private float smoothTime = 0.2f;
-
+    [SerializeField] private float smoothTime = 0.5f;
+    private float interpolationSpeed = 0f;
+    private float time = 0f;
+    private float reachValue = 0f;
     public void SetSliderValue(float value, bool immediate)
     {
         if (immediate)
@@ -18,18 +23,24 @@ public class NeedsBarUI : MonoBehaviour
         }
         else
         {
-            StartCoroutine(SmoothSlider(slider.value,value, smoothTime));
+            interpolationSpeed = Mathf.Abs(value - slider.value) / smoothTime;
+            reachValue = value;
         }
     }
-    IEnumerator SmoothSlider(float start, float end, float duration)
+
+    public void Update()
     {
-        float time = 0f;
-        while (time < duration)
+        if (slider.value != reachValue)
         {
-            slider.value = Mathf.Lerp(start, end, time / duration);
             time += Time.deltaTime;
-            yield return null;
+            slider.value = Mathf.MoveTowards(slider.value, reachValue, interpolationSpeed * Time.deltaTime);
+            
+            if (slider.value == reachValue)
+            {
+                time = 0;
+                reachValue = 0;
+                interpolationSpeed = 0;
+            }
         }
-        slider.value = end;
     }
 }

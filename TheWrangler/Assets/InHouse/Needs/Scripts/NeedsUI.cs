@@ -37,6 +37,8 @@ public class NeedsUI : MonoBehaviour
                     break;
                 case NeedsBroadcastReason.INCREASED:
                 case NeedsBroadcastReason.DECREASED:
+                case NeedsBroadcastReason.REACHED_MAXIMUM:
+                case NeedsBroadcastReason.REACHED_MINIMUM:
                     bar.SetSliderValue(needsBroadcastEvent.need.NormalizedValue, false);
                     break;
             }

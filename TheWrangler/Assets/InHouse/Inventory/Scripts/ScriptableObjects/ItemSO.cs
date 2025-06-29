@@ -7,12 +7,16 @@ using UnityEngine;
 public class ItemSO : ScriptableObject
 {
     [field: SerializeField] public string ID { get; private set; }
+    [Header("UI Settings")] 
     public string displayName;
     public GameObject prefab;
     public Sprite icon;
+    [Header("Amount Settings")]
     public int maxAmount = 300;
     public bool stackable;
+    [Header("Holdable Settings")]
     public EquipmentSlot equipmentSlot;
+    [Header("Tool Settings")]
     public ToolType toolType;
     public Tier tier;
 

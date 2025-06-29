@@ -1345,7 +1345,7 @@ namespace JUTPS.CharacterBrain
                 //Sequencial Item Using
                 if (ShotInput && HoldableItemInUseRightHand.IsUsingItem == false)
                 {
-                    if (IsRolling == false && IsDriving == false && canUseItem)
+                    if (IsRolling == false && IsDriving == false && HoldableItemInUseRightHand.CanUseItem)
                     {
                         UseEquipedItem();
                     }
