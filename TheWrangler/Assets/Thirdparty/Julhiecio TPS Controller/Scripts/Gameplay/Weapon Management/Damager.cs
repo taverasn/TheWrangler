@@ -33,7 +33,6 @@ namespace JUTPS
         /// The damage force.
         /// </summary>
         [JUHeader("Damager Settings")]
-        public ItemSO itemSO;
         public float Damage;
 
         /// <summary>
@@ -63,7 +62,8 @@ namespace JUTPS
         public bool IsColliding { get; private set; }
         public Rigidbody Rigidbody { get; private set; }
         [HideInInspector] public NeedsOwner owner;
-        
+        [HideInInspector] public ItemSO itemSO;
+
 
         public Damager()
         {
@@ -283,7 +283,7 @@ namespace JUTPS
 
                 if (health is ResourceHealth resourceHealth)
                 {
-                    if (itemSO.toolType == resourceHealth.toolType && itemSO.tier == resourceHealth.tier)
+                    if (itemSO.toolType == resourceHealth.toolType && (int)itemSO.tier >= (int)resourceHealth.tier)
                     {
                         resourceHealth.DoDamage(owner, damage);
                     }

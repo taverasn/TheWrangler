@@ -20,6 +20,7 @@ namespace JUTPS.WeaponSystem
         {
             base.Start();
             DamagerToEnable = DamagerToEnable ?? GetComponentInChildren<Damager>();
+            DamagerToEnable.itemSO = itemSO;
         }
         public override void Update()
         {

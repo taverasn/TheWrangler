@@ -53,6 +53,7 @@ namespace TheWrangler.GOAP
         {
             if (context.IsInRange && !chargeMessageSent)
             {
+                
                 GameEventsManager.Instance.NeedsEvents.UpdateNeeds(new NeedsUpdateEvent(NeedsOwner.COMPANION, "", NeedsType.HUNGER, NeedsUpdateReason.EFFECT_OVER_TIME_MAXIMUM, 0, 5));
                 chargeMessageSent = true;
             }
