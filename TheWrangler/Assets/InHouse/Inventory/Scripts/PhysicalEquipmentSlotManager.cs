@@ -7,10 +7,7 @@ using UnityEngine;
 
 public class PhysicalEquipmentSlotManager : MonoBehaviour
 {
-    [ShowInInspector] public PhysicalEquipmentSlotDictionary slots { get; private set; } = new PhysicalEquipmentSlotDictionary();
-    [SerializeField] private Transform HeadSlot;
-    [SerializeField] private Transform WeaponSlot;
-
+    [field:SerializeField] public PhysicalEquipmentSlotDictionary slots { get; private set; } = new PhysicalEquipmentSlotDictionary();
     private JUCharacterBrain jUCharacterBrain;
     private PlayerInventory inventory;
 
@@ -18,8 +15,6 @@ public class PhysicalEquipmentSlotManager : MonoBehaviour
     {
         inventory = GetComponent<PlayerInventory>();
         jUCharacterBrain = GetComponent<JUCharacterBrain>();
-        slots[EquipmentSlot.HEAD] = HeadSlot;
-        slots[EquipmentSlot.MAIN_HAND] = WeaponSlot;
     }
 
     private void OnEnable()

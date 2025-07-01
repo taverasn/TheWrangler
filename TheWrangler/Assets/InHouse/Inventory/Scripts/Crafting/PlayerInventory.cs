@@ -57,9 +57,12 @@ public class PlayerInventory : Inventory
         equipment = new Dictionary<EquipmentSlot, Item>();
         foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
         {
+            // The following are not yet implemented for UI slots and might not be at all
             if (slot == EquipmentSlot.NONE) continue;
+            if (slot == EquipmentSlot.MAIN_HAND) continue;
+            if (slot == EquipmentSlot.OFF_HAND) continue;
+            if (slot == EquipmentSlot.BOTH_HAND) continue;
             equipment[slot] = null;
-            if (slot == EquipmentSlot.FEET) break;
         }
     }
 
