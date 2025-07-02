@@ -62,8 +62,7 @@ namespace JUTPS.CustomEditors
             if (HoldableSettings)
             {
                 serializedObject.FindProperty("Unlocked").boolValue = EditorGUILayout.Toggle("Unlocked", w.Unlocked);
-                serializedObject.FindProperty("ItemName").stringValue = EditorGUILayout.TextField("Item Name", w.ItemName);
-                serializedObject.FindProperty("ItemSwitchID").intValue = EditorGUILayout.IntField("Item Switch ID", w.ItemSwitchID);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("itemSO"));
 
                 GUILayout.Space(3);
                 serializedObject.FindProperty("ItemFilterTag").stringValue = EditorGUILayout.TextField("Item Filter Tag", w.ItemFilterTag);
@@ -71,7 +70,6 @@ namespace JUTPS.CustomEditors
 
                 GUILayout.Space(3);
                 serializedObject.FindProperty("ItemQuantity").intValue = EditorGUILayout.IntField("Item Quantity", w.ItemQuantity);
-                serializedObject.FindProperty("MaxItemQuantity").intValue = EditorGUILayout.IntField("Max Item Quantity", w.MaxItemQuantity);
 
                 GUILayout.Space(3);
                 serializedObject.FindProperty("ItemModelInBody").objectReferenceValue = EditorGUILayout.ObjectField("Item on Body", w.ItemModelInBody, typeof(GameObject), true) as GameObject;

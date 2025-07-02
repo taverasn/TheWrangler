@@ -327,15 +327,15 @@ namespace JUTPS.CustomEditors
                     var lifestyle = new GUIStyle(JUTPSEditor.CustomEditorStyles.Toolbar());
                     Color fullifecolor = new Color(0.2f, 1, 0.1f);
                     Color nolifecolor = new Color(1f, 0.5f, 0.5f);
-                    lifestyle.normal.textColor = Color.Lerp(nolifecolor, fullifecolor, JUCharacter.CharacterHealth.Health / JUCharacter.CharacterHealth.MaxHealth);
+                    //lifestyle.normal.textColor = Color.Lerp(nolifecolor, fullifecolor, JUCharacter.CharacterHealth.Health / JUCharacter.CharacterHealth.MaxHealth);
                     lifestyle.alignment = TextAnchor.MiddleCenter;
                     lifestyle.fontSize = 12;
 
                     //Health Display
-                    int health_int = (int)JUCharacter.CharacterHealth.Health;
-                    EditorGUILayout.LabelField("Health: " + health_int.ToString() + "%", lifestyle, GUILayout.Width(120));
+                    //int health_int = (int)JUCharacter.CharacterHealth.Health;
+                    //EditorGUILayout.LabelField("Health: " + health_int.ToString() + "%", lifestyle, GUILayout.Width(120));
                     //Health Slider
-                    JUCharacter.CharacterHealth.Health = GUILayout.HorizontalSlider(JUCharacter.CharacterHealth.Health, 0, JUCharacter.CharacterHealth.MaxHealth, GUILayout.Width(120), GUILayout.Height(2));
+                    //JUCharacter.CharacterHealth.Health = GUILayout.HorizontalSlider(JUCharacter.CharacterHealth.Health, 0, JUCharacter.CharacterHealth.MaxHealth, GUILayout.Width(120), GUILayout.Height(2));
                 }
                 else
                 {

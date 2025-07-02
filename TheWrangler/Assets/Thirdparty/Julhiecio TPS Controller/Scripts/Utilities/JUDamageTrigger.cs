@@ -9,6 +9,7 @@ namespace JUTPS.Utilities
     {
         [SerializeField] private float Damage = 5;
         [SerializeField] private string CharacterTag;
+        [SerializeField] private NeedsOwner owner = NeedsOwner.NONE;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -18,7 +19,7 @@ namespace JUTPS.Utilities
                 {
                     if(other.TryGetComponent(out JUHealth health))
                     {
-                        health.DoDamage(Damage);
+                        health.DoDamage(owner, Damage);
                     }
                 }
             }
@@ -26,7 +27,7 @@ namespace JUTPS.Utilities
             {
                 if (other.TryGetComponent(out JUHealth health))
                 {
-                    health.DoDamage(Damage);
+                    health.DoDamage(owner, Damage);
                 }
             }
         }

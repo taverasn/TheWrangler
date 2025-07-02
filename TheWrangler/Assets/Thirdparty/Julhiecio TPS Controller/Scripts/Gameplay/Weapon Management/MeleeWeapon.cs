@@ -20,6 +20,7 @@ namespace JUTPS.WeaponSystem
         {
             base.Start();
             DamagerToEnable = DamagerToEnable ?? GetComponentInChildren<Damager>();
+            DamagerToEnable.itemSO = itemSO;
         }
         public override void Update()
         {
@@ -32,8 +33,8 @@ namespace JUTPS.WeaponSystem
                 {
                     if (ItemQuantity > 0 || Unlocked == true)
                     {
-                        JUInventory inventory = GetComponentInParent<JUInventory>();
-                        inventory.UnequipItem(JUInventory.GetGlobalItemSwitchID(this, inventory));
+                        PlayerInventory inventory = GetComponentInParent<PlayerInventory>();
+                        inventory.Equip(ItemSwitchID, false);
 
                         RemoveItem();
                     }

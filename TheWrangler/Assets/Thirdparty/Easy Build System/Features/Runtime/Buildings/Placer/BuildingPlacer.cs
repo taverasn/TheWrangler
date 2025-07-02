@@ -18,6 +18,8 @@ using EasyBuildSystem.Features.Runtime.Buildings.Manager;
 using EasyBuildSystem.Features.Runtime.Extensions;
 
 using Random = UnityEngine.Random;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
 {
@@ -205,8 +207,19 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
             [SerializeField] float m_MaxAngle = 20f;
             public float MaxAngles { get { return m_MaxAngle; } set { m_MaxAngle = value; } }
         }
+
         [SerializeField] SnappingSettings m_SnappingSettings = new SnappingSettings();
         public SnappingSettings GetSnappingSettings { get { return m_SnappingSettings; } }
+        
+        [Serializable]
+        public class InventorySettings
+        {
+            [SerializeField] Inventory m_PlayerInventory;
+            public Inventory PlayerInventory { get { return m_PlayerInventory; } set { m_PlayerInventory = value; } }
+        }
+
+        [SerializeField] InventorySettings m_InventorySettings = new InventorySettings();
+        public InventorySettings GetInventorySettings { get { return m_InventorySettings; } }
 
         [Serializable]
         public class AudioSettings
@@ -284,6 +297,7 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
             {
                 SelectBuildingPart(BuildingManager.Instance.BuildingPartReferences[0]);
             }
+
         }
 
         public virtual void Update()
@@ -390,6 +404,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
 
                 m_CurrentPreview.AttachedBuildingSocket = m_CurrentSocket;
 
+                if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+                {
+                    m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+                }
+
                 //if (!CanPlacing)
                 //{
                 //    HandleFree();
@@ -404,6 +423,11 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
         /// </summary>
         void HandleFree()
         {
+            if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+            }
+
             m_CurrentPreview.AttachedBuildingSocket = null;
 
             Quaternion rotation;
@@ -664,6 +688,13 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
                 return false;
             }
 
+            if (m_LastBuildMode != BuildMode.EDIT && m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                foreach (KeyValuePair<ItemSO, int> ingredients in m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().Recipe.ingredients)
+                {
+                    m_InventorySettings.PlayerInventory.RemoveItem(ingredients.Key, ingredients.Value);
+                }
+            }
 
             BuildingPart instancedPart = BuildingManager.Instance.PlaceBuildingPart(GetSelectedBuildingPart,
                 m_CurrentPreview.transform.position,
@@ -719,6 +750,10 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
                 }
 
                 m_LastPreview = m_CurrentPreview;
+                if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+                {
+                    m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+                }
                 m_CurrentPreview.ChangeState(BuildingPart.StateType.DESTROY);
             }
             else
@@ -775,6 +810,15 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
                 return false;
             }
 
+            if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                foreach (KeyValuePair<ItemSO, int> ingredients in m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().Recipe.ingredients)
+                {
+                    Item item = new Item(ingredients.Value, ingredients.Key);
+                    m_InventorySettings.PlayerInventory.AddItem(item);
+                }
+            }
+
             BuildingManager.Instance.DestroyBuildingPart(m_CurrentPreview);
 
             if (m_AudioSettings.AudioSource != null)
@@ -813,6 +857,10 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
 
                 m_LastPreview = m_CurrentPreview;
                 m_CurrentPreview.ChangeState(BuildingPart.StateType.EDIT);
+                if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+                {
+                    m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+                }
             }
             else
             {
@@ -972,6 +1020,12 @@ namespace EasyBuildSystem.Features.Runtime.Buildings.Placer
             }
 
             m_CurrentPreview = Instantiate(buildingPart);
+
+            if (m_CurrentPreview.Conditions.Any(c => c is BuildingItemCondition))
+            {
+                m_CurrentPreview.Conditions.OfType<BuildingItemCondition>().ToList().First().inventory = m_InventorySettings.PlayerInventory;
+            }
+
             m_CurrentPreview.ChangeState(BuildingPart.StateType.PREVIEW);
             m_CurrentPreview.transform.position = instantiatePoint;
 

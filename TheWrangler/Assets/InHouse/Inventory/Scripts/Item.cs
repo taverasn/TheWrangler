@@ -5,6 +5,7 @@ public class Item
 {
     public int amount { get; set; }
     public ItemSO info { get; set; }
+    public HotBarSlot hotBarSlot { get; set; }
 
     public Item(int amount, ItemSO info)
     {
@@ -25,5 +26,10 @@ public class Item
     public virtual void Use()
     {
 
+    }
+
+    public ItemData GetItemData()
+    {
+        return new ItemData(amount, info.ID);
     }
 }

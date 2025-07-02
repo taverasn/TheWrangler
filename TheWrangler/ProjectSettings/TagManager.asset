@@ -36,8 +36,8 @@ TagManager:
   - Walls
   - Trigger
   - Socket
-  - 
-  - 
+  - CharacterSensor
+  - ChargeStation
   - 
   - 
   - 

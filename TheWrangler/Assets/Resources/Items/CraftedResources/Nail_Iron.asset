@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e751992c75fc84f978351e4a8f2faf, type: 3}
+  m_Name: Nail_Iron
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Nail_Iron
+  displayName: Iron Nails
+  prefab: {fileID: 0}
+  hoverBehavior: 0
+  pickUpPrefab: {fileID: 0}
+  icon: {fileID: 21300000, guid: a1fd9d76a89c25a4b912f4f612e9a64a, type: 3}
+  maxAmount: 300
+  stackable: 1
+  equipmentSlot: 0
+  toolType: 0
+  tier: 1

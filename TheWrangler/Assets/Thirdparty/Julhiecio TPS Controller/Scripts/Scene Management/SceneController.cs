@@ -110,7 +110,7 @@ namespace JUTPS
             PlayerController.transform.position = RespawnPlayerPostion;
 
             //Reset Health
-            PlayerController.CharacterHealth.Health = PlayerController.CharacterHealth.MaxHealth;
+            PlayerController.CharacterHealth.ResetHealth();
             PlayerController.IsDead = false;
 
             //Reset layer
@@ -146,7 +146,7 @@ namespace JUTPS
             PlayerController.ResetDefaultLayersWeight();
 
             if (PlayerController.HoldableItemInUseRightHand != null)
-                PlayerController.SwitchToItem(-1);
+                PlayerController.SwitchToItem("");
 
             if (UseDebugLogs)
                 Debug.Log("Player has respawned");

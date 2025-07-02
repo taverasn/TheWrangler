@@ -7,6 +7,8 @@ using JUTPS.JUInputSystem;
 using JUTPS.InventorySystem;
 
 using JUTPSEditor.JUHeader;
+using System.Linq;
+using UnityEngine.TextCore.Text;
 
 namespace JUTPS.ItemSystem
 {
@@ -18,7 +20,7 @@ namespace JUTPS.ItemSystem
         public bool IsPlayer;
         public bool UseOldInputSystem;
         [SerializeField] private JUCharacterController JuTPSCharacter;
-        public int ItemToEquipOnStart = -1;
+        public ItemSO ItemToEquipOnStart;
 
 
         [JUHeader("Next-Previous Item Switch [Q-E]")]
@@ -51,6 +53,8 @@ namespace JUTPS.ItemSystem
                 Invoke(nameof(EquipStartItem), 0.2f);
             }
             IsPlayer = gameObject.tag == "Player";
+
+
         }
         protected virtual void Update()
         {
@@ -65,7 +69,7 @@ namespace JUTPS.ItemSystem
 
         private void EquipStartItem()
         {
-            JuTPSCharacter.SwitchToItem(ItemToEquipOnStart);
+            JuTPSCharacter.SwitchToItem(JuTPSCharacter.Inventory.items[JuTPSCharacter.Inventory.lastHotBarSlot]?.info.ID);
         }
         protected virtual void OldInput_ItemSwitchController()
         {
@@ -122,9 +126,9 @@ namespace JUTPS.ItemSystem
                 {
                     int InputKey = i;
                     int SwitchID = i - 49;
-                    if (Input.GetKeyDown((KeyCode)InputKey) && SwitchID < JuTPSCharacter.Inventory.HoldableItensRightHand.Length)
+                    if (Input.GetKeyDown((KeyCode)InputKey))
                     {
-                        JuTPSCharacter.SwitchToItem(SwitchID);
+                        JuTPSCharacter.SwitchToItem(JuTPSCharacter.Inventory.GetSequentialSlotItemID((HotBarSlot)SwitchID));
                     }
                 }
             }
@@ -162,17 +166,17 @@ namespace JUTPS.ItemSystem
 
             if (EnableAlphaNumericWeaponSwitch)
             {
-                if (JUInput.Instance().InputActions.Player.Slot1.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.first);
-                if (JUInput.Instance().InputActions.Player.Slot2.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.second);
-                if (JUInput.Instance().InputActions.Player.Slot3.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.third);
-                if (JUInput.Instance().InputActions.Player.Slot4.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.fourth);
-                if (JUInput.Instance().InputActions.Player.Slot5.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.fifth);
-                if (JUInput.Instance().InputActions.Player.Slot6.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.sixth);
-                if (JUInput.Instance().InputActions.Player.Slot7.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.seventh);
-                if (JUInput.Instance().InputActions.Player.Slot8.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.eighth);
-                if (JUInput.Instance().InputActions.Player.Slot9.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.ninth);
-                if (JUInput.Instance().InputActions.Player.Slot10.triggered) SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum.tenth);
-            }
+                if (JUInput.Instance().InputActions.Player.Slot1.triggered) SwitchToItemInSequentialSlot(HotBarSlot.first);
+                if (JUInput.Instance().InputActions.Player.Slot2.triggered) SwitchToItemInSequentialSlot(HotBarSlot.second);
+                if (JUInput.Instance().InputActions.Player.Slot3.triggered) SwitchToItemInSequentialSlot(HotBarSlot.third);
+                if (JUInput.Instance().InputActions.Player.Slot4.triggered) SwitchToItemInSequentialSlot(HotBarSlot.fourth);
+                if (JUInput.Instance().InputActions.Player.Slot5.triggered) SwitchToItemInSequentialSlot(HotBarSlot.fifth);
+                if (JUInput.Instance().InputActions.Player.Slot6.triggered) SwitchToItemInSequentialSlot(HotBarSlot.sixth);
+                if (JUInput.Instance().InputActions.Player.Slot7.triggered) SwitchToItemInSequentialSlot(HotBarSlot.seventh);
+                if (JUInput.Instance().InputActions.Player.Slot8.triggered) SwitchToItemInSequentialSlot(HotBarSlot.eighth);
+                if (JUInput.Instance().InputActions.Player.Slot9.triggered) SwitchToItemInSequentialSlot(HotBarSlot.ninth);
+                if (JUInput.Instance().InputActions.Player.Slot10.triggered) SwitchToItemInSequentialSlot(HotBarSlot.tenth);
+       }
         }
 
 
@@ -196,9 +200,9 @@ namespace JUTPS.ItemSystem
         /// Changes character selected item to a specific one in the list
         /// </summary>
         /// <param name="SwitchID">Item index</param>
-        public virtual void SwitchToItem(int SwitchID)
+        public virtual void SwitchToItem(string SwitchID)
         {
-            if (SwitchID < JuTPSCharacter.Inventory.HoldableItensRightHand.Length)
+            if (JuTPSCharacter.Inventory.mainHandItems.Any(i => i.info.ID == SwitchID))
             {
                 if (JuTPSCharacter.IsItemEquiped == false)
                 {
@@ -211,24 +215,14 @@ namespace JUTPS.ItemSystem
             }
             else
             {
-                Debug.LogWarning("Unable to switch to this item, this ID is out of bounds for the list");
+                JuTPSCharacter.SwitchToItem(SwitchID);
             }
         }
 
 
-        public virtual void SwitchToItemInSequentialSlot(JUInventory.SequentialSlotsEnum Slot)
+        public virtual void SwitchToItemInSequentialSlot(HotBarSlot Slot)
         {
-            JUTPS.ItemSystem.JUItem ItemToSwich = JuTPSCharacter.Inventory.GetSequentialSlotItem(Slot);
-            int GlobalItemID = (ItemToSwich == null) ? -1 : JUInventory.GetGlobalItemSwitchID(ItemToSwich, JuTPSCharacter.Inventory);
-
-            if (ItemToSwich == null)
-            {
-                SwitchToItem(-1);
-                return;
-            }
-
-            //SwitchToItem(GlobalItemID);
-            SwitchToItem(ItemToSwich.ItemSwitchID);
+            SwitchToItem(JuTPSCharacter.Inventory.GetSequentialSlotItemID(Slot));
         }
 
 
@@ -236,9 +230,9 @@ namespace JUTPS.ItemSystem
         /// Changes character selected item to a specific one in the list
         /// </summary>
         /// <param name="SwitchID">Item index</param>
-        public static void SwitchCharacterItem(JUCharacterController character, int SwitchID)
+        public static void SwitchCharacterItem(JUCharacterController character, string SwitchID)
         {
-            if (SwitchID < character.Inventory.HoldableItensRightHand.Length)
+            if (character.Inventory.mainHandItems.Any(i => i.info.ID == SwitchID))
             {
                 character.SwitchToItem(SwitchID);
             }
@@ -253,7 +247,7 @@ namespace JUTPS.ItemSystem
         /// Changes player selected item to a specific one in the list
         /// </summary>
         /// <param name="SwitchID">Item index</param>
-        public static void SwitchPlayerItem(int SwitchID)
+        public static void SwitchPlayerItem(string SwitchID)
         {
             if (GameObject.FindGameObjectWithTag("Player") == null)
             {
@@ -262,7 +256,7 @@ namespace JUTPS.ItemSystem
             }
 
             JUCharacterController player = GameObject.FindGameObjectWithTag("Player").GetComponent<JUCharacterController>();
-            if (SwitchID < player.Inventory.HoldableItensRightHand.Length)
+            if (player.Inventory.mainHandItems.Any(i => i.info.ID == SwitchID))
             {
                 player.SwitchToItem(SwitchID);
             }

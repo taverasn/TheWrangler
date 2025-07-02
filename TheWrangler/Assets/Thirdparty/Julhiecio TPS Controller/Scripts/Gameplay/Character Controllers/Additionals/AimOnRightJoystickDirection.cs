@@ -29,7 +29,7 @@ namespace JUTPS.ActionScripts
         [HideInInspector] public bool IsUsingJoystick;
         void Start()
         {
-            cameraController = FindObjectOfType<JUCameraController>();
+            cameraController = FindFirstObjectByType<JUCameraController>();
         }
 
         // Update is called once per frame

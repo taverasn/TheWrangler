@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
+  m_Name: Recipe_Melee_Pine_Shield
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Recipe_Melee_Pine_Shield
+  item: {fileID: 11400000, guid: c4525f4cab5a58048a2678c6cbbf93cf, type: 2}
+  ingredients:
+    keys:
+    - {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
+    - {fileID: 11400000, guid: a256868a570622344b34ba863acf2cdd, type: 2}
+    values: 0600000003000000

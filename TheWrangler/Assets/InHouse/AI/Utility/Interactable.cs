@@ -6,19 +6,29 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour, IInteractable
 {
-    public Inventory inventory;
-    [SerializeField] private RecipeSO recipe;
+    [SerializeField] private List<ItemSO> items;
+    [SerializeField] private List<ItemSO> ingredients;
+    public Inventory inventory { get; set; }
+    Transform IInteractable.transform { get => transform; set => throw new System.NotImplementedException(); }
+    InteractType IInteractable.type { get => InteractType.Inventory; set => throw new System.NotImplementedException(); }
 
-    private void Awake()
+    private void Start()
     {
-        inventory = new Inventory(30);
-        
+        inventory = GetComponent<Inventory>();
+
         int position = 0;
 
-        foreach (KeyValuePair<ItemSO, int> itemSO in recipe.ingredients)
+        foreach (ItemSO itemSO in items)
         {
-            Item item = new Item(itemSO.Value, itemSO.Key);
+            Item item = new Item(1, itemSO);
+            inventory.AddItem(item, position);
+            position++;
+        }
 
+
+        foreach (ItemSO itemSO in ingredients)
+        {
+            Item item = new Item(5, itemSO);
             inventory.AddItem(item, position);
             position++;
         }

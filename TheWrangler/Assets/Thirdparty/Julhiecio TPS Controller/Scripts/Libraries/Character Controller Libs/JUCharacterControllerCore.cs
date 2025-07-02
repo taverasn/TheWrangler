@@ -10,6 +10,7 @@ using JUTPS.ActionScripts;
 using JUTPS.PhysicsScripts;
 using JUTPS.WeaponSystem;
 using JUTPS.CameraSystems;
+using UnityEngine.TextCore.Text;
 
 //using JU_INPUT_SYSTEM;
 
@@ -34,7 +35,7 @@ namespace JUTPS.CharacterBrain
         [HideInInspector] protected JUFootPlacement FootPlacerIK;
         [HideInInspector] public JUHealth CharacterHealth;
         [HideInInspector] public DriveVehicles DriveVehicleAbility;
-        public JUInventory Inventory;
+        public PlayerInventory Inventory;
         [HideInInspector] public Damager LeftHandDamager, RightHandDamager, LeftFootDamager, RightFootDamager;
 
         public enum MovementMode { Free, AwaysInFireMode, JuTpsClassic }
@@ -60,6 +61,9 @@ namespace JUTPS.CharacterBrain
         private bool GoToStepPosition;
         private Vector3 StartStepUpCharacterPosition, StepPosition;
         private float GoingToStepTime;
+
+        [Header("Owner")]
+        public NeedsOwner owner;
 
         //MOVEMENT
         [Header("Movement Settings")]
@@ -193,7 +197,7 @@ namespace JUTPS.CharacterBrain
         [HideInInspector] public Weapon WeaponInUseRightHand, WeaponInUseLeftHand;
         [HideInInspector] public MeleeWeapon MeleeWeaponInUseRightHand, MeleeWeaponInUseLeftHand;
 
-        protected int CurrentItemIDRightHand = -1, CurrentItemIDLeftHand = -1; // [-1] = Hand
+        protected string CurrentItemIDRightHand = "", CurrentItemIDLeftHand = ""; // [-1] = Hand
         [Header("Fire Mode Settings")]
         public PressAimMode AimMode;
         public float FireModeWalkSpeed = 0.5f, FireModeRunSpeed = 1.3f, FireModeCrouchSpeed = 0.5f;
@@ -261,11 +265,11 @@ namespace JUTPS.CharacterBrain
         public bool IsArtificialIntelligence = false;
         #region Unity Standard Functions
 
-        private void OnEnable()
+        public virtual void OnEnable()
         {
             Events.SetEventListeners(this);
         }
-        private void OnDisable()
+        public virtual void OnDisable()
         {
             Events.RemoveEventListeners(this);
         }
@@ -319,12 +323,12 @@ namespace JUTPS.CharacterBrain
             //PivotItemRotation.gameObject.hideFlags = HideFlags.HideInHierarchy;
 
             // Start with no item selected
-            CurrentItemIDRightHand = -1;
+            CurrentItemIDRightHand = "";
             WeaponInUseRightHand = null;
             HoldableItemInUseRightHand = null;
 
             // Get Camera references
-            MyPivotCamera = (IsArtificialIntelligence == false) ? FindObjectOfType<JUCameraController>() : null;
+            MyPivotCamera = (IsArtificialIntelligence == false) ? FindFirstObjectByType<JUCameraController>(FindObjectsInactive.Exclude) : null;
             MyCamera = (MyPivotCamera != null && IsArtificialIntelligence == false) ? MyPivotCamera.mCamera : null;
 
             // Get last character spine bone
@@ -356,10 +360,10 @@ namespace JUTPS.CharacterBrain
             }
 
             //Get JUHealth
-            if (TryGetComponent(out JUHealth health)) { CharacterHealth = health; CharacterHealth.OnDeath.AddListener(DisableDamagers); }
+            if (TryGetComponent(out JUHealth health)) { CharacterHealth = health; CharacterHealth.OnDestroyed.AddListener(DisableDamagers); }
 
             // Get Inventory
-            if (TryGetComponent(out JUInventory juInventory)) { Inventory = juInventory; }
+            if (TryGetComponent(out PlayerInventory _Inventory)) { Inventory = _Inventory; }
 
             // Get Ragdoller
             if (TryGetComponent(out AdvancedRagdollController ragdollerController)) { Ragdoller = ragdollerController; }
@@ -1341,7 +1345,7 @@ namespace JUTPS.CharacterBrain
                 //Sequencial Item Using
                 if (ShotInput && HoldableItemInUseRightHand.IsUsingItem == false)
                 {
-                    if (IsRolling == false && IsDriving == false && canUseItem)
+                    if (IsRolling == false && IsDriving == false && HoldableItemInUseRightHand.CanUseItem)
                     {
                         UseEquipedItem();
                     }
@@ -1946,7 +1950,7 @@ namespace JUTPS.CharacterBrain
         {
             if (CharacterHealth == null) return;
 
-            if (CharacterHealth.Health <= 0 && IsDead == false)
+            if (CharacterHealth.lastReason == NeedsBroadcastReason.REACHED_MINIMUM && IsDead == false)
             {
                 KillCharacter();
             }
@@ -1974,31 +1978,6 @@ namespace JUTPS.CharacterBrain
             gameObject.layer = 2;
             transform.position = GetGroundPoint();
         }
-        protected void PickUpCheck()
-        {
-            if (Inventory == null)
-            {
-                ToPickupItem = false;
-                return;
-            }
-            else
-            {
-                //if (Inventory.EnablePickup == false) { ToPickupItem = false; return; }
-                if (Inventory.ItemToPickUp != null)
-                {
-                    ToPickupItem = true;
-                }
-                else
-                {
-                    if (ToPickupItem == true && Inventory.ItemToPickUp == null && IsInvoking(nameof(DisableToPickUpItemBoolean)) == false)
-                    {
-                        Invoke(nameof(DisableToPickUpItemBoolean), 0.3f);
-                    }
-                }
-                ToPickupItem = Inventory.ItemToPickUp == null ? false : true;
-            }
-        }
-        private void DisableToPickUpItemBoolean() => ToPickupItem = false;
 
         public virtual void TakeDamage(float Damage, Vector3 hitPosition = default(Vector3))
         {
@@ -2007,7 +1986,8 @@ namespace JUTPS.CharacterBrain
                 CharacterHealth = GetComponent<JUHealth>();
                 if (CharacterHealth == null) return;
             }
-            CharacterHealth.DoDamage(Damage, hitPosition);
+            // If the player takes damage in this way it doesnt matter where it came from it should hit
+            CharacterHealth.DoDamage(NeedsOwner.NONE, Damage, hitPosition);
         }
         public virtual void KillCharacter()
         {
@@ -2026,7 +2006,7 @@ namespace JUTPS.CharacterBrain
                 Ragdoller.TimeToGetUp = 900;
             }
 
-            CharacterHealth.Health = 0;
+            CharacterHealth.SetMinimum();
             IsDead = true;
         }
         public virtual void RessurectCharacter()
@@ -2034,7 +2014,7 @@ namespace JUTPS.CharacterBrain
             if (IsDead == false) return;
 
             //Reset Camera
-            if (FindObjectOfType<TPSCameraController>() != null) { FindObjectOfType<TPSCameraController>().mCamera.transform.localEulerAngles = Vector3.zero; }
+            if (FindFirstObjectByType<TPSCameraController>() != null) { FindFirstObjectByType<TPSCameraController>().mCamera.transform.localEulerAngles = Vector3.zero; }
 
 
             //Get up
@@ -2054,9 +2034,7 @@ namespace JUTPS.CharacterBrain
             //Reset Health
             if (CharacterHealth != null)
             {
-                CharacterHealth.Health = CharacterHealth.MaxHealth;
-                CharacterHealth.IsDead = false;
-                CharacterHealth.CheckHealthState();
+                CharacterHealth.ResetHealth();
             }
             IsDead = false;
 
@@ -2177,7 +2155,7 @@ namespace JUTPS.CharacterBrain
             SwitchItens(SwitchDirection.Backward, RightHand);
         }
         private JUHoldableItem oldDualItem;
-        public void SwitchToItem(int id = -1, bool RightHand = true)
+        public void SwitchToItem(string ID, bool alreadyEquipped = false)
         {
             if (Inventory == null) return;
             //Disable Aiming State and Shot State
@@ -2187,46 +2165,54 @@ namespace JUTPS.CharacterBrain
             //if you have an item forcing double wielding before switching items do the left hand item switch
             if (oldDualItem != null)
             {
-                Inventory.SwitchToItem(-1, false);
+                if (!alreadyEquipped)
+                {
+                    Inventory.Equip(ID);
+                }
                 oldDualItem.gameObject.SetActive(false);
                 oldDualItem = null;
             }
             //Switch
-            Inventory.SwitchToItem(id, RightHand);
+            if (!alreadyEquipped)
+            {
+                LeftHandIKPositionTarget.SetParent(this.transform);
+                IKPositionLeftHand.SetParent(this.transform);
+                Inventory.Equip(ID);
+            }
 
             //Get IDs
             CurrentItemIDRightHand = Inventory.CurrentRightHandItemID;
             CurrentItemIDLeftHand = Inventory.CurrentLeftHandItemID;
 
             //Get Holdable Itens
-            HoldableItemInUseLeftHand = Inventory.HoldableItemInUseInLeftHand;
-            HoldableItemInUseRightHand = Inventory.HoldableItemInUseInRightHand;
+            HoldableItemInUseLeftHand = Inventory.ItemInLeftHand as JUHoldableItem;
+            HoldableItemInUseRightHand = Inventory.ItemInRightHand as JUHoldableItem;
 
             //Get Weapon
-            WeaponInUseLeftHand = Inventory.WeaponInUseInLeftHand;
-            WeaponInUseRightHand = Inventory.WeaponInUseInRightHand;
+            WeaponInUseLeftHand = Inventory.ItemInLeftHand as Weapon;
+            WeaponInUseRightHand = Inventory.ItemInRightHand as Weapon;
 
             //Get Melee Weapon
-            MeleeWeaponInUseRightHand = Inventory.MeleeWeaponInUseInRightHand;
-            MeleeWeaponInUseLeftHand = Inventory.MeleeWeaponInUseInLeftHand;
+            MeleeWeaponInUseRightHand = Inventory.ItemInRightHand as MeleeWeapon;
+            MeleeWeaponInUseLeftHand = Inventory.ItemInLeftHand as MeleeWeapon;
 
-            IsItemEquiped = Inventory.IsItemSelected;
+            IsItemEquiped = Inventory.IsItemEquipped;
             IsDualWielding = Inventory.IsDualWielding;
 
             //Force Dual Wielding
-            if (RightHand == true)
+            if (CurrentItemIDRightHand != "")
             {
                 if (HoldableItemInUseRightHand != null)
                 {
                     if (HoldableItemInUseRightHand.ForceDualWielding && HoldableItemInUseRightHand.DualItemToWielding != null)
                     {
-                        SwitchToItem(HoldableItemInUseRightHand.DualItemToWielding.ItemSwitchID, false);
+                        SwitchToItem(HoldableItemInUseRightHand.DualItemToWielding.ItemSwitchID);
                         oldDualItem = HoldableItemInUseRightHand.DualItemToWielding;
                     }
                 }
                 else
                 {
-                    SwitchToItem(-1, false);
+                    SwitchToItem("");
                     oldDualItem = null;
                 }
             }
@@ -2236,7 +2222,7 @@ namespace JUTPS.CharacterBrain
                 {
                     if (HoldableItemInUseLeftHand.ForceDualWielding && HoldableItemInUseLeftHand.DualItemToWielding != null)
                     {
-                        SwitchToItem(HoldableItemInUseLeftHand.DualItemToWielding.ItemSwitchID, true);
+                        SwitchToItem(HoldableItemInUseLeftHand.DualItemToWielding.ItemSwitchID);
                         oldDualItem = HoldableItemInUseLeftHand.DualItemToWielding;
                     }
                 }
@@ -2254,7 +2240,7 @@ namespace JUTPS.CharacterBrain
 
                 //IK
                 ArmsWeightIK = 0;
-                if (CurrentItemIDRightHand != -1) BothArmsLayerWeight = 0;
+                if (CurrentItemIDRightHand != "") BothArmsLayerWeight = 0;
             }
 
         }
@@ -2271,15 +2257,15 @@ namespace JUTPS.CharacterBrain
             switch (Direction)
             {
                 case SwitchDirection.Forward:
-                    if (RightHand) CurrentItemIDRightHand = Inventory.GetNextUnlockedItemID(CurrentItemIDRightHand); else CurrentItemIDLeftHand = Inventory.GetNextUnlockedItemID(CurrentItemIDLeftHand, transform, false);
+                    if (RightHand) CurrentItemIDRightHand = Inventory.GetNextEquippableWeapon(CurrentItemIDRightHand); else CurrentItemIDLeftHand = Inventory.GetNextEquippableWeapon(CurrentItemIDLeftHand);
                     break;
                 case SwitchDirection.Backward:
-                    if (RightHand) CurrentItemIDRightHand = Inventory.GetPreviousUnlockedItemID(CurrentItemIDRightHand); else CurrentItemIDLeftHand = Inventory.GetPreviousUnlockedItemID(CurrentItemIDLeftHand, transform, false);
+                    if (RightHand) CurrentItemIDRightHand = Inventory.GetPreviousEquippableWeapon(CurrentItemIDRightHand); else CurrentItemIDLeftHand = Inventory.GetPreviousEquippableWeapon(CurrentItemIDLeftHand);
                     break;
             }
 
 
-            SwitchToItem(RightHand ? CurrentItemIDRightHand : CurrentItemIDLeftHand, RightHand);
+            SwitchToItem(RightHand ? CurrentItemIDRightHand : CurrentItemIDLeftHand);
         }
 
         protected virtual void PlayWeaponSwitchAnimation()

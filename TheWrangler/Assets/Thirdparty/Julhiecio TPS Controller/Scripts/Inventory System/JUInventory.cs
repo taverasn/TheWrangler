@@ -6,6 +6,7 @@ using JUTPS.ItemSystem;
 using JUTPS.WeaponSystem;
 using JUTPS.ArmorSystem;
 using JUTPSEditor.JUHeader;
+using System;
 
 namespace JUTPS.InventorySystem
 {
@@ -122,14 +123,14 @@ namespace JUTPS.InventorySystem
             {
                 if (HoldableItemInUseInLeftHand.ItemQuantity == 0 || HoldableItemInUseInLeftHand.Unlocked == false)
                 {
-                    UnequipItem(GetGlobalItemSwitchID(HoldableItemInUseInLeftHand, this));
+                    UnequipItem(GetGlobalItemSwitchID(HoldableItemInUseInLeftHand, null));
                 }
             }
             if (HoldableItemInUseInRightHand != null)
             {
                 if (HoldableItemInUseInRightHand.ItemQuantity == 0 || HoldableItemInUseInRightHand.Unlocked == false)
                 {
-                    UnequipItem(GetGlobalItemSwitchID(HoldableItemInUseInRightHand, this));
+                    UnequipItem(GetGlobalItemSwitchID(HoldableItemInUseInRightHand, null));
                 }
             }
 
@@ -191,11 +192,9 @@ namespace JUTPS.InventorySystem
 
             for (int i = 0; i < ItemsArray.Length; i++)
             {
-                if (ItemsArray[i].ItemSwitchID != i)
+                if (ItemsArray[i].ItemSwitchID != "")
                 {
                     Debug.Log("The SwitchID from the item " + "'" + ItemsArray[i].name + "'" + " was changed from [" + ItemsArray[i].ItemSwitchID + "] to [" + i + "]  | the JU Inventory fixed the Switch IDs automatically.", ItemsArray[i]);
-
-                    ItemsArray[i].ItemSwitchID = i;
                 }
             }
         }
@@ -323,7 +322,7 @@ namespace JUTPS.InventorySystem
 
                             if (InventoryToAddItem.AutoEquipPickedUpItems)
                             {
-                                InventoryToAddItem.JUCharacter.SwitchToItem(ItemInInventoryToUnlock.ItemSwitchID, !ItemInInventoryToUnlock.IsLeftHandItem);
+                                InventoryToAddItem.JUCharacter.SwitchToItem("");
                             }
                             return;
                         }
@@ -371,14 +370,14 @@ namespace JUTPS.InventorySystem
             {
                 foreach (JUHoldableItem item in inventory.HoldableItensRightHand)
                 {
-                    if (item.ItemSwitchID == inventory.CurrentRightHandItemID) itemInUse = item;
+                    if (item.ItemSwitchID == "") itemInUse = item;
                 }
             }
             else
             {
                 foreach (JUHoldableItem item in inventory.HoldableItensLeftHand)
                 {
-                    if (item.ItemSwitchID == inventory.CurrentLeftHandItemID) itemInUse = item;
+                    if (item.ItemSwitchID == "") itemInUse = item;
                 }
             }
             return itemInUse;
@@ -465,9 +464,9 @@ namespace JUTPS.InventorySystem
                 }
             }
         }
-        public void SwitchToItem(int id = -1, bool RightHand = true)
+        public void SwitchToItem(string _id = "-1", bool RightHand = true)
         {
-            
+            int temp = Int32.TryParse(_id, System.Globalization.NumberStyles.Integer, null, out int id) ? Int32.Parse(_id) : -1;
             //>>> Loop Item Switching
             if (RightHand)
             {
@@ -514,7 +513,7 @@ namespace JUTPS.InventorySystem
                     else
                     {
                         //Swith to item
-                        if (item.ItemSwitchID == id)
+                        if (item.ItemSwitchID == _id)
                         {
                             //Return if not changed item
                             if (HoldableItemInUseInRightHand == item) return;
@@ -548,7 +547,7 @@ namespace JUTPS.InventorySystem
                     else
                     {
                         //Swith to item
-                        if (item.ItemSwitchID == id)
+                        if (item.ItemSwitchID == _id)
                         {
                             //Return if not changed item
                             if (HoldableItemInUseInLeftHand == item) return;
@@ -571,15 +570,15 @@ namespace JUTPS.InventorySystem
             RefreshItemsVisibility();
             RefreshInBodyItemVisibility();
         }
-        public static int GetGlobalItemSwitchID(JUItem item, JUInventory inventory)
+        public static int GetGlobalItemSwitchID(JUItem item, Inventory inventory)
         {
             int global_id = -3;
 
             if (item == null) return global_id;
 
-            for (int i = 0; i < inventory.AllItems.Length; i++)
+            for (int i = 0; i < inventory.items.Length; i++)
             {
-                if (inventory.AllItems[i].ItemName == item.ItemName) global_id = i;
+                if (inventory.items[i]?.info.displayName == item.ItemName) global_id = i;
             }
             //Debug.Log("Item ID " + global_id);
             return global_id;
@@ -603,11 +602,11 @@ namespace JUTPS.InventorySystem
             {
                 if (RightHand)
                 {
-                    item_id = GetGlobalItemSwitchID(item: HoldableItensRightHand[NextUnlockedItemLocalIndexRightHand(CurrentID)], inventory: this);
+                    item_id = GetGlobalItemSwitchID(item: HoldableItensRightHand[NextUnlockedItemLocalIndexRightHand(CurrentID)], null);
                 }
                 else
                 {
-                    item_id = GetGlobalItemSwitchID(item: HoldableItensLeftHand[NextUnlockedItemLocalIndexLeftHand(CurrentID)], inventory: this);
+                    item_id = GetGlobalItemSwitchID(item: HoldableItensLeftHand[NextUnlockedItemLocalIndexLeftHand(CurrentID)], null);
                 }
             }
             return item_id;
@@ -630,11 +629,11 @@ namespace JUTPS.InventorySystem
             {
                 if (RightHand)
                 {
-                    item_id = GetGlobalItemSwitchID(item: HoldableItensRightHand[PreviousUnlockedItemLocalIndexRightHand(CurrentID)], inventory: this);
+                    item_id = GetGlobalItemSwitchID(item: HoldableItensRightHand[PreviousUnlockedItemLocalIndexRightHand(CurrentID)], null);
                 }
                 else
                 {
-                    item_id = GetGlobalItemSwitchID(item: HoldableItensLeftHand[PreviousUnlockedItemLocalIndexLeftHand(CurrentID)], inventory: this);
+                    item_id = GetGlobalItemSwitchID(item: HoldableItensLeftHand[PreviousUnlockedItemLocalIndexLeftHand(CurrentID)], null);
                 }
             }
             return item_id;
@@ -674,8 +673,8 @@ namespace JUTPS.InventorySystem
                 {
                     if (HoldableItensRightHand[i].Unlocked == true)
                     {
-                        item_id = HoldableItensRightHand[i].ItemSwitchID;
-                        return HoldableItensRightHand[i].ItemSwitchID;
+                        item_id = -1;
+                        return -1;
                     }
                 }
             }
@@ -690,8 +689,8 @@ namespace JUTPS.InventorySystem
                 {
                     if (HoldableItensLeftHand[i].Unlocked == true)
                     {
-                        item_id = HoldableItensLeftHand[i].ItemSwitchID;
-                        return HoldableItensLeftHand[i].ItemSwitchID;
+                        item_id = -1;
+                        return -1;
                     }
                 }
             }
@@ -706,8 +705,8 @@ namespace JUTPS.InventorySystem
                 {
                     if (HoldableItensRightHand[i].Unlocked == true)
                     {
-                        item_id = HoldableItensRightHand[i].ItemSwitchID;
-                        return HoldableItensRightHand[i].ItemSwitchID;
+                        item_id = -1;
+                        return -1;
                     }
                 }
             }
@@ -722,8 +721,8 @@ namespace JUTPS.InventorySystem
                 {
                     if (HoldableItensLeftHand[i].Unlocked == true)
                     {
-                        item_id = HoldableItensLeftHand[i].ItemSwitchID;
-                        return HoldableItensLeftHand[i].ItemSwitchID;
+                        item_id = -1;
+                        return -1;
                     }
                 }
             }
@@ -917,11 +916,11 @@ namespace JUTPS.InventorySystem
                 //Switch Item
                 if (JUCharacter == null)
                 {
-                    SwitchToItem(-1, RightHand: true);
+                    SwitchToItem("", RightHand: true);
                 }
                 else
                 {
-                    JUCharacter.SwitchToItem(-1, RightHand: true);
+                    JUCharacter.SwitchToItem("");
                 }
             }
             else
@@ -939,11 +938,11 @@ namespace JUTPS.InventorySystem
                 //Switch Item
                 if (JUCharacter == null)
                 {
-                    SwitchToItem(-1, RightHand: false);
+                    SwitchToItem("", RightHand: false);
                 }
                 else
                 {
-                    JUCharacter.SwitchToItem(-1, RightHand: false);
+                    JUCharacter.SwitchToItem("");
                 }
             }
             RefreshInBodyItemVisibility();
@@ -984,11 +983,11 @@ namespace JUTPS.InventorySystem
                 {
                     if (JUCharacter == null)
                     {
-                        SwitchToItem(-1, RightHand: true);
+                        SwitchToItem("", RightHand: true);
                     }
                     else
                     {
-                        JUCharacter.SwitchToItem(-1, RightHand: true);
+                        JUCharacter.SwitchToItem("");
                     }
                 }
             }
@@ -1029,7 +1028,7 @@ namespace JUTPS.InventorySystem
             else
             {
                 //Equip with the controller
-                JUCharacter.SwitchToItem(AllItems[ID].ItemSwitchID, !holdableItem.IsLeftHandItem);
+                JUCharacter.SwitchToItem("");
             }
         }
         public void UnequipItem(int ID)
@@ -1087,11 +1086,11 @@ namespace JUTPS.InventorySystem
                 //Switch Item
                 if (JUCharacter == null)
                 {
-                    SwitchToItem(-1, RightHand: true);
+                    SwitchToItem("", RightHand: true);
                 }
                 else
                 {
-                    JUCharacter.SwitchToItem(-1, RightHand: true);
+                    JUCharacter.SwitchToItem("");
                 }
             }
             else
@@ -1099,11 +1098,11 @@ namespace JUTPS.InventorySystem
                 //Switch Item
                 if (JUCharacter == null)
                 {
-                    SwitchToItem(-1, RightHand: false);
+                    SwitchToItem("", RightHand: false);
                 }
                 else
                 {
-                    JUCharacter.SwitchToItem(-1, RightHand: false);
+                    JUCharacter.SwitchToItem("");
                 }
             }
         }

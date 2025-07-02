@@ -46,14 +46,14 @@ public class Wander : State
             return false;
         }
 
-        List<Interactable> interactables = TargetFinder.FindTarget(machine.transform.position, walkRadius, LayerMask.GetMask("Default"));
+        List<IInteractable> interactables = TargetFinder.Instance.interactables;
 
         if (interactables.Count > 0)
         {
-            Transform target = interactables.First().transform;
-            SetDestination(target.position);
+            IInteractable interactable = interactables.OrderBy(i => Vector3.Distance(machine.transform.position, i.transform.position)).FirstOrDefault();
+            SetDestination(interactable.transform.position);
 
-            machine.interactable = interactables.First();
+            machine.interactable = interactable;
             
             machine.StartCoroutine(machine.StartCanInteractCoolDown());
 
@@ -63,11 +63,6 @@ public class Wander : State
         {
             return false;
         }
-    }
-
-    private void SetDestination(Vector3 position)
-    {
-        machine.target.position = position;
     }
 
     public override void Exit()

@@ -10,16 +10,16 @@ using JUTPSEditor.JUHeader;
 
 namespace JUTPS.ItemSystem
 {
-	public class JUItem : MonoBehaviour
+	public class JUItem : PhysicalItem
 	{
 		[JUHeader("Item Setting")]
 		public string ItemFilterTag = "General";
 		public Sprite ItemIcon;
 		public bool Unlocked;
 		public int ItemQuantity;
-		public int MaxItemQuantity = 1;
-		public string ItemName;
-		public int ItemSwitchID;
+		public int MaxItemQuantity => itemSO == null ? 1 : itemSO.maxAmount;
+        public string ItemName => itemSO == null ? "" : itemSO.displayName;
+		public string ItemSwitchID => itemSO == null ? "" : itemSO.ID;
 
 		public virtual void UseItem()
 		{

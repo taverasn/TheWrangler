@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
+  m_Name: Recipe_Wire_Copper
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Recipe_Wire_Copper
+  item: {fileID: 11400000, guid: 1a92931298f72a34ea534e161d011058, type: 2}
+  ingredients:
+    keys:
+    - {fileID: 11400000, guid: c74ecc8488d9c894b8337b3617894143, type: 2}
+    values: 02000000

@@ -190,7 +190,7 @@ namespace JUTPSActions
         }
 
         //Item Manegement
-        protected int LasUsedItemID;
+        protected string LasUsedItemID;
         protected void SetCurrentItemIndexToLastUsedItem()
         {
             if (TPSCharacter.HoldableItemInUseRightHand != null)
@@ -200,13 +200,13 @@ namespace JUTPSActions
             }
             else
             {
-                LasUsedItemID = -1;
+                LasUsedItemID = "";
             }
         }
         protected void DisableItemOnHand()
         {
             //Get Current Item
-            TPSCharacter.SwitchToItem(0);
+            TPSCharacter.SwitchToItem("");
         }
         protected void EnableLastUsedItem()
         {

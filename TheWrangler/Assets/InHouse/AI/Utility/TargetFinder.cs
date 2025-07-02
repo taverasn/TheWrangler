@@ -1,59 +1,38 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public interface IInteractable {};
-
-public static class TargetFinder
+public class TargetFinder : MonoBehaviour
 {
-    public static List<Interactable> FindTarget(Vector3 center, float radius, LayerMask targetLayer)
+    public static TargetFinder Instance { get; private set; }
+
+    public List<IInteractable> interactables { get; private set; } = new List<IInteractable>();
+    private float updateInteractablesSeconds = 10f;
+
+    private void Awake()
     {
-        Collider[] colliders = Physics.OverlapSphere(center, radius, targetLayer);
-
-        List<Interactable> interactables = new List<Interactable>();
-
-        foreach (Collider collider in colliders)
+        if (Instance != null)
         {
-            if(collider.TryGetComponent<Interactable>(out Interactable interactable))
-            {
-                interactables.Add(interactable);
-            }
+            Debug.Log("Found more than one Data Persisence Manager in the scene. Destroying the newest one");
+            Destroy(this.gameObject);
+            return;
         }
+        Instance = this;
 
-        return interactables;
+        UpdateInteractables();
+        StartCoroutine(UpdateInteractables());
     }
-    //public static List<IInteractable> FindTarget(Vector3 center, float radius, LayerMask targetLayer, List<AITargetType> ignore_targets)
-    //{
-    //    List<Character_Base> targets = new List<Character_Base>();
-    //    Collider[] hitColliders = Physics.OverlapSphere(center, radius, targetLayer);
 
-    //    foreach (Collider collider in hitColliders)
-    //    {
-    //        bool ownership_ignored = false;
-    //        bool target_ignored = false;
-    //        Character_Base target = collider.GetComponent<Character_Base>();
-    //        if (target != null)
-    //        {
-    //            if (ignore_targets.Contains(target.targetType))
-    //            {
-    //                target_ignored = true;
-    //            }
 
-    //            if (target.TryGetComponent<StructurePhysical>(out StructurePhysical structure))
-    //            {
-    //                if (structure.ownership == ownership_ignore)
-    //                {
-    //                    ownership_ignored = true;
-    //                }
-    //            }
-
-    //            if (!target_ignored && !ownership_ignored)
-    //            {
-    //                targets.Add(target);
-    //            }
-    //        }
-    //    }
-
-    //    return targets;
-    //}
+    private IEnumerator UpdateInteractables()
+    {
+        while (true)
+        {
+            interactables = new List<IInteractable>(FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+            .OfType<IInteractable>());
+            yield return new WaitForSeconds(updateInteractablesSeconds);
+        }
+    }
 }

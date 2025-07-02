@@ -13,14 +13,13 @@ public class StateMachine : MonoBehaviour
     [field:SerializeField] public Transform target { get; protected set; }
     private FollowerEntity follower;
 
-    public Interactable interactable;
+    public IInteractable interactable;
     public bool canInteract = true;
     public float interactCooldown = 30f;
 
     #region Inventory
-    [SerializeField] private int inventorySize = 30;
-    public Inventory inventory { get; protected set; }
-    public CraftingTable craftingTable { get; protected set; }
+    [field:SerializeField] public PlayerInventory inventory { get; protected set; }
+    [field:SerializeField] public CraftingTable craftingTable { get; protected set; }
     public List<RecipeSO> recipes = new List<RecipeSO>();
     public List<RecipeSO> craftableRecipes => interactable != null ? craftingTable.EvaluateCraftableRecipes(interactable.inventory) : new List<RecipeSO>();
     #endregion
@@ -39,10 +38,6 @@ public class StateMachine : MonoBehaviour
     {
         logger = LogManager.Instance.AddLogger("State Machine", LogLevel.INFO);
 
-        inventory = new Inventory(inventorySize);
-        craftingTable = new CraftingTable();
-        craftingTable.AddRecipes(recipes);
-
         follower = GetComponent<FollowerEntity>();
 
         states.Add(new Idle(this));
@@ -50,6 +45,7 @@ public class StateMachine : MonoBehaviour
         states.Add(new Deciding(this));
         states.Add(new ItemCraft(this));
         states.Add(new ItemMove(this));
+        states.Add(new ItemPickUp(this));
 
         onTransitionTo += HandleTransitionTo;
     }

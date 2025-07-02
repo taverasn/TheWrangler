@@ -678,9 +678,9 @@ namespace JUTPS.JUInputSystem
 		static void GetJUInputInstance()
 		{
 			if (JUInputInstance != null) return;
-			if (GameObject.FindObjectOfType<JUInputManager>() != null)
+			if (GameObject.FindFirstObjectByType<JUInputManager>(FindObjectsInactive.Exclude) != null)
 			{
-				JUInputInstance = GameObject.FindObjectOfType<JUInputManager>();
+				JUInputInstance = GameObject.FindFirstObjectByType<JUInputManager>(FindObjectsInactive.Exclude);
 			}
 			else
 			{
@@ -703,7 +703,7 @@ namespace JUTPS.JUInputSystem
 			else
 			{
 				GetJUInputInstance();
-				JUInputInstance = GameObject.FindObjectOfType<JUInputManager>();
+				JUInputInstance = GameObject.FindFirstObjectByType<JUInputManager>();
 				return JUInputInstance;
 			}
 		}
