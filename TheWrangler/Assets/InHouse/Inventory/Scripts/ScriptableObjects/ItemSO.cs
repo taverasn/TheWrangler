@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public class ItemSO : ScriptableObject
 {
-    [field: SerializeField] public Prefab PickUpPrefab;
     [field: SerializeField] public string ID { get; private set; }
     [Header("UI Settings")] 
     public string displayName;
