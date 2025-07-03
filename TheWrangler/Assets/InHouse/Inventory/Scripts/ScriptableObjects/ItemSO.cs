@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.Entities;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemSO", menuName = "Items/ItemSO")]
@@ -56,7 +55,8 @@ public enum EquipmentSlot
     FEET,
     MAIN_HAND,
     OFF_HAND,
-    BOTH_HAND
+    BOTH_HAND,
+    BACK_PACK
 }
 
 public enum EquipmentType

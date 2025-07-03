@@ -39,6 +39,7 @@ public class PlayerInventoryUI : InventoryUI
         foreach (EquipmentSlotUI slot in equipmentSlotsParent.GetComponentsInChildren<EquipmentSlotUI>().ToList())
         {
             equipmentSlots[slot.slot] = slot;
+            slot.Initialize(this);
         }
         foreach (HotBarSlotUI slot in hotbarSlotsParent.GetComponentsInChildren<HotBarSlotUI>().ToList())
         {
