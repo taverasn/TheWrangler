@@ -148,7 +148,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 743171410}
+  - {fileID: 7151072724449787707}
   m_Father: {fileID: 585420418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327934444
@@ -318,6 +318,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ItemPickUp (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1307484611420972036, guid: 967c508574646b04a88486e61833462c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674595350900712081, guid: 967c508574646b04a88486e61833462c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186805844940747124, guid: 967c508574646b04a88486e61833462c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7151072723869691883, guid: 967c508574646b04a88486e61833462c,
         type: 3}
@@ -1281,12 +1296,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &743171410 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7151072723869691883, guid: 967c508574646b04a88486e61833462c,
-    type: 3}
-  m_PrefabInstance: {fileID: 585928912}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &866998962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1855,6 +1864,11 @@ PrefabInstance:
       propertyPath: type
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6931442584534209887, guid: f8a60310aa7f4fc49be9a959381a7183,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1894,6 +1908,12 @@ Transform:
   - {fileID: 1757644932}
   m_Father: {fileID: 585420418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &7151072724449787707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7151072723869691883, guid: 967c508574646b04a88486e61833462c,
+    type: 3}
+  m_PrefabInstance: {fileID: 585928912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
