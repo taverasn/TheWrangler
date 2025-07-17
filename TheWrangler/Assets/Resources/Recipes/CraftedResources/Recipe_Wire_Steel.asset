@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Wire_Steel
   item: {fileID: 11400000, guid: 936448f3713dd5e44824962177cff58d, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: 0aea107809240f645be4d68955aa299f, type: 2}

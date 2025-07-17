@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
-  m_Name: BuildingRecipe_Pine_Foundation
+  m_Name: Recipe_Structure_Foundation_Pine
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: BuildingRecipe_Pine_Foundation
-  item: {fileID: 0}
+  <ID>k__BackingField: Recipe_Structure_Foundation_Pine
+  item: {fileID: 11400000, guid: 7ce10cc70ba47c843ab47b2129134250, type: 2}
+  buildSection: 1
   ingredients:
     keys:
     - {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
-    values: 02000000
+    values: 04000000

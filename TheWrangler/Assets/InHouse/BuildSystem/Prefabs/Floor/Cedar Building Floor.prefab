@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3130312731371641946}
   - component: {fileID: 389743957616574958}
   m_Layer: 0
-  m_Name: Default Modular Building Floor
+  m_Name: Cedar Building Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Rope
   item: {fileID: 11400000, guid: 266ce8ec58a326540a0ed133d0af922b, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: a256868a570622344b34ba863acf2cdd, type: 2}

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3130312731371641946}
   - component: {fileID: 2589084100581999642}
   m_Layer: 0
-  m_Name: Default Modular Building Foundation
+  m_Name: Oak Building Foundation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

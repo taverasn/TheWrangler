@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 4593290822901445611}
   - component: {fileID: 2695769998215834255}
   m_Layer: 0
-  m_Name: Default Modular Building Wall
+  m_Name: _Default Modular Building Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

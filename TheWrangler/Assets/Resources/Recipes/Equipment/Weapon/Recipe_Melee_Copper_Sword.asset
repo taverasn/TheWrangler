@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Melee_Copper_Sword
   item: {fileID: 11400000, guid: c4bf4d5734262f24f9307efd8e5551d7, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}
