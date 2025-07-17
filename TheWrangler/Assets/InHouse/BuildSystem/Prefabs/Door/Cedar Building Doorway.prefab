@@ -386,10 +386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GeneralSettings:
-    m_Name: Modular Building Doorway
+    m_Name: Cedar Building Doorway
     m_Type: Wall
     m_Thumbnail: {fileID: 2800000, guid: c1b8062d70e024c41bfbfe141ccc6258, type: 3}
-    m_Identifier: ca69c875bf7a4f3f8e0f8098af1d2a25
+    m_Identifier: de2ec7d77380439cbcf6270db4ff0f7b
   m_ModelSettings:
     m_Models:
     - {fileID: 672731566047880067}

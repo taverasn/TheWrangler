@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GeneralSettings:
-    m_Name: Modular Building Window
+    m_Name: Oak Building Window
     m_Type: Wall
     m_Thumbnail: {fileID: 2800000, guid: 1edfe5714ab21e44698062bca8e2c8cd, type: 3}
     m_Identifier: 76495c5f3bdc48c983d13100288c582d

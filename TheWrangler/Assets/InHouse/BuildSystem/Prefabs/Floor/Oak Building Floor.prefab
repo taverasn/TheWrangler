@@ -54,10 +54,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GeneralSettings:
-    m_Name: Modular Building Floor
+    m_Name: Oak Building Floor
     m_Type: Floor
     m_Thumbnail: {fileID: 2800000, guid: 8e6077419e3b29a47b9d5d5b99066b2e, type: 3}
-    m_Identifier: ccce3d20eca2439cb95e3a9af1155426
+    m_Identifier: 43a732c610ff4b26b297e3a326ef4422
   m_ModelSettings:
     m_Models:
     - {fileID: 6125779220641433681}

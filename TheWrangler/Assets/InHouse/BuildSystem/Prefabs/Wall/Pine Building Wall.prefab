@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GeneralSettings:
-    m_Name: Modular Building Wall
+    m_Name: Pine Building Wall
     m_Type: Wall
     m_Thumbnail: {fileID: 2800000, guid: 3db9381075dec9545886a3a72ec7b2ff, type: 3}
     m_Identifier: 5e969265507543b9a23d4b72a29e9a0d

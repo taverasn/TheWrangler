@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc031a73addaca44b9a1802137afafc, type: 3}
+  m_Name: Oak_Floor
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Oak_Floor
+  displayName: Oak Floor
+  prefab: {fileID: 265450613202171715, guid: 578ff1abc98db1a4b86b0edbd7f55404, type: 3}
+  icon: {fileID: 21300000, guid: 8e6077419e3b29a47b9d5d5b99066b2e, type: 3}
+  maxAmount: 300
+  stackable: 0
+  equipmentSlot: 0
+  toolType: 0
+  tier: 0

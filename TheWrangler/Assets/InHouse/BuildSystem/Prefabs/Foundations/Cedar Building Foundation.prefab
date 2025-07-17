@@ -94,10 +94,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GeneralSettings:
-    m_Name: Modular Building Foundation
+    m_Name: Cedar Building Foundation
     m_Type: Foundation
     m_Thumbnail: {fileID: 2800000, guid: 8ba0f94bfde42eb4b87ec62898b71608, type: 3}
-    m_Identifier: 449be245dca64d2e9ffe68c59b049b51
+    m_Identifier: 7eedd32c62a34208888dc15d57130f15
   m_ModelSettings:
     m_Models:
     - {fileID: 7772683334408293728}
