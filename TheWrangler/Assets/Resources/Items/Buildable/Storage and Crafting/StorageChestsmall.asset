@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc031a73addaca44b9a1802137afafc, type: 3}
+  m_Name: StorageChestsmall
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: StorageChestsmall
+  displayName: Storage Chest Small
+  prefab: {fileID: 3944877275688125808, guid: 11393ab5c8e74e84d8ee108b6161a9db, type: 3}
+  icon: {fileID: -1373099460, guid: 6138772c089e2284d9c5ffba86488c18, type: 3}
+  maxAmount: 300
+  stackable: 0
+  equipmentSlot: 0
+  toolType: 0
+  tier: 0

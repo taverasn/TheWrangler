@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
+  m_Name: Recipe_Storage_Chest_Large
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Recipe_Storage_Chest_Large
+  item: {fileID: 11400000, guid: 8c98e249cbd76bc4694d66c27bafd037, type: 2}
+  buildSection: 2
+  ingredients:
+    keys:
+    - {fileID: 11400000, guid: 20268693bec17b64488b2cb578dd7ba7, type: 2}
+    values: 03000000

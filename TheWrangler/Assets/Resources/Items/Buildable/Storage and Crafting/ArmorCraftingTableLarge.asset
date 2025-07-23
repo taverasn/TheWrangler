@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dc031a73addaca44b9a1802137afafc, type: 3}
-  m_Name: Chest
+  m_Name: ArmorCraftingTableLarge
   m_EditorClassIdentifier: 
-  <ID>k__BackingField: Chest
-  displayName: Chest
-  prefab: {fileID: 7829415602800888884, guid: ca30f2e17ff281f488c7961fd0204ae1, type: 3}
-  icon: {fileID: 1834710680, guid: 3613989358a515b4dafe1954ad6ad40c, type: 3}
+  <ID>k__BackingField: StorageChestLarge
+  displayName: Storage Chest Large
+  prefab: {fileID: 3944877275688125808, guid: 86cb22549f1c3744a996b559f31ee636, type: 3}
+  icon: {fileID: -1220183611, guid: 20135c9bd3c7f2644ad078041c6c1fb4, type: 3}
   maxAmount: 300
   stackable: 0
   equipmentSlot: 0

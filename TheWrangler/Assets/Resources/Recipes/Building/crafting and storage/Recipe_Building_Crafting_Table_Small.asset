@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d39d79611611e4ab0babfe064c6349, type: 3}
+  m_Name: Recipe_Building_Crafting_Table_Small
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: Recipe_Storage_Chest_Small
+  item: {fileID: 11400000, guid: 85d0418249e29334185c7637aa32b21a, type: 2}
+  buildSection: 2
+  ingredients:
+    keys:
+    - {fileID: 11400000, guid: d99031c223033d74b8bd931ca94a991b, type: 2}
+    values: 03000000
