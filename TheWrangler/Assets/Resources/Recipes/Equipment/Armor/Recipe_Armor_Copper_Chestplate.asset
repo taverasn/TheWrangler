@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Armor_Copper_Chestplate
   item: {fileID: 11400000, guid: 2d515e2845cb3cd40bf8375645245b93, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: c74ecc8488d9c894b8337b3617894143, type: 2}

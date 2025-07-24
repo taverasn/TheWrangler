@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Nail_Steel
   item: {fileID: 11400000, guid: cb7c5b0ad1d476348aaa5ae774fbc950, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: 0aea107809240f645be4d68955aa299f, type: 2}

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Armor_Copper_Leggings
   item: {fileID: 11400000, guid: 58189c92e256fa742b741d7bb03913f5, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: c74ecc8488d9c894b8337b3617894143, type: 2}

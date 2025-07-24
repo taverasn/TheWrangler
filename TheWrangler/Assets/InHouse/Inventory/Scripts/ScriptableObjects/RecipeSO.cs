@@ -8,6 +8,7 @@ public class RecipeSO : ScriptableObject
 {
     [field: SerializeField] public string ID { get; private set; }
     public ItemSO item;
+    public BuildSection buildSection;
 
     [ShowInInspector] public ItemAmountDictionary ingredients;
 
@@ -30,4 +31,13 @@ public enum CraftingType
     ARMOR,
     BUILDING,
     RESOURCES,
+}
+
+public enum BuildSection
+{
+    NONE,
+    STRUCTURE, 
+    CRAFTING, 
+    DECORATION, 
+    LIGHTING
 }

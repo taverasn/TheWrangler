@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Melee_Pine_Shield
   item: {fileID: 11400000, guid: c4525f4cab5a58048a2678c6cbbf93cf, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: b73e65394ac8a7f48885109c04a5dfb9, type: 2}

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: Recipe_Spike_Iron
   item: {fileID: 11400000, guid: d2b09ec9dd87ecf4788b17e72e32fba8, type: 2}
+  buildSection: 0
   ingredients:
     keys:
     - {fileID: 11400000, guid: a28d293b313d10d4096b162949eb2654, type: 2}
